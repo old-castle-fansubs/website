@@ -18,6 +18,7 @@ ALLOWED_FILETYPES = [
 def collect_local_files(local_root):
     lpaths = []
     for path, dirs, files in os.walk(local_root, topdown=True):
+        lpaths.append((os.path.relpath(path, local_root), 0))
         dirs[:] = [d for d in dirs if d not in IGNORE]
         for f in files:
             if f == '.':
@@ -70,7 +71,10 @@ def sync_files(local_root, base_url, to_create, to_update, to_delete, dry_run):
         if ext not in ALLOWED_FILETYPES:
             continue
         print('-> {}'.format(path))
-        files = {path: open(os.path.join(local_root, path), 'rb')}
+        full_path = os.path.join(local_root, path)
+        if os.path.isdir(full_path):
+            continue
+        files = {path: open(full_path, 'rb')}
         if not dry_run:
             response = requests.post('{}/upload'.format(base_url), files=files)
             response.raise_for_status()
