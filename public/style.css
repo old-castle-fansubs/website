@@ -1,0 +1,81 @@
+body {
+    background: black;
+    font-family: sans-serif;
+}
+main {
+    width: 40em;
+    margin: 0 auto;
+    text-align: left;
+}
+
+header {
+    height: 15em;
+    padding: 1em;
+    background: url('img/castle.jpg') center 0%;
+    background-size: cover;
+}
+header h1 {
+    font-family: 'UnifrakturCook', cursive;
+    margin: 0;
+    font-size: 40pt;
+    line-height: 30pt;
+}
+header h1 a {
+    color: black;
+    text-decoration: none;
+}
+
+nav {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    box-shadow: 0 0 1em black inset;
+    background: url('img/stone.jpg');
+    background-size: cover;
+}
+nav ul {
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+nav ul li {
+    display: inline-block;
+    flex-grow: 1;
+}
+nav ul li {
+    margin: 0.5em;
+}
+nav ul li:not(:first-child) {
+    margin-left: 0;
+}
+nav ul li a {
+    display: block;
+    background: rgba(205, 205, 205, 0.3);
+    padding: 0.2em 0.5em;
+    color: black;
+    text-decoration: none;
+    border: outset 3px rgba(128, 128, 128, 0.5);
+    text-align: center;
+}
+nav ul li a:active {
+    border-style: inset;
+}
+
+#body {
+    padding: 1em;
+    background: url('img/parchment.jpg') center;
+    box-shadow: 0 0 0.5em hsla(40, 50%, 50%, 1) inset;
+}
+#body>*:first-child {
+    margin-top: 0;
+}
+#body>*:last-child {
+    margin-bottom: 0;
+}
+
+#attention {
+    background: tomato;
+    color: yellow;
+    text-align: center;
+    padding: 0.2em;
+    border-bottom: 1px solid black;
+}
