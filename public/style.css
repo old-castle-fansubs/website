@@ -7,47 +7,50 @@ main {
     margin: 0 auto;
     text-align: left;
 }
+.clear {
+    clear: both;
+}
 
-header {
+#top-header {
     height: 12em;
     padding: 1em;
     background: url('img/castle.jpg') center 0%;
     background-size: cover;
 }
-header h1 {
+#top-header h1 {
     font-family: 'UnifrakturCook', cursive;
     margin: 0;
     font-size: 40pt;
     line-height: 30pt;
 }
-header h1 a {
+#top-header h1 a {
     color: black;
     text-decoration: none;
 }
 
-nav {
+#top-nav {
     border-top: 1px solid black;
     border-bottom: 1px solid black;
     box-shadow: 0 0 1em black inset;
     background: url('img/stone.jpg');
     background-size: cover;
 }
-nav ul {
+#top-nav ul {
     margin: 0;
     padding: 0;
     display: flex;
 }
-nav ul li {
+#top-nav ul li {
     display: inline-block;
     flex-grow: 1;
 }
-nav ul li {
+#top-nav ul li {
     margin: 0.5em;
 }
-nav ul li:not(:first-child) {
+#top-nav ul li:not(:first-child) {
     margin-left: 0;
 }
-nav ul li a {
+#top-nav ul li a {
     display: block;
     background: rgba(205, 205, 205, 0.3);
     padding: 0.2em 0.5em;
@@ -86,4 +89,27 @@ nav ul li a:active {
 
 #body li {
     margin-bottom: 0.5em;
+}
+
+.news {
+    margin-bottom: 2em;
+}
+.news header {
+    padding: 0.2em 0.5em;
+    background: hsla(120, 50%, 70%, 0.5);
+}
+.news .title {
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+    display: block;
+}
+.news .date {
+    float: right;
+    text-align: center;
+    line-height: 12pt;
+}
+
+.news img {
+    max-width: 100%;
 }

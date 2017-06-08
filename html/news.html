@@ -1,5 +1,19 @@
 {% extends "base.html" %}
 {% block title %}News{% endblock %}
 {% block content %}
-<h1>News</h1>
+
+{% for entry in news %}
+    <div class="news">
+        <header>
+            <div class='date'>
+                {{ entry.date.strftime('%A, %d %b %Y') }}
+            </div>
+            <a class='title' href='{{ entry.url }}'>{{ entry.title }}</a>
+        </header>
+
+        {{ entry.content }}
+        <div class='clear'></div>
+    </div>
+{% endfor %}
+
 {% endblock %}

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import typing as t
+import dateutil.parser
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -12,7 +13,35 @@ def _render(env: t.Any, template: str, output: str, **kwargs: t.Any) -> None:
 
 
 def _render_news(env: t.Any) -> None:
-    _render(env, template='news.html', output='index.html')
+    class News:
+        def __init__(
+                self,
+                date: str,
+                title: str,
+                content: str,
+                path: str,
+                url: str) -> None:
+            self.date = dateutil.parser.parse(date)
+            self.title = title
+            self.content = content
+            self.path = path
+            self.url = url
+
+    news = []
+    news_dir = os.path.join(os.path.dirname(__file__), 'news')
+    for entry in os.scandir(news_dir):
+        with open(entry.path, 'r', encoding='utf-8') as handle:
+            date = handle.readline().strip()
+            title = handle.readline().strip()
+            if handle.readline().strip():
+                raise ValueError('Expected empty line in news ' + entry.path)
+            content = handle.read()
+        url = 'news/' + entry.name + '.html'
+        news.append(News(date, title, content, entry.path, url))
+
+    news.sort(key=lambda news: news.path, reverse=True)
+
+    _render(env, template='news.html', output='index.html', news=news)
 
 
 def _render_releases(env: t.Any) -> None:

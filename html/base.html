@@ -10,21 +10,21 @@
 </head>
 <body>
     <main>
-    <div id='attention'>We're looking for quality checkers (both English and Japanese)!</div>
-    <header>
-        <h1><a href='index.html'>Old Castle<br/>
-        <small>fansub group</small></a></h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href='index.html'>News</a></li>
-            <li><a href='releases.html'>Releases</a></li>
-            <li><a href='about.html'>About</a></li>
-        </ul>
-    </nav>
-    <div id='body'>
-        {% block content %}{% endblock %}
-    </div>
+        <div id='attention'>We're looking for quality checkers (both English and Japanese)!</div>
+        <header id='top-header'>
+            <h1><a href='index.html'>Old Castle<br/>
+            <small>fansub group</small></a></h1>
+        </header>
+        <nav id='top-nav'>
+            <ul>
+                <li><a href='index.html'>News</a></li>
+                <li><a href='releases.html'>Releases</a></li>
+                <li><a href='about.html'>About</a></li>
+            </ul>
+        </nav>
+        <div id='body'>
+            {% block content %}{{ content }}{% endblock %}
+        </div>
     </main>
 </body>
 </html>
