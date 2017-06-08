@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<div class='news'>
+    <header>
+        <div class='date'>
+            {{ entry.date.strftime('%A, %d %b %Y') }}
+        </div>
+        <a class='title' href='{{ entry.url }}'>{{ entry.title }}</a>
+    </header>
+
+    {{ entry.content }}
+    <div class='clear'></div>
+</div>
+
+<div id='disqus_thread'></div>
+
+<script>
+var disqus_config = function () {
+    this.page.url = 'https://oldcastle.moe/{{ entry.url }}';
+    this.page.identifier = '{{ entry.url }}';
+};
+
+(function() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://old-castle-fansubs.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+{% endblock %}

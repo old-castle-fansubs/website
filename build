@@ -36,8 +36,12 @@ def _render_news(env: t.Any) -> None:
             if handle.readline().strip():
                 raise ValueError('Expected empty line in news ' + entry.path)
             content = handle.read()
-        url = 'news/' + entry.name + '.html'
-        news.append(News(date, title, content, entry.path, url))
+        url = 'news-' + entry.name.replace('.html', '') + '.html'
+
+        news_entry = News(date, title, content, entry.path, url)
+        news.append(news_entry)
+
+        _render(env, template='news-page.html', output=url, entry=news_entry)
 
     news.sort(key=lambda news: news.path, reverse=True)
 

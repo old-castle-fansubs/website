@@ -3,7 +3,7 @@
 {% block content %}
 
 {% for entry in news %}
-    <div class="news">
+    <div class='news'>
         <header>
             <div class='date'>
                 {{ entry.date.strftime('%A, %d %b %Y') }}
@@ -12,8 +12,12 @@
         </header>
 
         {{ entry.content }}
+
+        <p><a data-disqus-identifier='{{ entry.url }}' href='{{ entry.url }}?#disqus_thread'>Comments</a></p>
         <div class='clear'></div>
     </div>
 {% endfor %}
+
+<script id='dsq-count-scr' src='https://old-castle-fansubs.disqus.com/count.js' async></script>
 
 {% endblock %}
