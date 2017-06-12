@@ -8,8 +8,14 @@ from jinja2 import Environment, FileSystemLoader
 def _render(env: t.Any, template: str, output: str, **kwargs: t.Any) -> None:
     target_path = 'public/' + output
     os.makedirs(os.path.dirname(target_path), exist_ok=True)
+    new_content = env.get_template(template).render(**kwargs)
+    if os.path.exists(target_path):
+        with open(target_path, 'r', encoding='utf-8') as handle:
+            old_content = handle.read()
+            if old_content == new_content:
+                return
     with open(target_path, 'w', encoding='utf-8') as handle:
-        handle.write(env.get_template(template).render(**kwargs))
+        handle.write(new_content)
 
 
 def _render_news(env: t.Any) -> None:
