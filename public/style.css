@@ -91,6 +91,9 @@ main {
 #body h1 {
     font-size: 16pt;
 }
+#body h2 {
+    font-size: 100%;
+}
 
 #body li {
     margin-bottom: 0.5em;
@@ -117,4 +120,20 @@ main {
 
 .news img {
     max-width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table thead tr {
+    background: #CCC;
+}
+table tbody tr:hover {
+    background: #DDDDBB;
+}
+table th,
+table td {
+    border: 1px solid silver;
+    padding: 0.2em 0.5em;
 }
