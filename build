@@ -47,7 +47,12 @@ def _render_news(env: t.Any) -> None:
         news_entry = News(date, title, content, entry.path, url)
         news.append(news_entry)
 
-        _render(env, template='news-page.html', output=url, entry=news_entry)
+        _render(
+            env,
+            template='news-page.html',
+            output=url,
+            entry=news_entry,
+            title=news_entry.title)
 
     news.sort(key=lambda news: news.path, reverse=True)
 
