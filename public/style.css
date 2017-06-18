@@ -137,3 +137,13 @@ table td {
     border: 1px solid silver;
     padding: 0.2em 0.5em;
 }
+
+#releases img {
+    max-width: 50%;
+    margin: 0;
+}
+#releases .description {
+    margin-top: 0.5em;
+    font-size: 85%;
+    line-height: 130%;
+}
