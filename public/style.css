@@ -147,3 +147,13 @@ table td {
     font-size: 85%;
     line-height: 130%;
 }
+
+.split {
+    display: flex;
+}
+.split figure {
+    width: 50%;
+    margin: 0.5em;
+    padding: 0;
+    text-align: center;
+}
