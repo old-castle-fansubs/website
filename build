@@ -15,7 +15,22 @@ def _save(path: pathlib.Path, content: bytes):
         if old_content == content:
             return
     print('Writing', path)
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(content)
+
+
+def _copy(source: str):
+    source_path = pathlib.Path(source)
+    if os.path.isdir(source_path):
+        source_paths = [
+            path
+            for path in source_path.rglob('*')
+            if path.is_file()]
+    else:
+        source_paths = [source_path]
+    for source_path in source_paths:
+        target_path = TARGET_DIR / source_path
+        _save(target_path, source_path.read_bytes())
 
 
 def _render(env: t.Any, template: str, output: str, **kwargs: t.Any) -> None:
@@ -82,6 +97,8 @@ def main() -> None:
     _render_releases(env)
     _render_about(env)
     _render_attention(env)
+    _copy('style.css')
+    _copy('img')
 
 
 if __name__ == '__main__':
