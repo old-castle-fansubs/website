@@ -2,20 +2,27 @@
 import os
 import typing as t
 import dateutil.parser
+import pathlib
 from jinja2 import Environment, FileSystemLoader
 
 
+TARGET_DIR = pathlib.Path('public')
+
+
+def _save(path: pathlib.Path, content: bytes):
+    if path.exists():
+        old_content = path.read_bytes()
+        if old_content == content:
+            return
+    print('Writing', path)
+    path.write_bytes(content)
+
+
 def _render(env: t.Any, template: str, output: str, **kwargs: t.Any) -> None:
-    target_path = 'public/' + output
-    os.makedirs(os.path.dirname(target_path), exist_ok=True)
-    new_content = env.get_template(template).render(**kwargs)
-    if os.path.exists(target_path):
-        with open(target_path, 'r', encoding='utf-8') as handle:
-            old_content = handle.read()
-            if old_content == new_content:
-                return
-    with open(target_path, 'w', encoding='utf-8') as handle:
-        handle.write(new_content)
+    target_path = TARGET_DIR / output
+    target_path.parent.mkdir(parents=True, exist_ok=True)
+    new_content = env.get_template(template).render(**kwargs).encode('utf-8')
+    _save(target_path, new_content)
 
 
 def _render_news(env: t.Any) -> None:
@@ -25,7 +32,7 @@ def _render_news(env: t.Any) -> None:
                 date: str,
                 title: str,
                 content: str,
-                path: str,
+                path: pathlib.Path,
                 url: str) -> None:
             self.date = dateutil.parser.parse(date)
             self.title = title
@@ -33,30 +40,28 @@ def _render_news(env: t.Any) -> None:
             self.path = path
             self.url = url
 
-    news = []
-    news_dir = os.path.join(os.path.dirname(__file__), 'news')
-    for entry in os.scandir(news_dir):
-        with open(entry.path, 'r', encoding='utf-8') as handle:
+    news_entries = []
+    news_dir = pathlib.Path(__file__).parent / 'news'
+    for entry in news_dir.iterdir():
+        with entry.open('r', encoding='utf-8') as handle:
             date = handle.readline().strip()
             title = handle.readline().strip()
             if handle.readline().strip():
-                raise ValueError('Expected empty line in news ' + entry.path)
+                raise ValueError('Expected empty line in news ' + entry.name)
             content = handle.read()
-        url = 'news-' + entry.name.replace('.html', '') + '.html'
+        url = 'news-' + entry.stem + '.html'
+        news_entries.append(News(date, title, content, entry, url))
+    news_entries.sort(key=lambda news: news.path, reverse=True)
 
-        news_entry = News(date, title, content, entry.path, url)
-        news.append(news_entry)
-
+    for news_entry in news_entries:
         _render(
             env,
             template='news-page.html',
-            output=url,
+            output=news_entry.url,
             entry=news_entry,
             title=news_entry.title)
 
-    news.sort(key=lambda news: news.path, reverse=True)
-
-    _render(env, template='news.html', output='index.html', news=news)
+    _render(env, template='news.html', output='index.html', news=news_entries)
 
 
 def _render_releases(env: t.Any) -> None:
