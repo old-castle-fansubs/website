@@ -13,21 +13,10 @@
     <div class='clear'></div>
 </div>
 
-<div id='disqus_thread'></div>
-
-<script>
-var disqus_config = function () {
-    this.page.url = 'https://oldcastle.moe/{{ entry.url }}';
-    this.page.identifier = '{{ entry.url }}';
-};
-
-(function() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://old-castle-fansubs.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-})();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script
+    data-isso='https://comments.oldcastle.moe/'
+    data-isso-require-author="true"
+    src='https://comments.oldcastle.moe/js/embed.min.js'></script>
+<section id='isso-thread'></section>
 
 {% endblock %}

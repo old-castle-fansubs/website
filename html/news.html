@@ -14,11 +14,11 @@
 
         {{ entry.content }}
 
-        <p><a data-disqus-identifier='{{ entry.url }}' href='{{ entry.url }}?#disqus_thread'>Comments</a></p>
+        <p><a href='{{ entry.url }}#isso-thread'>Comments</a></p>
         <div class='clear'></div>
     </div>
 {% endfor %}
 
-<script id='dsq-count-scr' src='https://old-castle-fansubs.disqus.com/count.js' async></script>
+<script data-isso='https://comments.oldcastle.moe/' src='https://comments.oldcastle.moe/js/count.min.js'></script>
 
 {% endblock %}
