@@ -87,6 +87,10 @@ def _render_about(env: t.Any) -> None:
     _render(env, template='about.html', output='about.html')
 
 
+def _render_guest_book(env: t.Any) -> None:
+    _render(env, template='guest_book.html', output='guest_book.html')
+
+
 def _render_attention(env: t.Any) -> None:
     _render(env, template='attention.html', output='attention.html')
 
@@ -96,6 +100,7 @@ def main() -> None:
     _render_news(env)
     _render_releases(env)
     _render_about(env)
+    _render_guest_book(env)
     _render_attention(env)
     _copy('style.css')
     _copy('img')

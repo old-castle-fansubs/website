@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}About{% endblock %}
+{% block id %}about{% endblock %}
+{% block content %}
+<h1>Guest book</h1>
+
+<script
+    data-isso='https://comments.oldcastle.moe/'
+    data-isso-require-author="true"
+    src='https://comments.oldcastle.moe/js/embed.min.js'></script>
+<section id='isso-thread'></section>
+
+{% endblock %}
