@@ -1,12 +1,15 @@
 #!/usr/bin/env python3
 from getpass import getpass
-import os
-import sys
+from pathlib import Path
+import hashlib
 import argparse
+import json
 import requests
-import dateutil.parser
 
-IGNORE = ['node_modules', '.git', '.sass-cache']
+
+IGNORE = ['.git']
+
+USER_NAME = 'old-castle-fansubs'
 ALLOWED_FILETYPES = [
     '.html', '.htm',
     '.jpg', '.png', '.gif', '.svg', '.ico',
@@ -16,68 +19,69 @@ ALLOWED_FILETYPES = [
 
 
 def collect_local_files(local_root):
-    lpaths = []
-    for path, dirs, files in os.walk(local_root, topdown=True):
-        lpaths.append((os.path.relpath(path, local_root), 0))
-        dirs[:] = [d for d in dirs if d not in IGNORE]
-        for f in files:
-            if f == '.':
-                continue
-            fpath = os.path.join(path, f)
-            mtime = os.path.getmtime(fpath)
-            lpaths.append((os.path.relpath(fpath, local_root), mtime))
-    return lpaths
+    for path in local_root.iterdir():
+        if path.name in IGNORE:
+            continue
+        elif path.is_file():
+            if path.suffix in ALLOWED_FILETYPES:
+                yield path
+        elif path.is_dir():
+            yield from collect_local_files(path)
 
 
-def collect_remote_files(base_url):
-    response = requests.get('{}/list'.format(base_url))
-    rpaths = [
-        (d['path'], dateutil.parser.parse(d['updated_at']).timestamp())
-        for d in response.json()['files']
-    ]
-    return rpaths
+def get_local_info(local_paths):
+    return {
+        path: hashlib.md5(path.read_bytes()).hexdigest()
+        for path in local_paths
+    }
 
 
-def collect_diff(lpaths, rpaths):
-    # what to delete
-    lexists = [path for path, _ in lpaths]
-    to_delete = [path for path, _ in rpaths if path not in lexists]
-
-    to_update = []
-    to_create = []
-    for lpath, lmtime in lpaths:
-        remote = next(
-            ((path, mtime) for (path, mtime) in rpaths if path == lpath),
-            None)
-        if remote is None:
-            to_create.append(lpath)
-        elif remote[1] < lmtime:
-            to_update.append(lpath)
-    return to_create, to_update, to_delete
+def get_remote_info(published_path):
+    if not published_path.exists():
+        return {}
+    return {
+        Path(path): checksum
+        for path, checksum in json.loads(published_path.read_text()).items()
+    }
 
 
-def sync_files(local_root, base_url, to_create, to_update, to_delete, dry_run):
-    if to_delete:
-        for path in to_delete:
-            print(' X {}'.format(path))
-        if not dry_run:
+def save_remote_info(published_path, info):
+    published_path.write_text(json.dumps({
+        str(path): checksum
+        for path, checksum in info.items()
+    }))
+
+
+def collect_diff(local_info, remote_info):
+    local_paths = set(local_info.keys())
+    remote_paths = set(remote_info.keys())
+
+    files_to_create = local_paths - remote_paths
+    files_to_delete = remote_paths - local_paths
+    files_to_update = set(
+        path
+        for path in local_paths & remote_paths
+        if local_info[path] != remote_info[path])
+
+    return files_to_create, files_to_update, files_to_delete
+
+
+def sync_files(base_url, local_root, files_to_upload, files_to_delete):
+    if files_to_delete:
+        for path in sorted(files_to_delete):
+            print(f'Removing {path}')
+        if base_url:
             response = requests.post(
-                '{}/delete'.format(base_url),
-                params={'filenames[]': to_delete})
+                f'{base_url}/delete', params={'filenames[]': files_to_delete})
             response.raise_for_status()
 
-    for path in to_create + to_update:
-        _, ext = os.path.splitext(path)
-        if ext not in ALLOWED_FILETYPES:
-            continue
-        print('-> {}'.format(path))
-        full_path = os.path.join(local_root, path)
-        if os.path.isdir(full_path):
-            continue
-        files = {path: open(full_path, 'rb')}
-        if not dry_run:
-            response = requests.post('{}/upload'.format(base_url), files=files)
-            response.raise_for_status()
+    if files_to_upload:
+        for path in sorted(files_to_upload):
+            print(f'Uploading {path}')
+            files = {str(path.relative_to(local_root)): path.open(mode='rb')}
+            if base_url:
+                response = requests.post(f'{base_url}/upload', files=files)
+                response.raise_for_status()
 
 
 def parse_args():
@@ -90,16 +94,32 @@ def main():
     args = parse_args()
     dry_run = args.dry_run
 
-    local_root = os.path.join(os.path.dirname(__file__), 'public')
-    username = 'old-castle-fansubs'
-    password = getpass('Password: ')
-    base_url = 'https://{}:{}@neocities.org/api'.format(username, password)
+    local_root = Path(__file__).parent / 'public'
+    published_path = Path(__file__).parent / '.publish.json'
 
-    lpaths = collect_local_files(local_root)
-    rpaths = collect_remote_files(base_url)
-    to_create, to_update, to_delete = collect_diff(lpaths, rpaths)
+    local_files = list(collect_local_files(local_root))
+    local_info = get_local_info(local_files)
+    remote_info = get_remote_info(published_path)
 
-    sync_files(local_root, base_url, to_create, to_update, to_delete, dry_run)
+    files_to_create, \
+    files_to_update, \
+    files_to_delete = collect_diff(local_info, remote_info)
+    files_to_upload = files_to_update | files_to_create
+
+    if not files_to_upload and not files_to_delete:
+        print('Nothing to do')
+        return
+
+    if dry_run:
+        base_url = None
+    else:
+        password = getpass('Password: ')
+        base_url = f'https://{USER_NAME}:{password}@neocities.org/api'
+
+    sync_files(base_url, local_root, files_to_upload, files_to_delete)
+
+    if not dry_run:
+        save_remote_info(published_path, local_info)
 
 
 if __name__ == '__main__':
