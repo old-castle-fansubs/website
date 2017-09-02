@@ -5,25 +5,29 @@
     <meta charset='utf-8'/>
     <title>Old Castle Fansubs - {% block title %}{{ title }}{% endblock %}</title>
     <link href='https://fonts.googleapis.com/css?family=UnifrakturCook:700' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=New+Rocker' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Pirata+One' rel='stylesheet'>
     <link href='style.css' rel='stylesheet'>
     {% endblock %}
 </head>
 <body>
     <main id='{% block id %}{% endblock %}'>
-        <div id='attention'>
-            We're looking for quality checkers! (<a href='attention.html'>click here for details</a>)
-        </div>
         <header id='top-header'>
-            <h1><a href='index.html'>Old Castle<br/>
-            <small>fansub group</small></a></h1>
+            <div>
+                <h1><a href='index.html'>Old Castle<br/>
+                <small>fansub group</small></a></h1>
+            </div>
         </header>
         <nav id='top-nav'>
             <ul>
                 <li><a href='index.html'>News</a></li>
                 <li><a href='releases.html'>Releases</a></li>
-                <li><a href='about.html'>About</a></li>
+                <li><a href='about.html'>About us</a></li>
             </ul>
         </nav>
+        <div id='attention'>
+            We're looking for quality checkers! (<a href='attention.html'>click here for details</a>)
+        </div>
         <div id='body'>
             {% block content %}{{ content }}{% endblock %}
         </div>

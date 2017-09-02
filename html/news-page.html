@@ -2,12 +2,12 @@
 {% block id %}news{% endblock %}
 {% block content %}
 <div class='news'>
-    <header>
-        <div class='date'>
-            {{ entry.date.strftime('%A, %d %b %Y') }}
-        </div>
-        <a class='title' href='{{ entry.url }}'>{{ entry.title }}</a>
-    </header>
+    <div class='date'>
+        {{ entry.date.strftime('%A, %d %b %Y') }}
+    </div>
+    <div class='title'>
+        <a href='{{ entry.url }}'>{{ entry.title }}</a>
+    </div>
 
     {{ entry.content }}
     <div class='clear'></div>
