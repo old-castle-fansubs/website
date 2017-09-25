@@ -71,13 +71,13 @@ main {
 }
 
 #attention {
-    background: linear-gradient(90deg, rgba(255, 0, 0, 0), tomato 25%, tomato 75%, rgba(255, 0, 0, 0));
-    color: yellow;
+    background: linear-gradient(90deg, rgba(255, 0, 0, 0), orange 25%, orange 75%, rgba(255, 0, 0, 0));
+    color: black;
     text-align: center;
     padding: 0.2em;
 }
 #attention a {
-    color: lemonchiffon;
+    color: green;
 }
 
 #body {
@@ -203,4 +203,9 @@ figure img {
 }
 figure figcaption {
     font-style: italic;
+}
+
+img.flag {
+    box-shadow: 0 0 2px 2px rgba(0, 0, 0, 30%);
+    margin-left: 0.5em;
 }
