@@ -70,10 +70,11 @@ def sync_files(base_url, local_root, files_to_upload, files_to_delete):
     if files_to_delete:
         for path in sorted(files_to_delete):
             print(f'Removing {path}')
-        if base_url:
-            response = requests.post(
-                f'{base_url}/delete', params={'filenames[]': files_to_delete})
-            response.raise_for_status()
+            if base_url:
+                response = requests.post(
+                    f'{base_url}/delete',
+                    params={'filenames[]': str(path.relative_to(local_root))})
+                response.raise_for_status()
 
     if files_to_upload:
         for path in sorted(files_to_upload):
