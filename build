@@ -3,6 +3,7 @@ import os
 import typing as t
 import dateutil.parser
 import pathlib
+import yaml
 from jinja2 import Environment, FileSystemLoader
 
 
@@ -80,7 +81,17 @@ def _render_news(env: t.Any) -> None:
 
 
 def _render_releases(env: t.Any) -> None:
-    _render(env, template='releases.html', output='releases.html')
+    releases = []
+    releases_dir = pathlib.Path(__file__).parent / 'releases'
+    for entry in sorted(releases_dir.iterdir()):
+        with entry.open('r', encoding='utf-8') as handle:
+            releases.append(yaml.load(handle))
+
+    _render(
+        env,
+        template='releases.html',
+        output='releases.html',
+        releases=releases)
 
 
 def _render_about(env: t.Any) -> None:
