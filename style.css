@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=New+Rocker|Pirata+One|Roboto|UnifrakturCook:700');
+@import url('comments.css');
 
 body {
     background: url('img/blue.jpg') fixed;

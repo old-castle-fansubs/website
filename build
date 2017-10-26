@@ -114,6 +114,7 @@ def main() -> None:
     _render_guest_book(env)
     _render_attention(env)
     _copy('style.css')
+    _copy('comments.css')
     _copy('img')
 
 

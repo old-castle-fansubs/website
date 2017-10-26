@@ -1,0 +1,180 @@
+#isso-root {
+    display: flex;
+    flex-direction: column-reverse;
+}
+#isso-thread * {
+    box-sizing: border-box;
+}
+
+#isso-thread {
+    padding: 0;
+    margin: 0;
+}
+
+.isso-comment {
+    width: 100%;
+    margin-bottom: 1em;
+}
+.isso-comment:not(:first-of-type):after {
+    clear: both;
+    display: block;
+    content: '';
+    width: 100%;
+    height: 5px;
+    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAIklEQVQYV2NkwAQNjGhiDUA+iiBYAKQIphIuABNEEQAJAgDOJASGVcZrrgAAAABJRU5ErkJggg==');
+}
+
+.isso-comment a {
+    color: green;
+}
+.isso-comment a:hover {
+    color: black;
+    text-decoration: underline;
+}
+
+.isso-comment>.avatar,
+.isso-postbox>.avatar {
+    display: block;
+    float: left;
+    width: 7%;
+    box-sizing: border-box;
+    margin: 0.15em 0.75em 0 0;
+}
+.isso-comment>.avatar>svg,
+.isso-postbox>.avatar>svg {
+    max-width: 48px;
+    max-height: 48px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.isso-comment>.text-wrapper {
+    display: block;
+    float: left;
+    width: 90%;
+    margin-bottom: 1em;
+}
+.isso-comment .isso-follow-up {
+    padding-left: calc(7% + 20px);
+}
+
+.isso-comment>.text-wrapper>.isso-comment-header {
+    font-size: 0.85em;
+}
+.isso-comment>.text-wrapper>.isso-comment-header .spacer {
+    padding: 0 0.5em;
+}
+.isso-comment>.text-wrapper>.isso-comment-header .spacer,
+.isso-comment>.text-wrapper>.isso-comment-header .permalink,
+.isso-comment>.text-wrapper>.isso-comment-header .note,
+.isso-comment>.text-wrapper>.isso-comment-header .parent {
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: normal;
+}
+.isso-comment>.text-wrapper>.isso-comment-header .spacer:hover,
+.isso-comment>.text-wrapper>.isso-comment-header .permalink:hover,
+.isso-comment>.text-wrapper>.isso-comment-header .note:hover,
+.isso-comment>.text-wrapper>.isso-comment-header .parent:hover {
+    color: black;
+}
+.isso-comment>.text-wrapper>.isso-comment-header .note {
+    float: right;
+}
+.isso-comment>.text-wrapper>.isso-comment-header .author {
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.isso-comment>.text-wrapper>.text p {
+    margin-top: 0.2em;
+}
+.isso-comment>.text-wrapper>.text p:last-child {
+    margin-bottom: 0.2em;
+}
+.isso-comment>.text-wrapper>.text h1,
+.isso-comment>.text-wrapper>.text h2,
+.isso-comment>.text-wrapper>.text h3,
+.isso-comment>.text-wrapper>.text h4,
+.isso-comment>.text-wrapper>.text h5,
+.isso-comment>.text-wrapper>.text h6 {
+    font-size: 130%;
+    font-weight: bold;
+}
+
+.isso-comment .isso-postbox {
+    margin-top: 0.8em;
+}
+
+.isso-comment-footer {
+    font-size: 0.80em;
+    color: rgba(0, 0, 0, 0.5);
+    clear: left;
+}
+.isso-comment-footer a {
+    text-decoration: none;
+    position: relative;
+    top: .2em;
+}
+.isso-comment-footer a+a {
+    padding-left: 1em;
+}
+.isso-comment-footer .votes {
+    vertical-align: middle;
+    color: rgba(0, 0, 0, 0.5);
+}
+.isso-comment.isso-no-votes .isso-comment-footer .votes {
+    display: none;
+}
+.isso-comment-footer svg {
+    position: relative;
+    top: .2em;
+    fill: rgba(0, 0, 0, 0.5);
+}
+
+.isso-postbox {
+    margin: 0 auto 2em;
+}
+.isso-postbox>.form-wrapper {
+    display: block;
+    padding: 0;
+}
+.isso-postbox>.form-wrapper>.auth-section,
+.isso-postbox>.form-wrapper>.auth-section .post-action {
+    display: block;
+}
+.isso-postbox>.form-wrapper .textarea,
+.isso-postbox>.form-wrapper .input-wrapper input {
+    background-color: white;
+    color: black;
+    outline: 0;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+}
+.isso-postbox>.form-wrapper .textarea {
+    min-height: 5em;
+    margin: 0 0 0.5em;
+    padding: 0.3em 0.5em;
+}
+.isso-postbox>.form-wrapper .textarea:focus,
+.isso-postbox>.form-wrapper .input-wrapper input:focus {
+    border-color: green;
+}
+.isso-postbox>.form-wrapper .post-action input {
+    background: silver;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+    line-height: 1.4em;
+    padding: 0.3em 0.5em;
+}
+.isso-postbox>.form-wrapper>.auth-section .input-wrapper {
+    display: inline-block;
+    position: relative;
+    max-width: 25%;
+    margin: 0 0.5em 0 0;
+}
+.isso-postbox>.form-wrapper>.auth-section .input-wrapper input {
+    padding: 0.3em 0.5em;
+    max-width: 100%;
+    line-height: 1.4em;
+}
+.isso-postbox>.form-wrapper>.auth-section .post-action {
+    display: inline-block;
+    float: right;
+    margin: 0;
+}
