@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% import 'release-table.html' as release_table %}
+{% block title %}Releases{% endblock %}
+{% block id %}releases{% endblock %}
+{% block content %}
+
+<h1>Latest releases</h1>
+
+{{ release_table.table(releases) }}
+
+{% endblock %}

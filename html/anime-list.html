@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Anime{% endblock %}
+{% block id %}anime-list{% endblock %}
+{% block content %}
+
+<h1>Subbed anime</h1>
+
+<ul class='anime'>
+    {% for anime_entry in anime_entries %}
+        <li>
+            <a href='{{ anime_entry.url }}'>
+                <div class='cover' style='background-image: url("img/anime/{{ anime_entry.stem }}-small.jpg")'><div></div></div><!--
+                --><br/><!--
+                -->{{ anime_entry.title }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

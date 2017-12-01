@@ -2,6 +2,7 @@
 @import url('comments.css');
 
 body {
+    overflow-y: scroll;
     background: url('img/blue.jpg') fixed;
     background-size: cover;
     color: black;
@@ -19,13 +20,8 @@ main {
 }
 
 #top-header {
-    background-size: cover;
+    margin: 1.5em auto;
     text-align: center;
-}
-#top-header div {
-    padding: 1em;
-    margin: 0 auto;
-    display: inline-block;
 }
 #top-header h1 {
     font-family: 'UnifrakturCook', cursive;
@@ -36,6 +32,9 @@ main {
 #top-header h1 a {
     color: black;
     text-decoration: none;
+}
+#top-nav {
+    margin-top: 1em;
 }
 
 #top-nav ul {
@@ -81,12 +80,6 @@ main {
     color: green;
 }
 
-#body {
-    margin: 2em 0 0 0;
-    /*margin: 0;
-    background: url('img/parchment.jpg') center;
-    border: 1px solid grey;*/
-}
 #body h1 {
     font-size: 16pt;
 }
@@ -168,25 +161,17 @@ table td {
     padding: 0.2em 0.5em;
 }
 
-#releases img {
-    max-width: 70%;
-    max-height: 20em;
-    margin: 0;
-}
-#releases .description {
-    margin-top: 0.5em;
-    font-size: 85%;
-    line-height: 130%;
-}
-#releases table {
-    white-space: nowrap;
+table.releases {
+    font-size: 80%;
     margin-bottom: 3em;
 }
-#releases table .episode,
-#releases table .version {
+table.releases .date,
+table.releases .links {
+    white-space: nowrap;
     text-align: center;
 }
-#releases table .title {
+table.releases .links a+a:before { width: 1px; height: 1.3em; vertical-align: bottom; background: black; margin: 0 0.5em; content: ''; display: inline-block; }
+table.releases .file {
     width: 100%;
 }
 
@@ -224,4 +209,61 @@ figure figcaption {
 img.flag {
     box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.15);
     margin-left: 0.5em;
+}
+
+#home main {
+    text-align: center;
+}
+#home #top-nav,
+#home #attention {
+    display: none;
+}
+#home img {
+    margin: 0 auto;
+    display: inline-block;
+    max-width: 80%;
+}
+
+#anime-list #body a {
+    display: inline-block;
+}
+#anime-list #body ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#anime-list #body li {
+    margin: 0 1em 1em 0;
+    padding: 0;
+    display: inline-block;
+    text-align: center;
+    width: 12em;
+    vertical-align: top;
+}
+#anime-list #body .cover {
+    display: inline-block;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    line-height: 0;
+}
+#anime-list #body .cover>div {
+    display: inline-block;
+    width: 12em;
+    height: 8em;
+    border-top: 5px solid rgba(255, 255, 255, 0.5);
+    border-left: 5px solid rgba(255, 255, 255, 0.5);
+    border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+    border-right: 5px solid rgba(0, 0, 0, 0.5);
+}
+
+#anime-page #body img {
+    max-width: 70%;
+    max-height: 20em;
+    margin: 0;
+}
+#anime-page #body .description {
+    margin-top: 0.5em;
+    font-size: 85%;
+    line-height: 130%;
 }

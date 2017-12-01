@@ -1,16 +1,42 @@
 #!/usr/bin/env python3
 import os
-import typing as t
-import dateutil.parser
 import pathlib
-import yaml
-from jinja2 import Environment, FileSystemLoader
+
+import dateutil.parser
+import json5
+import jinja2
 
 
+ROOT_DIR = pathlib.Path(__file__).parent
 TARGET_DIR = pathlib.Path('public')
 
 
-def _save(path: pathlib.Path, content: bytes):
+class AnimeLoader(jinja2.BaseLoader):
+    source = ''
+
+    def get_source(self, environment, template):
+        if template != 'generated_anime.html':
+            raise jinja2.TemplateNotFound(template)
+        return (AnimeLoader.source, None, lambda: False)
+
+
+class Anime:
+    def __init__(self, title, content, stem, url):
+        self.title = title
+        self.content = content
+        self.stem = stem
+        self.url = url
+
+
+class News:
+    def __init__(self, date, title, content, path):
+        self.date = dateutil.parser.parse(date)
+        self.title = title
+        self.content = content
+        self.path = path
+
+
+def _save(path, content):
     if path.exists():
         old_content = path.read_bytes()
         if old_content == content:
@@ -20,7 +46,7 @@ def _save(path: pathlib.Path, content: bytes):
     path.write_bytes(content)
 
 
-def _copy(source: str):
+def _copy(source):
     source_path = pathlib.Path(source)
     if os.path.isdir(source_path):
         source_paths = [
@@ -34,81 +60,123 @@ def _copy(source: str):
         _save(target_path, source_path.read_bytes())
 
 
-def _render(env: t.Any, template: str, output: str, **kwargs: t.Any) -> None:
+def _get_news():
+    news_dir = ROOT_DIR / 'html' / 'news'
+    for news_path in news_dir.iterdir():
+        with news_path.open('r', encoding='utf-8') as handle:
+            date = handle.readline().strip()
+            title = handle.readline().strip()
+            if handle.readline().strip():
+                raise ValueError(
+                    'Expected empty line in news ' + news_path.name)
+            content = handle.read()
+        yield News(date, title, content, news_path)
+
+
+def _get_releases():
+    return json5.loads(
+        (ROOT_DIR / 'releases.json5').read_text(encoding='utf-8'))
+
+
+def _get_featured_images():
+    return json5.loads(
+        (ROOT_DIR / 'featured.json5').read_text(encoding='utf-8'))
+
+
+def _get_anime():
+    anime_dir = ROOT_DIR / 'html' / 'anime'
+    for anime_path in anime_dir.iterdir():
+        with anime_path.open('r', encoding='utf-8') as handle:
+            title = handle.readline().strip()
+            if handle.readline().strip():
+                raise ValueError(
+                    'Expected empty line in anime entry ' + anime_path.name)
+            content = handle.read()
+
+        yield Anime(
+            title=title,
+            content=content,
+            stem=anime_path.stem,
+            url='anime-' + anime_path.stem + '.html')
+
+
+def _render(env, template, output, **kwargs):
     target_path = TARGET_DIR / output
     target_path.parent.mkdir(parents=True, exist_ok=True)
     new_content = env.get_template(template).render(**kwargs).encode('utf-8')
     _save(target_path, new_content)
 
 
-def _render_news(env: t.Any) -> None:
-    class News:
-        def __init__(
-                self,
-                date: str,
-                title: str,
-                content: str,
-                path: pathlib.Path,
-                url: str) -> None:
-            self.date = dateutil.parser.parse(date)
-            self.title = title
-            self.content = content
-            self.path = path
-            self.url = url
+def _render_home(env):
+    _render(
+        env,
+        template='home.html',
+        output='index.html',
+        featured_images=_get_featured_images())
 
-    news_entries = []
-    news_dir = pathlib.Path(__file__).parent / 'news'
-    for entry in news_dir.iterdir():
-        with entry.open('r', encoding='utf-8') as handle:
-            date = handle.readline().strip()
-            title = handle.readline().strip()
-            if handle.readline().strip():
-                raise ValueError('Expected empty line in news ' + entry.name)
-            content = handle.read()
-        url = 'news-' + entry.stem + '.html'
-        news_entries.append(News(date, title, content, entry, url))
-    news_entries.sort(key=lambda news: news.path, reverse=True)
 
-    for news_entry in news_entries:
+def _render_news(env):
+    _render(
+        env,
+        template='news.html',
+        output='news.html',
+        news_entries=sorted(
+            _get_news(),
+            key=lambda news: news.path,
+            reverse=True))
+
+
+def _render_anime(env):
+    release_entries = list(_get_releases())
+    anime_entries = list(sorted(_get_anime(), key=lambda anime: anime.title))
+
+    for anime_entry in anime_entries:
+        AnimeLoader.source = anime_entry.content
         _render(
             env,
-            template='news-page.html',
-            output=news_entry.url,
-            entry=news_entry,
-            title=news_entry.title)
-
-    _render(env, template='news.html', output='index.html', news=news_entries)
-
-
-def _render_releases(env: t.Any) -> None:
-    releases = []
-    releases_dir = pathlib.Path(__file__).parent / 'releases'
-    for entry in sorted(releases_dir.iterdir()):
-        with entry.open('r', encoding='utf-8') as handle:
-            releases.append(yaml.load(handle))
+            template='anime-page.html',
+            output=anime_entry.url,
+            anime_entry=anime_entry,
+            releases=release_entries)
 
     _render(
         env,
-        template='releases.html',
+        template='anime-list.html',
+        output='anime.html',
+        anime_entries=anime_entries)
+
+
+def _render_releases(env):
+    _render(
+        env,
+        template='release-list.html',
         output='releases.html',
-        releases=releases)
+        releases=sorted(
+            _get_releases(),
+            key=lambda release: release['date'],
+            reverse=True))
 
 
-def _render_about(env: t.Any) -> None:
+def _render_about(env):
     _render(env, template='about.html', output='about.html')
 
 
-def _render_guest_book(env: t.Any) -> None:
+def _render_guest_book(env):
     _render(env, template='guest_book.html', output='guest_book.html')
 
 
-def _render_attention(env: t.Any) -> None:
+def _render_attention(env):
     _render(env, template='attention.html', output='attention.html')
 
 
-def main() -> None:
-    env = Environment(loader=FileSystemLoader('html'))
+def main():
+    env = jinja2.Environment(loader=jinja2.ChoiceLoader([
+        AnimeLoader(),
+        jinja2.FileSystemLoader('html')
+    ]))
+    _render_home(env)
     _render_news(env)
+    _render_anime(env)
     _render_releases(env)
     _render_about(env)
     _render_guest_book(env)

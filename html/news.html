@@ -3,22 +3,19 @@
 {% block id %}news{% endblock %}
 {% block content %}
 
-{% for entry in news %}
+{% for news_entry in news_entries %}
     <div class='news'>
         <div class='date'>
-            {{ entry.date.strftime('%A, %d %b %Y') }}
+            {{ news_entry.date.strftime('%A, %d %b %Y') }}
         </div>
         <div class='title'>
-            <a href='{{ entry.url }}'>{{ entry.title }}</a>
+            <a href='{{ news_entry.url }}'>{{ news_entry.title }}</a>
         </div>
 
-        {{ entry.content }}
+        {{ news_entry.content }}
 
-        <p><a href='{{ entry.url }}#isso-thread'>Comments</a></p>
         <div class='clear'></div>
     </div>
 {% endfor %}
-
-<script data-isso='https://comments.oldcastle.moe/' src='https://comments.oldcastle.moe/js/count.min.js'></script>
 
 {% endblock %}
