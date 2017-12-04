@@ -7,7 +7,7 @@ import dateutil.parser
 import jinja2
 
 
-ROOT_DIR = pathlib.Path(__file__).parent
+ROOT_DIR = pathlib.Path(__file__).parent.parent
 TARGET_DIR = pathlib.Path('public')
 
 

@@ -7,6 +7,7 @@ import json
 import requests
 
 
+ROOT_DIR = Path(__file__).parent.parent
 IGNORE = ['.git']
 
 USER_NAME = 'old-castle-fansubs'
@@ -95,8 +96,8 @@ def main():
     args = parse_args()
     dry_run = args.dry_run
 
-    local_root = Path(__file__).parent / 'public'
-    published_path = Path(__file__).parent / '.publish.json'
+    local_root = ROOT_DIR / 'public'
+    published_path = ROOT_DIR / '.publish.json'
 
     local_files = list(collect_local_files(local_root))
     local_info = get_local_info(local_files)
