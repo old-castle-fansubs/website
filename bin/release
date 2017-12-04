@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+import argparse
+import json
+import re
+from datetime import datetime
+from pathlib import Path
+
+
+ROOT_DIR = Path(__file__).parent.parent
+RELEASES_JSON_PATH = ROOT_DIR / 'releases.json'
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('path', type=Path)
+    parser.add_argument('link', nargs='+')
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args()
+
+    version = int(
+        re.search(
+            '\[[0-9a-f]{4}([0-9a-f])[0-9a-f]{3}\]',
+            args.path.name,
+            re.I)
+        .group(1))
+
+    episode = (
+        re.search(
+            '([0-9]+) \[[0-9a-f]{8}\]',
+            args.path.name,
+            re.I)
+        .group(1))
+
+    releases = json.loads(RELEASES_JSON_PATH.read_text())
+    releases.append({
+        'date': f'{datetime.today():%Y-%m-%d}',
+        'file': args.path.name,
+        'version': version,
+        'episode': episode,
+        'title': '-',
+        'links': args.link,
+    })
+    RELEASES_JSON_PATH.write_text(json.dumps(releases, indent=4))
+
+
+if __name__ == '__main__':
+    main()
