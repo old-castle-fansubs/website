@@ -8,27 +8,27 @@
             </tr>
         </thead>
         <tbody>
-            {% for release in releases %}
-                {% if not filter or filter in release.file %}
-                    <tr>
-                        <td class='date'>{{ release.date }}</td>
-                        <td class='file'>{{ release.file }}</td>
-                        <td class='links'>
-                            {% for link in release.links %}
-                                <a href='{{ link }}'>
-                                    {% if 'nyaa.si' in link %}
-                                        nyaa.si
-                                    {% elif 'anidex' in link %}
-                                        anidex
-                                    {% else %}
-                                        ?
-                                    {% endif %}
-                                </a>
-                            {% endfor %}
-                        </td>
-                    </tr>
-                {% endif %}
-            {% endfor %}
+        {%- for release in releases %}
+        {%- if not filter or filter in release.file %}
+            <tr>
+                <td class='date'>{{ release.date }}</td>
+                <td class='file'>{{ release.file }}</td>
+                <td class='links'>
+                {%- for link in release.links %}
+                    <a href='{{ link }}'>
+                        {%- if 'nyaa.si' in link -%}
+                            nyaa.si
+                        {%- elif 'anidex' in link -%}
+                            anidex
+                        {%- else -%}
+                            ?
+                        {%- endif -%}
+                    </a>
+                {%- endfor %}
+                </td>
+            </tr>
+        {%- endif %}
+        {%- endfor %}
         </tbody>
     </table>
 {% endmacro %}
