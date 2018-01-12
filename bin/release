@@ -27,12 +27,15 @@ def main():
             re.I)
         .group(1))
 
-    episode = (
-        re.search(
-            '([0-9]+) \[[0-9a-f]{8}\]',
-            args.path.name,
-            re.I)
-        .group(1))
+    try:
+        episode = (
+            re.search(
+                '([0-9]+) \[[0-9a-f]{8}\]',
+                args.path.name,
+                re.I)
+            .group(1))
+    except AttributeError:
+        episode = None
 
     releases = json.loads(RELEASES_JSON_PATH.read_text())
     releases.append({
