@@ -4,6 +4,11 @@ import json
 import re
 from datetime import datetime
 from pathlib import Path
+from subprocess import run, PIPE
+
+import pysubs2
+
+from ass_tag_parser import parse_ass
 
 
 ROOT_DIR = Path(__file__).parent.parent
@@ -18,32 +23,80 @@ def parse_args():
     return parser.parse_args()
 
 
-def main():
-    args = parse_args()
+def extract_subtitles(source_path):
+    out = run(['mkvmerge', '-i', source_path], stdout=PIPE).stdout.decode()
+    results = re.search(r'Track ID (\d+): subtitles \(SubStationAlpha\)', out)
+    if not results:
+        raise RuntimeError('No subtiles found in the file')
+    track_id = int(results.group(1))
+    ass = run(
+        [
+            'mkvextract',
+            'tracks',
+            '-r',
+            '/dev/null',
+            source_path,
+            f'{track_id}:/dev/stdout'
+        ],
+        stdout=PIPE).stdout
+    return ass.decode()
 
-    version = int(
+
+def extract_text(ass_string):
+    ret = ''
+    for node in parse_ass(ass_string):
+        if node['type'] == 'text':
+            ret += node['text']
+    return ret.replace('\\N', '\n')
+
+
+def get_version_from_file_name(file_name):
+    return int(
         re.search(
-            '\[[0-9a-f]{4}([0-9a-f])[0-9a-f]{3}\]',
-            args.path.name,
+            r'\[[0-9a-f]{4}([0-9a-f])[0-9a-f]{3}\]',
+            file_name,
             re.I)
         .group(1))
 
+
+def get_episode_from_file_name(file_name):
     try:
-        episode = (
+        return (
             re.search(
-                '([0-9]+) \[[0-9a-f]{8}\]',
-                args.path.name,
+                r'([0-9]+) \[[0-9a-f]{8}\]',
+                file_name,
                 re.I)
             .group(1))
     except AttributeError:
-        episode = None
+        return None
+
+
+def get_title_from_subs(subs):
+    for sub in subs:
+        if sub.name == '[title]':
+            return re.sub(
+                r'[–—]?\s*episode\s+#?\d+\s*[–—:]?\s*',
+                '',
+                extract_text(sub.text),
+                flags=re.I)
+    return None
+
+
+def main():
+    args = parse_args()
+
+    subs = pysubs2.SSAFile.from_string(extract_subtitles(args.path))
+
+    version = get_version_from_file_name(args.path.name)
+    episode = get_episode_from_file_name(args.path.name)
+    title = get_title_from_subs(subs)
 
     release = {
         'date': f'{datetime.today():%Y-%m-%d}',
         'file': args.path.name,
         'version': version,
         'episode': episode,
-        'title': '-',
+        'title': title or '-',
         'links': args.link,
     }
 
