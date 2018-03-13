@@ -105,7 +105,7 @@ def main():
     else:
         releases = json.loads(RELEASES_JSON_PATH.read_text())
         releases.append(release)
-        RELEASES_JSON_PATH.write_text(json.dumps(releases, indent=4))
+        RELEASES_JSON_PATH.write_text(json.dumps(releases, indent=4) + '\n')
 
 
 if __name__ == '__main__':
