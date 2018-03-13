@@ -72,13 +72,25 @@ def get_episode_from_file_name(file_name):
 
 
 def get_title_from_subs(subs):
+    titles = []
+
     for sub in subs:
         if sub.name == '[title]':
-            return re.sub(
+            clean_title = re.sub(
                 r'[–—]?\s*episode\s+#?\d+\s*[–—:]?\s*',
                 '',
                 extract_text(sub.text),
                 flags=re.I)
+            titles.append((extract_text(sub.text), clean_title))
+
+    def sort(item):
+        sub_text, clean_title = item
+        return not re.search(r'\d|episode', sub_text, re.I)
+
+    titles.sort(key=sort)
+
+    if titles:
+        return titles[0][1]
     return None
 
 
