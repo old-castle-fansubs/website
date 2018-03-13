@@ -38,8 +38,7 @@ def main():
 
     shutil.copy(source_path, target_path)
 
-    FEATURED_JSON_PATH.write_text(json.dumps(featured, indent=4))
-
+    FEATURED_JSON_PATH.write_text(json.dumps(featured, indent=4) + '\n')
 
 
 if __name__ == '__main__':
