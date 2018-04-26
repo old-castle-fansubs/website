@@ -9,7 +9,7 @@
         </thead>
         <tbody>
         {%- for release in releases %}
-        {%- if not filter or filter in release.file %}
+        {%- if not release.hidden and (not filter or filter in release.file) %}
             <tr>
                 <td class='date'>{{ release.date }}</td>
                 <td class='file'>{{ release.file }}</td>
