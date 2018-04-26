@@ -4,7 +4,7 @@
             <tr>
                 <th class='date'>Date</th>
                 <th class='file'>File</th>
-                <th class='links'>Links</th>
+                <th class='links' colspan='2'>Links</th>
             </tr>
         </thead>
         <tbody>
@@ -13,17 +13,18 @@
             <tr>
                 <td class='date'>{{ release.date }}</td>
                 <td class='file'>{{ release.file }}</td>
-                <td class='links'>
+                <td class='link nyaa'>
                 {%- for link in release.links %}
-                    <a href='{{ link }}'>
-                        {%- if 'nyaa.si' in link -%}
-                            nyaa.si
-                        {%- elif 'anidex' in link -%}
-                            anidex
-                        {%- else -%}
-                            ?
-                        {%- endif -%}
-                    </a>
+                    {%- if 'nyaa.si' in link -%}
+                        <a href='{{ link }}'>nyaa.si</a>
+                    {%- endif -%}
+                {%- endfor %}
+                </td>
+                <td class='link nyaa'>
+                {%- for link in release.links %}
+                    {%- if 'anidex' in link -%}
+                        <a href='{{ link }}'>anidex</a>
+                    {%- endif -%}
                 {%- endfor %}
                 </td>
             </tr>

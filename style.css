@@ -170,7 +170,6 @@ table.releases .links {
     white-space: nowrap;
     text-align: center;
 }
-table.releases .links a+a:before { width: 1px; height: 1.3em; vertical-align: bottom; background: black; margin: 0 0.5em; content: ''; display: inline-block; }
 table.releases .file {
     width: 100%;
 }
