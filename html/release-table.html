@@ -32,4 +32,41 @@
         {%- endfor %}
         </tbody>
     </table>
+
+    <script>
+    function previousElementSibling(element) {
+        var ret = element.previousSibling;
+        while (ret && ret.nodeType !== 1) {
+            ret = ret.previousSibling;
+        }
+        return ret;
+    }
+
+    function groupLinks(table) {
+        table.querySelectorAll('td.link').forEach(function(elem, i) {
+            var col = Array.prototype.indexOf.call(elem.parentNode.children, elem);
+            var html = elem.innerHTML;
+            var span = 1;
+            var rowAbove = previousElementSibling(elem.parentNode);
+            if (!rowAbove) {
+                return;
+            }
+            var cellAbove = rowAbove.children[col];
+
+            while (cellAbove && cellAbove.innerHTML === html) {
+                span++;
+                cellAboveOld = cellAbove;
+                rowAbove = previousElementSibling(cellAbove.parentNode);
+                cellAbove = rowAbove ? rowAbove.children[col] : null;
+            }
+
+            if (span > 1) {
+                cellAboveOld.setAttribute('rowspan', span);
+                elem.style.display = 'none';
+            }
+        });
+    }
+
+    groupLinks(document.getElementsByTagName('table')[0]);
+    </script>
 {% endmacro %}

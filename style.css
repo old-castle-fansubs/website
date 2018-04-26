@@ -152,9 +152,6 @@ table thead tr {
 table tbody tr {
     background: #EEE;
 }
-table tbody tr:hover {
-    background: #DDDDBB;
-}
 table th,
 table td {
     border: 1px solid silver;
@@ -172,6 +169,12 @@ table.releases .links {
 }
 table.releases .file {
     width: 100%;
+}
+table.releases td.link[rowspan] {
+  background: rgba(0,200,0,0.05);
+}
+table.releases td.link[rowspan]:after {
+    content: '(batch)';
 }
 
 .split {
