@@ -104,7 +104,7 @@ def main():
     title = get_title_from_subs(subs)
 
     release = {
-        'date': f'{datetime.today():%Y-%m-%d}',
+        'date': f'{datetime.today():%Y-%m-%d %H:%M:%S}',
         'file': args.path.name,
         'version': version,
         'episode': episode,
