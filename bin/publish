@@ -62,7 +62,8 @@ def collect_diff(local_info, remote_info):
     files_to_update = set(
         path
         for path in local_paths & remote_paths
-        if local_info[path] != remote_info[path])
+        if local_info[path] != remote_info[path]
+    )
 
     return files_to_create, files_to_update, files_to_delete
 
@@ -74,7 +75,8 @@ def sync_files(base_url, local_root, files_to_upload, files_to_delete):
             if base_url:
                 response = requests.post(
                     f'{base_url}/delete',
-                    params={'filenames[]': str(path.relative_to(local_root))})
+                    params={'filenames[]': str(path.relative_to(local_root))}
+                )
                 response.raise_for_status()
 
     if files_to_upload:

@@ -52,7 +52,8 @@ def _copy(source):
         source_paths = [
             path
             for path in source_path.rglob('*')
-            if path.is_file()]
+            if path.is_file()
+        ]
     else:
         source_paths = [source_path]
     for source_path in source_paths:
@@ -68,17 +69,22 @@ def _get_news():
             title = handle.readline().strip()
             if handle.readline().strip():
                 raise ValueError(
-                    'Expected empty line in news ' + news_path.name)
+                    'Expected empty line in news ' + news_path.name
+                )
             content = handle.read()
         yield News(date, title, content, news_path)
 
 
 def _get_releases():
-    return json.loads((ROOT_DIR / 'releases.json').read_text(encoding='utf-8'))
+    return json.loads(
+        (ROOT_DIR / 'data' / 'releases.json').read_text(encoding='utf-8')
+    )
 
 
 def _get_featured_images():
-    return json.loads((ROOT_DIR / 'featured.json').read_text(encoding='utf-8'))
+    return json.loads(
+        (ROOT_DIR / 'data' / 'featured.json').read_text(encoding='utf-8')
+    )
 
 
 def _get_anime():
@@ -88,14 +94,16 @@ def _get_anime():
             title = handle.readline().strip()
             if handle.readline().strip():
                 raise ValueError(
-                    'Expected empty line in anime entry ' + anime_path.name)
+                    'Expected empty line in anime entry ' + anime_path.name
+                )
             content = handle.read()
 
         yield Anime(
             title=title,
             content=content,
             stem=anime_path.stem,
-            url='anime-' + anime_path.stem + '.html')
+            url='anime-' + anime_path.stem + '.html'
+        )
 
 
 def _render(env, template, output, **kwargs):
@@ -110,7 +118,8 @@ def _render_home(env):
         env,
         template='home.html',
         output='index.html',
-        featured_images=_get_featured_images())
+        featured_images=_get_featured_images()
+    )
 
 
 def _render_news(env):
@@ -121,7 +130,9 @@ def _render_news(env):
         news_entries=sorted(
             _get_news(),
             key=lambda news: news.path,
-            reverse=True))
+            reverse=True
+        )
+    )
 
 
 def _render_anime(env):
@@ -135,13 +146,15 @@ def _render_anime(env):
             template='anime-page.html',
             output=anime_entry.url,
             anime_entry=anime_entry,
-            releases=release_entries)
+            releases=release_entries
+        )
 
     _render(
         env,
         template='anime-list.html',
         output='anime.html',
-        anime_entries=anime_entries)
+        anime_entries=anime_entries
+    )
 
 
 def _render_releases(env):
@@ -152,7 +165,9 @@ def _render_releases(env):
         releases=sorted(
             _get_releases(),
             key=lambda release: release['date'],
-            reverse=True))
+            reverse=True
+        )
+    )
 
 
 def _render_about(env):
@@ -179,8 +194,8 @@ def main():
     _render_about(env)
     _render_guest_book(env)
     _render_attention(env)
-    _copy('style.css')
-    _copy('comments.css')
+    _copy('data/style.css')
+    _copy('data/comments.css')
     _copy('img')
 
 
