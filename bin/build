@@ -43,6 +43,30 @@ class FeaturedImage:
         return TARGET_DIR / self.thumbnail_url
 
 
+class Release:
+    def __init__(
+            self,
+            date,
+            file_name,
+            file_version,
+            episode_number,
+            episode_title,
+            links,
+            is_visible
+    ):
+        self.date = date
+        self.file_name = file_name
+        self.file_version = file_version
+        self.episode_number = episode_number
+        self.episode_title = episode_title
+        self.links = links
+        self.is_visible = is_visible
+
+    @property
+    def is_hidden(self):
+        return not self.is_visible
+
+
 class Anime:
     def __init__(self, title, content, stem, url):
         self.title = title
@@ -99,9 +123,20 @@ def _get_news():
 
 
 def _get_releases():
-    return json.loads(
-        (ROOT_DIR / 'data' / 'releases.json').read_text(encoding='utf-8')
-    )
+    return [
+        Release(
+            date=dateutil.parser.parse(item['date']),
+            file_name=item['file'],
+            file_version=item['version'],
+            episode_number=item['episode'],
+            episode_title=item['title'],
+            links=item['links'],
+            is_visible='hidden' not in item or not item['hidden'],
+        )
+        for item in json.loads(
+            (ROOT_DIR / 'data' / 'releases.json').read_text(encoding='utf-8')
+        )
+    ]
 
 
 def _get_featured_images():
@@ -209,7 +244,7 @@ def _render_releases(env):
         output='releases.html',
         releases=sorted(
             _get_releases(),
-            key=lambda release: release['date'],
+            key=lambda release: release.date,
             reverse=True
         )
     )

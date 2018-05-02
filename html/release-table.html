@@ -9,10 +9,10 @@
         </thead>
         <tbody>
         {%- for release in releases %}
-        {%- if not release.hidden and (not filter or filter in release.file) %}
+        {%- if release.is_visible and (not filter or filter in release.file_name) %}
             <tr>
-                <td class='date'>{{ release.date }}</td>
-                <td class='file'>{{ release.file }}</td>
+                <td class='date'>{{ release.date.strftime('%Y-%m-%d') }}</td>
+                <td class='file'>{{ release.file_name }}</td>
                 <td class='link nyaa'>
                 {%- for link in release.links %}
                     {%- if 'nyaa.si' in link -%}
