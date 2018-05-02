@@ -25,6 +25,10 @@ class FeaturedImage:
         self.date = dateutil.parser.parse(date)
         self.name = name
 
+    @property
+    def url(self):
+        return 'img/featured/' + self.name
+
 
 class Anime:
     def __init__(self, title, content, stem, url):
