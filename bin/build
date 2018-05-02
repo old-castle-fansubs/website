@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 
+import PIL.Image
 import dateutil.parser
 import jinja2
 
@@ -28,6 +29,18 @@ class FeaturedImage:
     @property
     def url(self):
         return 'img/featured/' + self.name
+
+    @property
+    def thumbnail_url(self):
+        return 'img-thumb/featured/' + self.name
+
+    @property
+    def path(self):
+        return TARGET_DIR / self.url
+
+    @property
+    def thumbnail_path(self):
+        return TARGET_DIR / self.thumbnail_url
 
 
 class Anime:
@@ -135,6 +148,25 @@ def _render_home(env):
     )
 
 
+def _render_featured_images(env):
+    featured_images = _get_featured_images()
+
+    for featured_image in featured_images:
+        if featured_image.thumbnail_path.exists():
+            continue
+        image = PIL.Image.open(featured_image.path)
+        image.thumbnail((320, 240))
+        featured_image.thumbnail_path.parent.mkdir(exist_ok=True, parents=True)
+        image.save(featured_image.thumbnail_path, 'JPEG')
+
+    _render(
+        env,
+        template='featured-list.html',
+        output='featured.html',
+        featured_images=featured_images
+    )
+
+
 def _render_news(env):
     _render(
         env,
@@ -201,6 +233,7 @@ def main():
         jinja2.FileSystemLoader('html')
     ]))
     _render_home(env)
+    _render_featured_images(env)
     _render_news(env)
     _render_anime(env)
     _render_releases(env)

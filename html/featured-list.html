@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Previously featured images{% endblock %}
+{% block id %}featured-images{% endblock %}
+{% block content %}
+<h1>Previously featured images</h1>
+
+<ul>
+    {% for featured_image in featured_images %}
+        <li>
+            <a href='{{ featured_image.url }}'>
+                <img src='{{ featured_image.thumbnail_url }}' alt='Featured image from {{ featured_image.date.strftime('%A, %d %b %Y') }}'/>
+                <br/>
+                {{ featured_image.date.strftime('%A, %d %b %Y') }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+<p><a href='index.html'>Back to main page</a></p>
+
+{% endblock %}

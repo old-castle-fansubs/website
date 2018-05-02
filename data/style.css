@@ -213,6 +213,28 @@ img.flag {
     margin-left: 0.5em;
 }
 
+#featured-images #body {
+    text-align: center;
+}
+#featured-images #top-nav,
+#featured-images #attention {
+    display: none;
+}
+#featured-images ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+
+}
+#featured-images li {
+    margin: 0 1em 1em 0;
+    width: calc(33% - 1em);
+}
+#featured-images li img {
+    max-width: 100%;
+}
+
 #home main {
     text-align: center;
 }

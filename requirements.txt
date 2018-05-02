@@ -1,3 +1,4 @@
 py-dateutil
 pysubs2
 jinja2
+Pillow
