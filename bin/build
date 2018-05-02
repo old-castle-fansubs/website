@@ -20,6 +20,12 @@ class AnimeLoader(jinja2.BaseLoader):
         return (AnimeLoader.source, None, lambda: False)
 
 
+class FeaturedImage:
+    def __init__(self, date, name):
+        self.date = dateutil.parser.parse(date)
+        self.name = name
+
+
 class Anime:
     def __init__(self, title, content, stem, url):
         self.title = title
@@ -82,9 +88,12 @@ def _get_releases():
 
 
 def _get_featured_images():
-    return json.loads(
-        (ROOT_DIR / 'data' / 'featured.json').read_text(encoding='utf-8')
-    )
+    return [
+        FeaturedImage(item['date'], item['name'])
+        for item in json.loads(
+            (ROOT_DIR / 'data' / 'featured.json').read_text(encoding='utf-8')
+        )
+    ]
 
 
 def _get_anime():
