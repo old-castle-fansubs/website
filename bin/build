@@ -23,7 +23,7 @@ class AnimeLoader(jinja2.BaseLoader):
 
 class FeaturedImage:
     def __init__(self, date, name):
-        self.date = dateutil.parser.parse(date)
+        self.date = date
         self.name = name
 
     @property
@@ -53,7 +53,7 @@ class Anime:
 
 class News:
     def __init__(self, date, title, content, path):
-        self.date = dateutil.parser.parse(date)
+        self.date = date
         self.title = title
         self.content = content
         self.path = path
@@ -88,7 +88,7 @@ def _get_news():
     news_dir = ROOT_DIR / 'html' / 'news'
     for news_path in news_dir.iterdir():
         with news_path.open('r', encoding='utf-8') as handle:
-            date = handle.readline().strip()
+            date = dateutil.parser.parse(handle.readline().strip())
             title = handle.readline().strip()
             if handle.readline().strip():
                 raise ValueError(
@@ -106,7 +106,7 @@ def _get_releases():
 
 def _get_featured_images():
     return [
-        FeaturedImage(item['date'], item['name'])
+        FeaturedImage(dateutil.parser.parse(item['date']), item['name'])
         for item in json.loads(
             (ROOT_DIR / 'data' / 'featured.json').read_text(encoding='utf-8')
         )
