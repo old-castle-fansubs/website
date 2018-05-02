@@ -3,7 +3,7 @@
 
 body {
     overflow-y: scroll;
-    background: url('img/blue.jpg') fixed;
+    background: url('../img/blue.jpg') fixed;
     background-size: cover;
     color: black;
     font-family: 'Roboto', sans-serif;
@@ -56,7 +56,7 @@ main {
     border-left: 3px solid rgba(190, 190, 190, 0.8);
     border-bottom: 3px solid rgba(0, 0, 0, 0.5);
     border-right: 3px solid rgba(0, 0, 0, 0.5);
-    background: url('img/stone.jpg');
+    background: url('../img/stone.jpg');
     font-family: 'Pirata One', cursive;
     font-size: 20pt;
     line-height: 16pt;
