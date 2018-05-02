@@ -1,0 +1,3 @@
+py-dateutil
+pysubs2
+jinja2
