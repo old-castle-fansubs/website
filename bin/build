@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-import os
-import pathlib
 import json
+import os
+from pathlib import Path
 
 import dateutil.parser
 import jinja2
 
 
-ROOT_DIR = pathlib.Path(__file__).parent.parent
-TARGET_DIR = pathlib.Path('public')
+ROOT_DIR = Path(__file__).parent.parent
+TARGET_DIR = Path('public')
 
 
 class AnimeLoader(jinja2.BaseLoader):
@@ -47,7 +47,7 @@ def _save(path, content):
 
 
 def _copy(source):
-    source_path = pathlib.Path(source)
+    source_path = Path(source)
     if os.path.isdir(source_path):
         source_paths = [
             path
