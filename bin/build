@@ -74,11 +74,21 @@ class Release:
 
 
 class Anime:
-    def __init__(self, title: str, content: str, stem: str, url: str) -> None:
+    def __init__(
+            self,
+            title: str,
+            content: str,
+            stem: str,
+            is_finished: bool
+    ) -> None:
         self.title = title
         self.content = content
         self.stem = stem
-        self.url = url
+        self.is_finished = is_finished
+
+    @property
+    def url(self):
+        return 'anime-' + self.stem + '.html'
 
 
 class News:
@@ -165,9 +175,14 @@ def _get_anime() -> T.Iterable[Anime]:
     for anime_path in anime_dir.iterdir():
         with anime_path.open('r', encoding='utf-8') as handle:
             title = handle.readline().strip()
+            status = handle.readline().strip()
+            if status not in ('finished', 'ongoing'):
+                raise ValueError(
+                    f'Unknown status "{status}" in anime entry "{anime_path}"'
+                )
             if handle.readline().strip():
                 raise ValueError(
-                    'Expected empty line in anime entry ' + anime_path.name
+                    f'Expected empty line in anime entry "{anime_path}"'
                 )
             content = handle.read()
 
@@ -175,7 +190,7 @@ def _get_anime() -> T.Iterable[Anime]:
             title=title,
             content=content,
             stem=anime_path.stem,
-            url='anime-' + anime_path.stem + '.html'
+            is_finished=status == 'finished'
         )
 
 

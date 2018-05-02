@@ -253,7 +253,7 @@ img.flag {
 }
 #anime-list #body ul {
     list-style-type: none;
-    margin: 0;
+    margin: 1em 0 2em 0;
     padding: 0;
 }
 #anime-list #body li {
