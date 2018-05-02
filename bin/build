@@ -42,7 +42,7 @@ class FeaturedImage:
 
     @property
     def path(self) -> Path:
-        return TARGET_DIR / self.url
+        return ROOT_DIR / self.url
 
     @property
     def thumbnail_path(self) -> Path:
