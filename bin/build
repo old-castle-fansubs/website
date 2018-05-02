@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import json
 import os
+import typing as T
+from datetime import datetime
 from pathlib import Path
 
 import PIL.Image
@@ -15,45 +17,49 @@ TARGET_DIR = Path('public')
 class AnimeLoader(jinja2.BaseLoader):
     source = ''
 
-    def get_source(self, environment, template):
+    def get_source(
+            self,
+            environment: jinja2.Environment,
+            template: str
+    ) -> T.Any:
         if template != 'generated_anime.html':
             raise jinja2.TemplateNotFound(template)
         return (AnimeLoader.source, None, lambda: False)
 
 
 class FeaturedImage:
-    def __init__(self, date, name):
+    def __init__(self, date: datetime, name: str) -> None:
         self.date = date
         self.name = name
 
     @property
-    def url(self):
+    def url(self) -> str:
         return 'img/featured/' + self.name
 
     @property
-    def thumbnail_url(self):
+    def thumbnail_url(self) -> str:
         return 'img-thumb/featured/' + self.name
 
     @property
-    def path(self):
+    def path(self) -> Path:
         return TARGET_DIR / self.url
 
     @property
-    def thumbnail_path(self):
+    def thumbnail_path(self) -> Path:
         return TARGET_DIR / self.thumbnail_url
 
 
 class Release:
     def __init__(
             self,
-            date,
-            file_name,
-            file_version,
-            episode_number,
-            episode_title,
-            links,
-            is_visible
-    ):
+            date: datetime,
+            file_name: str,
+            file_version: int,
+            episode_number: str,
+            episode_title: str,
+            links: T.List[str],
+            is_visible: bool
+    ) -> None:
         self.date = date
         self.file_name = file_name
         self.file_version = file_version
@@ -63,12 +69,12 @@ class Release:
         self.is_visible = is_visible
 
     @property
-    def is_hidden(self):
+    def is_hidden(self) -> bool:
         return not self.is_visible
 
 
 class Anime:
-    def __init__(self, title, content, stem, url):
+    def __init__(self, title: str, content: str, stem: str, url: str) -> None:
         self.title = title
         self.content = content
         self.stem = stem
@@ -76,14 +82,20 @@ class Anime:
 
 
 class News:
-    def __init__(self, date, title, content, path):
+    def __init__(
+            self,
+            date: datetime,
+            title: str,
+            content: str,
+            path: Path
+    ) -> None:
         self.date = date
         self.title = title
         self.content = content
         self.path = path
 
 
-def _save(path, content):
+def _save(path: Path, content: bytes) -> None:
     if path.exists():
         old_content = path.read_bytes()
         if old_content == content:
@@ -93,7 +105,7 @@ def _save(path, content):
     path.write_bytes(content)
 
 
-def _copy(source):
+def _copy(source: T.Union[str, Path]) -> None:
     source_path = Path(source)
     if os.path.isdir(source_path):
         source_paths = [
@@ -108,7 +120,7 @@ def _copy(source):
         _save(target_path, source_path.read_bytes())
 
 
-def _get_news():
+def _get_news() -> T.Iterable[News]:
     news_dir = ROOT_DIR / 'html' / 'news'
     for news_path in news_dir.iterdir():
         with news_path.open('r', encoding='utf-8') as handle:
@@ -122,7 +134,7 @@ def _get_news():
         yield News(date, title, content, news_path)
 
 
-def _get_releases():
+def _get_releases() -> T.Iterable[Release]:
     return [
         Release(
             date=dateutil.parser.parse(item['date']),
@@ -139,7 +151,7 @@ def _get_releases():
     ]
 
 
-def _get_featured_images():
+def _get_featured_images() -> T.Iterable[FeaturedImage]:
     return [
         FeaturedImage(dateutil.parser.parse(item['date']), item['name'])
         for item in json.loads(
@@ -148,7 +160,7 @@ def _get_featured_images():
     ]
 
 
-def _get_anime():
+def _get_anime() -> T.Iterable[Anime]:
     anime_dir = ROOT_DIR / 'html' / 'anime'
     for anime_path in anime_dir.iterdir():
         with anime_path.open('r', encoding='utf-8') as handle:
@@ -167,14 +179,19 @@ def _get_anime():
         )
 
 
-def _render(env, template, output, **kwargs):
+def _render(
+        env: jinja2.Environment,
+        template: str,
+        output: str,
+        **kwargs: T.Any
+) -> None:
     target_path = TARGET_DIR / output
     target_path.parent.mkdir(parents=True, exist_ok=True)
     new_content = env.get_template(template).render(**kwargs).encode('utf-8')
     _save(target_path, new_content)
 
 
-def _render_home(env):
+def _render_home(env: jinja2.Environment) -> None:
     _render(
         env,
         template='home.html',
@@ -183,7 +200,7 @@ def _render_home(env):
     )
 
 
-def _render_featured_images(env):
+def _render_featured_images(env: jinja2.Environment) -> None:
     featured_images = _get_featured_images()
 
     for featured_image in featured_images:
@@ -202,7 +219,7 @@ def _render_featured_images(env):
     )
 
 
-def _render_news(env):
+def _render_news(env: jinja2.Environment) -> None:
     _render(
         env,
         template='news.html',
@@ -215,7 +232,7 @@ def _render_news(env):
     )
 
 
-def _render_anime(env):
+def _render_anime(env: jinja2.Environment) -> None:
     release_entries = list(_get_releases())
     anime_entries = list(sorted(_get_anime(), key=lambda anime: anime.title))
 
@@ -237,7 +254,7 @@ def _render_anime(env):
     )
 
 
-def _render_releases(env):
+def _render_releases(env: jinja2.Environment) -> None:
     _render(
         env,
         template='release-list.html',
@@ -250,19 +267,19 @@ def _render_releases(env):
     )
 
 
-def _render_about(env):
+def _render_about(env: jinja2.Environment) -> None:
     _render(env, template='about.html', output='about.html')
 
 
-def _render_guest_book(env):
+def _render_guest_book(env: jinja2.Environment) -> None:
     _render(env, template='guest_book.html', output='guest_book.html')
 
 
-def _render_attention(env):
+def _render_attention(env: jinja2.Environment) -> None:
     _render(env, template='attention.html', output='attention.html')
 
 
-def main():
+def main() -> None:
     env = jinja2.Environment(loader=jinja2.ChoiceLoader([
         AnimeLoader(),
         jinja2.FileSystemLoader('html')
