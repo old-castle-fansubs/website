@@ -3,12 +3,12 @@
 {% block id %}anime-page{% endblock %}
 {% block content %}
 
-<div class='anime'>
-    <h1>{{ anime_entry.title }}</h1>
-
+<header>
     <img src='img/anime/{{ anime_entry.stem }}-big.jpg' alt='{{ anime_entry.title }}'/>
 
-    {% include 'generated_anime.html' %}
-</div>
+    <h1>{{ anime_entry.title }}</h1>
+</header>
+
+{% include 'generated_anime.html' %}
 
 {% endblock %}

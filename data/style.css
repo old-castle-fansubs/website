@@ -247,6 +247,9 @@ img.flag {
     max-width: 80%;
 }
 
+#anime-list #body {
+    text-align: center;
+}
 #anime-list #body a {
     display: inline-block;
 }
@@ -280,6 +283,9 @@ img.flag {
     border-right: 5px solid rgba(0, 0, 0, 0.5);
 }
 
+#anime-page header {
+    text-align: center;
+}
 #anime-page #body img {
     max-width: 70%;
     max-height: 20em;
