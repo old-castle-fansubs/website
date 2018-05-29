@@ -1206,7 +1206,8 @@
         "links": [
             "https://nyaa.si/view/1039952",
             "https://anidex.info/torrent/148347"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-05-29 20:09:20",
@@ -1217,6 +1218,28 @@
         "links": [
             "https://nyaa.si/view/1042175",
             "https://anidex.info/torrent/150497"
+        ]
+    },
+    {
+        "date": "2018-05-29 22:05:26",
+        "file": "[OldCastle] Glass Mask - 01 [B0962001].mkv",
+        "version": 2,
+        "episode": "01",
+        "title": "A Spring Storm",
+        "links": [
+            "https://nyaa.si/view/1042209",
+            "https://anidex.info/torrent/150522"
+        ]
+    },
+    {
+        "date": "2018-05-29 22:13:53",
+        "file": "[OldCastle] Glass Mask - 02 [7F5A1002].mkv",
+        "version": 1,
+        "episode": "02",
+        "title": "Mr. Purple Rose",
+        "links": [
+            "https://nyaa.si/view/1042214",
+            "https://anidex.info/torrent/150523"
         ]
     },
     {
