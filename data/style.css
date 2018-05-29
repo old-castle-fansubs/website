@@ -214,6 +214,13 @@ figure figcaption {
 
 img.flag {
     box-shadow: 0 0 3px 2px rgba(0, 0, 0, 0.15);
+    width: 24px;
+    height: 18px;
+    vertical-align: bottom;
+}
+
+#about td.flag {
+    padding-right: 0;
 }
 
 #featured-images #body {
