@@ -106,6 +106,7 @@ main {
     line-height: 18pt;
     text-align: center;
     overflow: hidden;
+    margin-bottom: 0.5em;
 }
 .news .title a {
     display: inline-block;
