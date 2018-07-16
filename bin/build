@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import os
+import subprocess
 import typing as T
 from datetime import datetime
 from pathlib import Path
@@ -222,10 +223,21 @@ def _render_featured_images(env: jinja2.Environment) -> None:
     for featured_image in featured_images:
         if featured_image.thumbnail_path.exists():
             continue
-        image = PIL.Image.open(featured_image.path)
-        image.thumbnail((320, 240))
+
         featured_image.thumbnail_path.parent.mkdir(exist_ok=True, parents=True)
-        image.save(featured_image.thumbnail_path, 'JPEG')
+
+        try:
+            image = PIL.Image.open(featured_image.path)
+            image.thumbnail((320, 240))
+            image.save(featured_image.thumbnail_path, 'JPEG')
+        except OSError:
+            subprocess.run([
+                'ffmpeg',
+                '-i', str(featured_image.path),
+                '-vframes', '1',
+                '-s', '320x240',
+                str(featured_image.thumbnail_path)
+            ])
 
     _render(
         env,
