@@ -38,7 +38,8 @@ class FeaturedImage:
 
     @property
     def thumbnail_url(self) -> str:
-        return 'img-thumb/featured/' + self.name
+        stem, suffix = os.path.splitext(self.name)
+        return 'img-thumb/featured/' + stem.rstrip('.') + '.jpg'
 
     @property
     def path(self) -> Path:
