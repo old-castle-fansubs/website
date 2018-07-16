@@ -32,8 +32,9 @@ def main():
     if today_entry:
         target_path = IMAGES_DIR / today_entry['name']
     else:
-        target_path = IMAGES_DIR / '{:04d}.jpg'.format(
-            max(int(entry['name'][0:4]) for entry in featured) + 1
+        target_path = IMAGES_DIR / '{:04d}.{}'.format(
+            max(int(entry['name'][0:4]) for entry in featured) + 1,
+            source_path.suffix.lstrip('.')
         )
         featured.insert(0, {'date': today, 'name': target_path.name})
 
