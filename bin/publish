@@ -14,7 +14,7 @@ IGNORE = ['.git']
 USER_NAME = 'old-castle-fansubs'
 ALLOWED_FILETYPES = [
     '.html', '.htm',
-    '.jpg', '.png', '.gif', '.svg', '.ico',
+    '.jpg', '.png', '.webm', '.gif', '.svg', '.ico',
     '.js', '.css',
     '.txt', '.ass',
 ]
