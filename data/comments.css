@@ -40,11 +40,10 @@
     box-sizing: border-box;
     margin: 0.15em 0.75em 0 0;
 }
-.isso-comment>.avatar>svg,
-.isso-postbox>.avatar>svg {
+.isso-comment>.avatar img,
+.isso-postbox>.avatar img {
     max-width: 48px;
     max-height: 48px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 .isso-comment>.text-wrapper {
     display: block;
