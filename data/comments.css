@@ -45,7 +45,7 @@
     max-width: 48px;
     max-height: 48px;
 }
-.isso-comment>.text-wrapper {
+#isso-root .isso-comment>.text-wrapper {
     display: block;
     float: left;
     width: 90%;
