@@ -2,26 +2,21 @@
     display: flex;
     flex-direction: column-reverse;
 }
-#isso-thread * {
-    box-sizing: border-box;
-}
 
 #isso-thread {
     padding: 0;
     margin: 0;
 }
-
-.isso-comment {
+#isso-root .isso-comment {
+    display: flex;
     width: 100%;
-    margin-bottom: 1em;
+    margin-top: 0.75em;
+    padding-top: 0.75em;
 }
-.isso-comment:not(:first-of-type):after {
-    clear: both;
-    display: block;
-    content: '';
-    width: 100%;
-    height: 5px;
-    background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAIklEQVQYV2NkwAQNjGhiDUA+iiBYAKQIphIuABNEEQAJAgDOJASGVcZrrgAAAABJRU5ErkJggg==');
+#isso-root>.isso-comment:not(:last-of-type),
+#isso-root .isso-follow-up .isso-comment {
+    border-top: 5px solid transparent;
+    border-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAFUlEQVR4AWMgEjigC4xqpAUYBaMAALsAAUGk8YXgAAAAAElFTkSuQmCC') 5 round;
 }
 
 .isso-comment a {
@@ -34,9 +29,6 @@
 
 .isso-comment>.avatar,
 .isso-postbox>.avatar {
-    display: block;
-    float: left;
-    width: 7%;
     box-sizing: border-box;
     margin: 0.15em 0.75em 0 0;
 }
@@ -44,15 +36,6 @@
 .isso-postbox>.avatar img {
     max-width: 48px;
     max-height: 48px;
-}
-#isso-root .isso-comment {
-    display: flex;
-}
-#isso-root .isso-comment>.text-wrapper {
-    margin-bottom: 1em;
-}
-.isso-comment .isso-follow-up {
-    padding-left: calc(7% + 20px);
 }
 
 .isso-comment>.text-wrapper>.isso-comment-header {
@@ -116,14 +99,13 @@
 .isso-comment-footer a {
     text-decoration: none;
     position: relative;
-    top: .2em;
 }
 .isso-comment-footer a+a {
     padding-left: 1em;
 }
 .isso-comment-footer .votes {
-    vertical-align: middle;
     color: rgba(0, 0, 0, 0.5);
+    padding-right: 0.5em;
 }
 .isso-comment.isso-no-votes .isso-comment-footer .votes {
     display: none;
