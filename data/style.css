@@ -248,7 +248,7 @@ img.flag {
 #home #attention {
     display: none;
 }
-#home img {
+#home img, video {
     margin: 0 auto;
     display: inline-block;
     max-width: 80%;
