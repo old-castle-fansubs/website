@@ -12,7 +12,11 @@
         {%- if release.is_visible and (not filter or filter in release.file_name) %}
             <tr>
                 <td class='date'>{{ release.date.strftime('%Y-%m-%d') }}</td>
-                <td class='file'>{{ release.file_name }}</td>
+                <td class='file'>{{ release.file_name }}
+                    {%- if release.file_version > 1 %}
+                        (v{{ release.file_version }})
+                    {%- endif -%}
+                </td>
                 <td class='link nyaa'>
                 {%- for link in release.links %}
                     {%- if 'nyaa.si' in link -%}
