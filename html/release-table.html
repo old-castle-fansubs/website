@@ -9,7 +9,7 @@
         </thead>
         <tbody>
         {%- for release in releases %}
-        {%- if release.is_visible and (not filter or filter in release.file_name) %}
+        {%- if release.is_visible and (not filter or filter.lower() in release.file_name.lower()) %}
             <tr>
                 <td class='date'>{{ release.date.strftime('%Y-%m-%d') }}</td>
                 <td class='file'>{{ release.file_name }}
