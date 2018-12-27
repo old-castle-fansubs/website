@@ -97,44 +97,18 @@ main {
     margin-bottom: 0.5em;
 }
 
-.news {
-    margin-bottom: 4em;
-}
-.news .title {
-    font-family: 'New Rocker';
-    font-size: 18pt;
-    line-height: 18pt;
+.fancy-title {
     text-align: center;
-    overflow: hidden;
-    margin-bottom: 0.5em;
 }
-.news .title a {
-    display: inline-block;
-    position: relative;
-    text-decoration: none;
-    color: black;
-}
-.news .title a:before,
-.news .title a:after {
-    content: "";
-    position: absolute;
-    height: 5px;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    top: calc(50% - (5px + 2px) / 2);
-    width: 600px;
-}
-.news .title a:before {
-    right: 100%;
-    margin-right: 15px;
-}
-.news .title a:after {
-    left: 100%;
-    margin-left: 15px;
+
+.news {
+    margin: 2em 0;
 }
 .news .date {
     font-size: 10pt;
     text-align: center;
+    margin-bottom: 1em;
+    margin-top: -0.75em;
     color: rgba(0, 0, 0, 0.5);
 }
 
@@ -143,23 +117,27 @@ main {
     max-width: 100%;
 }
 
-table {
-    border-collapse: collapse;
+hr {
     width: 100%;
+    height: 1px;
+    background: black;
+    border: 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
 }
 table th,
 table td {
     padding: 0.2em 0.5em;
 }
 table.fancy thead tr {
-    background: #CCC;
-}
-table.fancy tbody tr {
-    background: #EEE;
+    background: rgba(0,0,0,0.2);
 }
 table.fancy th,
 table.fancy td {
-    border: 1px solid silver;
+    border: 1px solid black;
 }
 
 table.releases {
@@ -175,7 +153,7 @@ table.releases .file {
     width: 100%;
 }
 table.releases td.link[rowspan] {
-  background: rgba(0,200,0,0.05);
+  background: rgba(0,200,0,0.2);
 }
 table.releases td.link[rowspan]:after {
     content: '(batch)';
@@ -223,22 +201,26 @@ img.flag {
     padding-right: 0;
 }
 
-#featured-images #body {
+#featured-images table tr:first-of-type td {
+    padding-top: 0;
+}
+#featured-images table tr:last-of-type td {
+    padding-top: 0;
+}
+#featured-images table td:first-child {
+    padding-left: 0;
+}
+#featured-images table td:last-child {
+    padding-right: 0;
+}
+#featured-images table td {
     text-align: center;
+    width: 33%;
+    padding: 0.5em;
 }
-#featured-images #body ul {
-    list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-
-}
-#featured-images #body li {
-    margin: 0 1em 1em 0;
-    width: calc(33% - 1em);
-}
-#featured-images #body li img {
+#featured-images table td img {
     max-width: 100%;
+    margin: 0;
 }
 
 #home main {
@@ -254,18 +236,18 @@ img.flag {
     max-width: 80%;
 }
 
-#anime-list #body {
+#projects #body {
     text-align: center;
 }
-#anime-list #body a {
+#projects #body a {
     display: inline-block;
 }
-#anime-list #body ul {
+#projects #body ul {
     list-style-type: none;
     margin: 1em 0 2em 0;
     padding: 0;
 }
-#anime-list #body li {
+#projects #body li {
     margin: 0 1em 1em 0;
     padding: 0;
     display: inline-block;
@@ -273,14 +255,14 @@ img.flag {
     width: 12em;
     vertical-align: top;
 }
-#anime-list #body .cover {
+#projects #body .cover {
     display: inline-block;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     line-height: 0;
 }
-#anime-list #body .cover>div {
+#projects #body .cover>div {
     display: inline-block;
     width: 12em;
     height: 8em;
@@ -290,15 +272,15 @@ img.flag {
     border-right: 5px solid rgba(0, 0, 0, 0.5);
 }
 
-#anime-page header {
+#project header {
     text-align: center;
 }
-#anime-page #body img {
+#project #body img {
     max-width: 70%;
     max-height: 20em;
     margin: 0;
 }
-#anime-page #body .description {
+#project #body .description {
     margin-top: 0.5em;
     font-size: 85%;
     line-height: 130%;

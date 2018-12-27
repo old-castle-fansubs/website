@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+{% block id %}projects{% endblock %}
+{% block content %}
+
+<h1 class='fancy-title'><span>Ongoing projects</span></h1>
+
+<ul class='anime'>
+    {% for project in projects %}
+        {% if not project.is_finished %}
+            <li>
+                <a href='{{ project.url }}'>
+                    <div class='cover' style='background-image: url("img/anime/{{ project.stem }}-small.jpg")'><div></div></div><!--
+                    --><br/><!--
+                    -->{{ project.title }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+<h1 class='fancy-title'><span>Finished projects</span></h1>
+
+<ul class='anime'>
+    {% for project in projects %}
+        {% if project.is_finished %}
+            <li>
+                <a href='{{ project.url }}'>
+                    <div class='cover' style='background-image: url("img/anime/{{ project.stem }}-small.jpg")'><div></div></div><!--
+                    --><br/><!--
+                    -->{{ project.title }}
+                </a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
+
+{% endblock %}

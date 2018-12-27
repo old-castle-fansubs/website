@@ -15,7 +15,7 @@ ROOT_DIR = Path(__file__).parent.parent
 TARGET_DIR = Path('public')
 
 
-class AnimeLoader(jinja2.BaseLoader):
+class ProjectLoader(jinja2.BaseLoader):
     source = ''
 
     def get_source(
@@ -23,9 +23,9 @@ class AnimeLoader(jinja2.BaseLoader):
             environment: jinja2.Environment,
             template: str
     ) -> T.Any:
-        if template != 'generated_anime.html':
+        if template != 'generated_project.html':
             raise jinja2.TemplateNotFound(template)
-        return (AnimeLoader.source, None, lambda: False)
+        return (ProjectLoader.source, None, lambda: False)
 
 
 class FeaturedImage:
@@ -75,7 +75,7 @@ class Release:
         return not self.is_visible
 
 
-class Anime:
+class Project:
     def __init__(
             self,
             title: str,
@@ -90,7 +90,7 @@ class Anime:
 
     @property
     def url(self):
-        return 'anime-' + self.stem + '.html'
+        return 'project-' + self.stem + '.html'
 
 
 class News:
@@ -172,26 +172,26 @@ def _get_featured_images() -> T.Iterable[FeaturedImage]:
     ]
 
 
-def _get_anime() -> T.Iterable[Anime]:
-    anime_dir = ROOT_DIR / 'html' / 'anime'
-    for anime_path in anime_dir.iterdir():
-        with anime_path.open('r', encoding='utf-8') as handle:
+def _get_projects() -> T.Iterable[Project]:
+    projects_dir = ROOT_DIR / 'html' / 'projects'
+    for path in projects_dir.iterdir():
+        with path.open('r', encoding='utf-8') as handle:
             title = handle.readline().strip()
             status = handle.readline().strip()
             if status not in ('finished', 'ongoing'):
                 raise ValueError(
-                    f'Unknown status "{status}" in anime entry "{anime_path}"'
+                    f'Unknown status "{status}" in project "{path}"'
                 )
             if handle.readline().strip():
                 raise ValueError(
-                    f'Expected empty line in anime entry "{anime_path}"'
+                    f'Expected empty line in project "{path}"'
                 )
             content = handle.read()
 
-        yield Anime(
+        yield Project(
             title=title,
             content=content,
-            stem=anime_path.stem,
+            stem=path.stem,
             is_finished=status == 'finished'
         )
 
@@ -241,7 +241,7 @@ def _render_featured_images(env: jinja2.Environment) -> None:
 
     _render(
         env,
-        template='featured-list.html',
+        template='featured.html',
         output='featured.html',
         featured_images=featured_images
     )
@@ -260,38 +260,25 @@ def _render_news(env: jinja2.Environment) -> None:
     )
 
 
-def _render_anime(env: jinja2.Environment) -> None:
+def _render_projects(env: jinja2.Environment) -> None:
     release_entries = list(_get_releases())
-    anime_entries = list(sorted(_get_anime(), key=lambda anime: anime.title))
+    projects = list(sorted(_get_projects(), key=lambda project: project.title))
 
-    for anime_entry in anime_entries:
-        AnimeLoader.source = anime_entry.content
+    for project in projects:
+        ProjectLoader.source = project.content
         _render(
             env,
-            template='anime-page.html',
-            output=anime_entry.url,
-            anime_entry=anime_entry,
+            template='project.html',
+            output=project.url,
+            project=project,
             releases=release_entries
         )
 
     _render(
         env,
-        template='anime-list.html',
-        output='anime.html',
-        anime_entries=anime_entries
-    )
-
-
-def _render_releases(env: jinja2.Environment) -> None:
-    _render(
-        env,
-        template='release-list.html',
-        output='releases.html',
-        releases=sorted(
-            _get_releases(),
-            key=lambda release: release.date,
-            reverse=True
-        )
+        template='projects.html',
+        output='projects.html',
+        projects=projects
     )
 
 
@@ -309,14 +296,13 @@ def _render_attention(env: jinja2.Environment) -> None:
 
 def main() -> None:
     env = jinja2.Environment(loader=jinja2.ChoiceLoader([
-        AnimeLoader(),
+        ProjectLoader(),
         jinja2.FileSystemLoader('html')
     ]))
     _render_home(env)
     _render_featured_images(env)
     _render_news(env)
-    _render_anime(env)
-    _render_releases(env)
+    _render_projects(env)
     _render_about(env)
     _render_guest_book(env)
     _render_attention(env)

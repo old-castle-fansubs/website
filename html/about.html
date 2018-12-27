@@ -2,25 +2,20 @@
 {% block title %}About{% endblock %}
 {% block id %}about{% endblock %}
 {% block content %}
-<h1>About us</h1>
 
-<p>Founded in 2017 for the purpose of subbing "Attack no. 1", the group is only
-starting out. After we finish our first series, in the future we might possibly
-sub others. Our focus is on the series that have slight chances of being picked
-up by other groups. We favor quality over speed.</p>
+<h1 class='fancy-title'><span>About us</span></h1>
+
+<p>The group was founded in 2017 for the purpose of subbing "Attack No. 1".
+Our focus is on series that have slight chances of being picked up by other
+groups, especially older stuff. We favor quality over speed.</p>
 
 <h2>Members</h2>
 
 <table>
     <tr>
-        <td class='flag'><img class='flag'  src='img/icon_pl.svg' alt='Poland'/></td>
+        <td class='flag'><img class='flag' src='img/icon_pl.svg' alt='Poland'/></td>
         <td><strong>rr-</strong></td>
         <td>translation, timing, typesetting, karaoke, muxing, website</td>
-    </tr>
-    <tr>
-        <td class='flag'><img class='flag' src='img/icon_pl.svg' alt='Poland'/></td>
-        <td><strong>kropiciel</strong></td>
-        <td>Japanese translation assistance</td>
     </tr>
     <tr>
         <td class='flag'><img class='flag' src='img/icon_us.svg' alt='United States'/></td>
@@ -32,13 +27,12 @@ up by other groups. We favor quality over speed.</p>
         <td><strong>Greg</strong></td>
         <td>English editor, quality checking</td>
     </tr>
+    <tr>
+        <td class='flag'><img class='flag' src='img/icon_pl.svg' alt='Poland'/></td>
+        <td><strong>kropiciel</strong></td>
+        <td>Japanese translation assistance</td>
+    </tr>
 </table>
-
-<h2>Trivia</h2>
-
-<p>Our releases should hash to checksums in form of <code>XXXXYZZZ</code>,
-where <code>XXXX</code> is magic content hash, <code>Y</code> is release
-version and <code>ZZZ</code> is the episode number.</p>
 
 <h2>Contact</h2>
 
@@ -47,6 +41,10 @@ You can also reach us via e-mail: contact@oldcastle.moe.</p>
 
 <h2>Bonus</h2>
 
-<p><a href='featured.html'>Previously featured images</a></p>
+<p>Our releases should hash to checksums in form of <code>XXXXYZZZ</code>,
+where <code>XXXX</code> is magic content hash, <code>Y</code> is release
+version and <code>ZZZ</code> is the episode number.</p>
+
+<p>Also, <a href='featured.html'>here</a> you can see previous featured images.</p>
 
 {% endblock %}

@@ -3,18 +3,16 @@
 {% block id %}news{% endblock %}
 {% block content %}
 
+<h1 class='fancy-title'><span>News</span></h1>
+
 {% for news_entry in news_entries %}
     <div class='news'>
-        <div class='date'>
-            {{ news_entry.date.strftime('%A, %d %b %Y') }}
-        </div>
-        <div class='title'>
-            <a href='{{ news_entry.url }}'>{{ news_entry.title }}</a>
-        </div>
+        <h2 class='fancy-title'><span>{{ news_entry.title }}</span></h2>
+        <div class='date'>{{ news_entry.date.strftime('%A, %d %b %Y') }}</div>
 
         {{ news_entry.content }}
 
-        <div class='clear'></div>
+        <hr class='clear'/>
     </div>
 {% endfor %}
 
