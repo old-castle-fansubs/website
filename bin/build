@@ -98,6 +98,7 @@ class News:
             self,
             date: datetime,
             title: str,
+            author: str,
             content: str,
             path: Path
     ) -> None:
@@ -105,6 +106,7 @@ class News:
         self.title = title
         self.content = content
         self.path = path
+        self.author = author
 
 
 def _save(path: Path, content: bytes) -> None:
@@ -138,12 +140,13 @@ def _get_news() -> T.Iterable[News]:
         with news_path.open('r', encoding='utf-8') as handle:
             date = dateutil.parser.parse(handle.readline().strip())
             title = handle.readline().strip()
+            author = handle.readline().strip()
             if handle.readline().strip():
                 raise ValueError(
                     'Expected empty line in news ' + news_path.name
                 )
             content = handle.read()
-        yield News(date, title, content, news_path)
+        yield News(date, title, author, content, news_path)
 
 
 def _get_releases() -> T.Iterable[Release]:
