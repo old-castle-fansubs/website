@@ -8,7 +8,7 @@ from subprocess import run, PIPE
 
 import pysubs2
 
-from ass_tag_parser import parse_ass
+import ass_tag_parser
 
 
 ROOT_DIR = Path(__file__).parent.parent
@@ -45,9 +45,9 @@ def extract_subtitles(source_path):
 
 def extract_text(ass_string):
     ret = ''
-    for node in parse_ass(ass_string):
-        if node['type'] == 'text':
-            ret += node['text']
+    for ass_item in ass_tag_parser.parse_ass(ass_string):
+        if isinstance(ass_item, ass_tag_parser.AssText):
+            ret += ass_item.text
     return ret.replace('\\N', '\n')
 
 
