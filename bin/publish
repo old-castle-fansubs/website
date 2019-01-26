@@ -8,14 +8,22 @@ from pathlib import Path
 import requests
 
 ROOT_DIR = Path(__file__).parent.parent
-IGNORE = ['.git']
+IGNORE = [".git"]
 
-USER_NAME = 'old-castle-fansubs'
+USER_NAME = "old-castle-fansubs"
 ALLOWED_FILETYPES = [
-    '.html', '.htm',
-    '.jpg', '.png', '.webm', '.gif', '.svg', '.ico',
-    '.js', '.css',
-    '.txt', '.ass',
+    ".html",
+    ".htm",
+    ".jpg",
+    ".png",
+    ".webm",
+    ".gif",
+    ".svg",
+    ".ico",
+    ".js",
+    ".css",
+    ".txt",
+    ".ass",
 ]
 
 
@@ -47,10 +55,9 @@ def get_remote_info(published_path):
 
 
 def save_remote_info(published_path, info):
-    published_path.write_text(json.dumps({
-        str(path): checksum
-        for path, checksum in info.items()
-    }))
+    published_path.write_text(
+        json.dumps({str(path): checksum for path, checksum in info.items()})
+    )
 
 
 def collect_diff(local_info, remote_info):
@@ -71,26 +78,26 @@ def collect_diff(local_info, remote_info):
 def sync_files(base_url, local_root, files_to_upload, files_to_delete):
     if files_to_delete:
         for path in sorted(files_to_delete):
-            print(f'Removing {path}')
+            print(f"Removing {path}")
             if base_url:
                 response = requests.post(
-                    f'{base_url}/delete',
-                    params={'filenames[]': str(path.relative_to(local_root))}
+                    f"{base_url}/delete",
+                    params={"filenames[]": str(path.relative_to(local_root))},
                 )
                 response.raise_for_status()
 
     if files_to_upload:
         for path in sorted(files_to_upload):
-            print(f'Uploading {path}')
-            files = {str(path.relative_to(local_root)): path.open(mode='rb')}
+            print(f"Uploading {path}")
+            files = {str(path.relative_to(local_root)): path.open(mode="rb")}
             if base_url:
-                response = requests.post(f'{base_url}/upload', files=files)
+                response = requests.post(f"{base_url}/upload", files=files)
                 response.raise_for_status()
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-d', '--dry-run', action='store_true')
+    parser.add_argument("-d", "--dry-run", action="store_true")
     return parser.parse_args()
 
 
@@ -98,27 +105,27 @@ def main():
     args = parse_args()
     dry_run = args.dry_run
 
-    local_root = ROOT_DIR / 'public'
-    published_path = ROOT_DIR / '.publish.json'
+    local_root = ROOT_DIR / "public"
+    published_path = ROOT_DIR / ".publish.json"
 
     local_files = list(collect_local_files(local_root))
     local_info = get_local_info(local_files)
     remote_info = get_remote_info(published_path)
 
-    files_to_create, \
-    files_to_update, \
-    files_to_delete = collect_diff(local_info, remote_info)
+    files_to_create, files_to_update, files_to_delete = collect_diff(
+        local_info, remote_info
+    )
     files_to_upload = files_to_update | files_to_create
 
     if not files_to_upload and not files_to_delete:
-        print('Nothing to do')
+        print("Nothing to do")
         return
 
     if dry_run:
         base_url = None
     else:
-        password = getpass('Password: ')
-        base_url = f'https://{USER_NAME}:{password}@neocities.org/api'
+        password = getpass("Password: ")
+        base_url = f"https://{USER_NAME}:{password}@neocities.org/api"
 
     sync_files(base_url, local_root, files_to_upload, files_to_delete)
 
@@ -126,5 +133,5 @@ def main():
         save_remote_info(published_path, local_info)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

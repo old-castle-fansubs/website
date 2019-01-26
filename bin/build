@@ -11,18 +11,16 @@ import jinja2
 import PIL.Image
 
 ROOT_DIR = Path(__file__).parent.parent
-TARGET_DIR = Path('public')
+TARGET_DIR = Path("public")
 
 
 class ProjectLoader(jinja2.BaseLoader):
-    source = ''
+    source = ""
 
     def get_source(
-            self,
-            environment: jinja2.Environment,
-            template: str
+        self, environment: jinja2.Environment, template: str
     ) -> T.Any:
-        if template != 'generated_project.html':
+        if template != "generated_project.html":
             raise jinja2.TemplateNotFound(template)
         return (ProjectLoader.source, None, lambda: False)
 
@@ -34,12 +32,12 @@ class FeaturedImage:
 
     @property
     def url(self) -> str:
-        return 'img/featured/' + self.name
+        return "img/featured/" + self.name
 
     @property
     def thumbnail_url(self) -> str:
         stem, suffix = os.path.splitext(self.name)
-        return 'img-thumb/featured/' + stem.rstrip('.') + '.jpg'
+        return "img-thumb/featured/" + stem.rstrip(".") + ".jpg"
 
     @property
     def path(self) -> Path:
@@ -52,14 +50,14 @@ class FeaturedImage:
 
 class Release:
     def __init__(
-            self,
-            date: datetime,
-            file_name: str,
-            file_version: int,
-            episode_number: str,
-            episode_title: str,
-            links: T.List[str],
-            is_visible: bool
+        self,
+        date: datetime,
+        file_name: str,
+        file_version: int,
+        episode_number: str,
+        episode_title: str,
+        links: T.List[str],
+        is_visible: bool,
     ) -> None:
         self.date = date
         self.file_name = file_name
@@ -76,11 +74,7 @@ class Release:
 
 class Project:
     def __init__(
-            self,
-            title: str,
-            content: str,
-            stem: str,
-            is_finished: bool
+        self, title: str, content: str, stem: str, is_finished: bool
     ) -> None:
         self.title = title
         self.content = content
@@ -89,17 +83,12 @@ class Project:
 
     @property
     def url(self):
-        return 'project-' + self.stem + '.html'
+        return "project-" + self.stem + ".html"
 
 
 class News:
     def __init__(
-            self,
-            date: datetime,
-            title: str,
-            author: str,
-            content: str,
-            path: Path
+        self, date: datetime, title: str, author: str, content: str, path: Path
     ) -> None:
         self.date = date
         self.title = title
@@ -113,7 +102,7 @@ def _save(path: Path, content: bytes) -> None:
         old_content = path.read_bytes()
         if old_content == content:
             return
-    print('Writing', path)
+    print("Writing", path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(content)
 
@@ -122,9 +111,7 @@ def _copy(source: T.Union[str, Path]) -> None:
     source_path = Path(source)
     if os.path.isdir(source_path):
         source_paths = [
-            path
-            for path in source_path.rglob('*')
-            if path.is_file()
+            path for path in source_path.rglob("*") if path.is_file()
         ]
     else:
         source_paths = [source_path]
@@ -134,15 +121,15 @@ def _copy(source: T.Union[str, Path]) -> None:
 
 
 def _get_news() -> T.Iterable[News]:
-    news_dir = ROOT_DIR / 'html' / 'news'
+    news_dir = ROOT_DIR / "html" / "news"
     for news_path in news_dir.iterdir():
-        with news_path.open('r', encoding='utf-8') as handle:
+        with news_path.open("r", encoding="utf-8") as handle:
             date = dateutil.parser.parse(handle.readline().strip())
             title = handle.readline().strip()
             author = handle.readline().strip()
             if handle.readline().strip():
                 raise ValueError(
-                    'Expected empty line in news ' + news_path.name
+                    "Expected empty line in news " + news_path.name
                 )
             content = handle.read()
         yield News(date, title, author, content, news_path)
@@ -151,71 +138,66 @@ def _get_news() -> T.Iterable[News]:
 def _get_releases() -> T.Iterable[Release]:
     return [
         Release(
-            date=dateutil.parser.parse(item['date']),
-            file_name=item['file'],
-            file_version=item['version'],
-            episode_number=item['episode'],
-            episode_title=item['title'],
-            links=item['links'],
-            is_visible='hidden' not in item or not item['hidden'],
+            date=dateutil.parser.parse(item["date"]),
+            file_name=item["file"],
+            file_version=item["version"],
+            episode_number=item["episode"],
+            episode_title=item["title"],
+            links=item["links"],
+            is_visible="hidden" not in item or not item["hidden"],
         )
         for item in json.loads(
-            (ROOT_DIR / 'data' / 'releases.json').read_text(encoding='utf-8')
+            (ROOT_DIR / "data" / "releases.json").read_text(encoding="utf-8")
         )
     ]
 
 
 def _get_featured_images() -> T.Iterable[FeaturedImage]:
     return [
-        FeaturedImage(dateutil.parser.parse(item['date']), item['name'])
+        FeaturedImage(dateutil.parser.parse(item["date"]), item["name"])
         for item in json.loads(
-            (ROOT_DIR / 'data' / 'featured.json').read_text(encoding='utf-8')
+            (ROOT_DIR / "data" / "featured.json").read_text(encoding="utf-8")
         )
     ]
 
 
 def _get_projects() -> T.Iterable[Project]:
-    projects_dir = ROOT_DIR / 'html' / 'projects'
+    projects_dir = ROOT_DIR / "html" / "projects"
     for path in projects_dir.iterdir():
-        with path.open('r', encoding='utf-8') as handle:
+        with path.open("r", encoding="utf-8") as handle:
             title = handle.readline().strip()
             status = handle.readline().strip()
-            if status not in ('finished', 'ongoing'):
+            if status not in ("finished", "ongoing"):
                 raise ValueError(
                     f'Unknown status "{status}" in project "{path}"'
                 )
             if handle.readline().strip():
-                raise ValueError(
-                    f'Expected empty line in project "{path}"'
-                )
+                raise ValueError(f'Expected empty line in project "{path}"')
             content = handle.read()
 
         yield Project(
             title=title,
             content=content,
             stem=path.stem,
-            is_finished=status == 'finished'
+            is_finished=status == "finished",
         )
 
 
 def _render(
-        env: jinja2.Environment,
-        template: str,
-        output: str,
-        **kwargs: T.Any
+    env: jinja2.Environment, template: str, output: str, **kwargs: T.Any
 ) -> None:
     target_path = TARGET_DIR / output
     target_path.parent.mkdir(parents=True, exist_ok=True)
-    new_content = env.get_template(template).render(**kwargs).encode('utf-8')
+    new_content = env.get_template(template).render(**kwargs).encode("utf-8")
     _save(target_path, new_content)
 
 
 def _render_home(env: jinja2.Environment) -> None:
     _render(
         env,
-        template='home.html',
-        output='index.html',
-        featured_images=_get_featured_images()
+        template="home.html",
+        output="index.html",
+        featured_images=_get_featured_images(),
     )
 
 
@@ -231,34 +213,37 @@ def _render_featured_images(env: jinja2.Environment) -> None:
         try:
             image = PIL.Image.open(featured_image.path)
             image.thumbnail((320, 240))
-            image.save(featured_image.thumbnail_path, 'JPEG')
+            image.save(featured_image.thumbnail_path, "JPEG")
         except OSError:
-            subprocess.run([
-                'ffmpeg',
-                '-i', str(featured_image.path),
-                '-vframes', '1',
-                '-s', '320x240',
-                str(featured_image.thumbnail_path)
-            ])
+            subprocess.run(
+                [
+                    "ffmpeg",
+                    "-i",
+                    str(featured_image.path),
+                    "-vframes",
+                    "1",
+                    "-s",
+                    "320x240",
+                    str(featured_image.thumbnail_path),
+                ]
+            )
 
     _render(
         env,
-        template='featured.html',
-        output='featured.html',
-        featured_images=featured_images
+        template="featured.html",
+        output="featured.html",
+        featured_images=featured_images,
     )
 
 
 def _render_news(env: jinja2.Environment) -> None:
     _render(
         env,
-        template='news.html',
-        output='news.html',
+        template="news.html",
+        output="news.html",
         news_entries=sorted(
-            _get_news(),
-            key=lambda news: news.path,
-            reverse=True
-        )
+            _get_news(), key=lambda news: news.path, reverse=True
+        ),
     )
 
 
@@ -270,37 +255,38 @@ def _render_projects(env: jinja2.Environment) -> None:
         ProjectLoader.source = project.content
         _render(
             env,
-            template='project.html',
+            template="project.html",
             output=project.url,
             project=project,
-            releases=release_entries
+            releases=release_entries,
         )
 
     _render(
         env,
-        template='projects.html',
-        output='projects.html',
-        projects=projects
+        template="projects.html",
+        output="projects.html",
+        projects=projects,
     )
 
 
 def _render_about(env: jinja2.Environment) -> None:
-    _render(env, template='about.html', output='about.html')
+    _render(env, template="about.html", output="about.html")
 
 
 def _render_guest_book(env: jinja2.Environment) -> None:
-    _render(env, template='guest_book.html', output='guest_book.html')
+    _render(env, template="guest_book.html", output="guest_book.html")
 
 
 def _render_attention(env: jinja2.Environment) -> None:
-    _render(env, template='attention.html', output='attention.html')
+    _render(env, template="attention.html", output="attention.html")
 
 
 def main() -> None:
-    env = jinja2.Environment(loader=jinja2.ChoiceLoader([
-        ProjectLoader(),
-        jinja2.FileSystemLoader('html')
-    ]))
+    env = jinja2.Environment(
+        loader=jinja2.ChoiceLoader(
+            [ProjectLoader(), jinja2.FileSystemLoader("html")]
+        )
+    )
     _render_home(env)
     _render_featured_images(env)
     _render_news(env)
@@ -308,10 +294,10 @@ def main() -> None:
     _render_about(env)
     _render_guest_book(env)
     _render_attention(env)
-    _copy('data/style.css')
-    _copy('data/comments.css')
-    _copy('img')
+    _copy("data/style.css")
+    _copy("data/comments.css")
+    _copy("img")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
