@@ -7,7 +7,6 @@ from pathlib import Path
 
 import requests
 
-
 ROOT_DIR = Path(__file__).parent.parent
 IGNORE = ['.git']
 

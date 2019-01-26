@@ -6,10 +6,9 @@ import typing as T
 from datetime import datetime
 from pathlib import Path
 
-import PIL.Image
 import dateutil.parser
 import jinja2
-
+import PIL.Image
 
 ROOT_DIR = Path(__file__).parent.parent
 TARGET_DIR = Path('public')
