@@ -1,8 +1,4 @@
 {% extends "base.html" %}
-{% block title %}Projects{% endblock %}
-{% block id %}projects{% endblock %}
-{% block content %}
-
 {% macro project_list_item(project) %}
     <li>
         <a href='{{ project.url }}'>
@@ -13,26 +9,27 @@
             -->{{ project.title }}
         </a>
     </li>
-{%- endmacro %}
-
+{% endmacro %}
+{% block title %}Projects{% endblock %}
+{% block id %}projects{% endblock %}
+{% block content %}
 <h1 class='fancy-title'><span>Ongoing projects</span></h1>
 
 <ul class='anime'>
-    {% for project in projects -%}
+    {% for project in projects %}
         {% if not project.is_finished %}
             {{- project_list_item(project) }}
         {% endif %}
-    {%- endfor %}
+    {% endfor %}
 </ul>
 
 <h1 class='fancy-title'><span>Finished projects</span></h1>
 
 <ul class='anime'>
-    {%- for project in projects -%}
+    {% for project in projects %}
         {% if project.is_finished %}
             {{- project_list_item(project) }}
         {% endif %}
-    {%- endfor -%}
+    {% endfor %}
 </ul>
-
 {% endblock %}

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-    {%- block head %}
+    {% block head %}
     <meta charset='utf-8'/>
     <title>Old Castle Fansubs - {% block title %}{{ title }}{% endblock %}</title>
     <link href='data/style.css' rel='stylesheet'>
-    {%- endblock %}
+    {% endblock %}
 </head>
 <body id='{% block id %}{% endblock %}'>
     <main>
@@ -28,7 +28,7 @@
             -->
         </header>
         <div id='body'>
-            {%- block content -%}{{ content }}{%- endblock %}
+            {% block content %}{{ content }}{% endblock %}
         </div>
     </main>
 </body>

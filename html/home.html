@@ -2,7 +2,6 @@
 {% block title %}Home{% endblock %}
 {% block id %}home{% endblock %}
 {% block content %}
-
 <a href='news.html'>
 {% if featured_images[0].url.endswith(('jpg', 'png')) %}
     <img src='{{ featured_images[0].url }}' alt='Featured image'/>
@@ -14,5 +13,4 @@
 <br/><br/>
 
 <a href='news.html'>Click on the image to enter</a>
-
 {% endblock %}

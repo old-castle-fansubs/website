@@ -1,43 +1,43 @@
 {% macro table(releases, filter) %}
-    <table class='fancy releases'>
-        <thead>
-            <tr>
-                <th class='date'>Date</th>
-                <th class='file'>File</th>
-                <th class='links' colspan='2'>Links</th>
-            </tr>
-        </thead>
-        <tbody>
-        {%- for release in releases %}
-        {%- if release.is_visible and (not filter or filter.lower() in release.file_name.lower()) %}
-            <tr>
-                <td class='date'>{{ release.date.strftime('%Y-%m-%d') }}</td>
-                <td class='file'>{{ release.file_name }}
-                    {%- if release.file_version > 1 %}
-                        (v{{ release.file_version }})
-                    {%- endif -%}
-                </td>
-                <td class='link nyaa'>
-                {%- for link in release.links %}
-                    {%- if 'nyaa.si' in link -%}
-                        <a href='{{ link }}'>nyaa.si</a>
-                    {%- endif -%}
-                {%- endfor %}
-                </td>
-                <td class='link nyaa'>
-                {%- for link in release.links %}
-                    {%- if 'anidex' in link -%}
-                        <a href='{{ link }}'>anidex</a>
-                    {%- endif -%}
-                {%- endfor %}
-                </td>
-            </tr>
-        {%- endif %}
-        {%- endfor %}
-        </tbody>
-    </table>
+<table class='fancy releases'>
+    <thead>
+        <tr>
+            <th class='date'>Date</th>
+            <th class='file'>File</th>
+            <th class='links' colspan='2'>Links</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for release in releases %}
+    {% if release.is_visible and (not filter or filter.lower() in release.file_name.lower()) %}
+        <tr>
+            <td class='date'>{{ release.date.strftime('%Y-%m-%d') }}</td>
+            <td class='file'>{{ release.file_name }}
+                {% if release.file_version > 1 %}
+                    (v{{ release.file_version }})
+                {% endif %}
+            </td>
+            <td class='link nyaa'>
+            {% for link in release.links %}
+                {% if 'nyaa.si' in link %}
+                    <a href='{{ link }}'>nyaa.si</a>
+                {% endif %}
+            {% endfor %}
+            </td>
+            <td class='link nyaa'>
+            {% for link in release.links %}
+                {% if 'anidex' in link %}
+                    <a href='{{ link }}'>anidex</a>
+                {% endif %}
+            {% endfor %}
+            </td>
+        </tr>
+    {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
 
-    <script>
+<script>
     function previousElementSibling(element) {
         var ret = element.previousSibling;
         while (ret && ret.nodeType !== 1) {
@@ -72,5 +72,5 @@
     }
 
     groupLinks(document.getElementsByTagName('table')[0]);
-    </script>
+</script>
 {% endmacro %}

@@ -2,18 +2,16 @@
 {% block title %}News{% endblock %}
 {% block id %}news{% endblock %}
 {% block content %}
-
 <h1 class='fancy-title'><span>News</span></h1>
 
 {% for news_entry in news_entries %}
-    <div class='news'>
-        <h2 class='fancy-title'><span>{{ news_entry.title }}</span></h2>
-        <div class='date'>{{ news_entry.date.strftime('%A, %d %b %Y') }} by {{ news_entry.author }}</div>
+<div class='news'>
+    <h2 class='fancy-title'><span>{{ news_entry.title }}</span></h2>
+    <div class='date'>{{ news_entry.date.strftime('%A, %d %b %Y') }} by {{ news_entry.author }}</div>
 
-        {{ news_entry.content }}
+    {{ news_entry.content }}
 
-        <hr class='clear'/>
-    </div>
+    <hr class='clear'/>
+</div>
 {% endfor %}
-
 {% endblock %}

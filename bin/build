@@ -285,7 +285,9 @@ def main() -> None:
     env = jinja2.Environment(
         loader=jinja2.ChoiceLoader(
             [ProjectLoader(), jinja2.FileSystemLoader("html")]
-        )
+        ),
+        lstrip_blocks=True,
+        trim_blocks=True,
     )
     _render_home(env)
     _render_featured_images(env)
