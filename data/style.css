@@ -226,6 +226,9 @@ img.flag {
 #home main {
     text-align: center;
 }
+#home #featured-image {
+    display: inline-block;
+}
 #home #top-nav,
 #home #attention {
     display: none;
