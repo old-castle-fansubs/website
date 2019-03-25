@@ -236,7 +236,8 @@ img.flag {
 #home img, video {
     margin: 0 auto;
     display: inline-block;
-    max-width: 80%;
+    max-width: 100%;
+    max-height: 40em;
 }
 
 #projects #body {
