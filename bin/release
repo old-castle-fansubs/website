@@ -2,9 +2,10 @@
 import argparse
 import json
 import re
+import typing as T
 from datetime import datetime
 from pathlib import Path
-from subprocess import PIPE, run
+from subprocess import run
 
 import pysubs2
 
@@ -14,7 +15,7 @@ ROOT_DIR = Path(__file__).parent.parent
 RELEASES_JSON_PATH = ROOT_DIR / "data" / "releases.json"
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("path", type=Path)
     parser.add_argument("link", nargs="*")
@@ -22,13 +23,17 @@ def parse_args():
     return parser.parse_args()
 
 
-def extract_subtitles(source_path):
-    out = run(["mkvmerge", "-i", source_path], stdout=PIPE).stdout.decode()
+def extract_subtitles(source_path: Path) -> str:
+    out = run(
+        ["mkvmerge", "-i", source_path], capture_output=True, text=True
+    ).stdout
+
     results = re.search(r"Track ID (\d+): subtitles \(SubStationAlpha\)", out)
     if not results:
         raise RuntimeError("No subtiles found in the file")
     track_id = int(results.group(1))
-    ass = run(
+
+    return run(
         [
             "mkvextract",
             "tracks",
@@ -37,12 +42,12 @@ def extract_subtitles(source_path):
             source_path,
             f"{track_id}:/dev/stdout",
         ],
-        stdout=PIPE,
+        capture_output=True,
+        text=True,
     ).stdout
-    return ass.decode()
 
 
-def extract_text(ass_string):
+def extract_text(ass_string: str) -> str:
     ret = ""
     for ass_item in ass_tag_parser.parse_ass(ass_string):
         if isinstance(ass_item, ass_tag_parser.AssText):
@@ -50,23 +55,23 @@ def extract_text(ass_string):
     return ret.replace("\\N", "\n")
 
 
-def get_version_from_file_name(file_name):
-    return int(
-        re.search(
-            r"\[[0-9a-f]{4}([0-9a-f])[0-9a-f]{3}\]", file_name, re.I
-        ).group(1)
+def get_version_from_file_name(file_name: str) -> int:
+    result = re.search(
+        r"\[[0-9a-f]{4}([0-9a-f])[0-9a-f]{3}\]", file_name, re.I
     )
+    assert result
+    return int(result.group(1))
 
 
-def get_episode_from_file_name(file_name):
-    try:
-        return re.search(r"([0-9]+) \[[0-9a-f]{8}\]", file_name, re.I).group(1)
-    except AttributeError:
+def get_episode_from_file_name(file_name: str) -> T.Optional[str]:
+    result = re.search(r"([0-9]+) \[[0-9a-f]{8}\]", file_name, re.I)
+    if not result:
         return None
+    return result.group(1)
 
 
-def get_title_from_subs(subs):
-    titles = []
+def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
+    titles: T.List[T.Tuple[str, str]] = []
 
     for sub in subs:
         if sub.name == "[title]":
@@ -78,7 +83,7 @@ def get_title_from_subs(subs):
             )
             titles.append((extract_text(sub.text), clean_title))
 
-    def sort(item):
+    def sort(item: T.Tuple[str, str]) -> T.Any:
         sub_text, clean_title = item
         return not re.search(r"\d|episode", sub_text, re.I)
 
@@ -89,7 +94,7 @@ def get_title_from_subs(subs):
     return None
 
 
-def main():
+def main() -> None:
     args = parse_args()
 
     releases = json.loads(RELEASES_JSON_PATH.read_text())
