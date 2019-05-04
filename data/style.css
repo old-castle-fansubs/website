@@ -197,8 +197,20 @@ img.flag {
     vertical-align: bottom;
 }
 
+#about h2 small {
+    font-weight: normal;
+}
+#about h2 {
+    margin-top: 2em;
+}
 #about td.flag {
     padding-right: 0;
+}
+#about td.name {
+    width: 25%;
+}
+#about td.desc {
+    width: 75%;
 }
 
 #featured-images table tr:first-of-type td {
