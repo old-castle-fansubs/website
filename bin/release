@@ -92,26 +92,31 @@ def get_title_from_subs(subs):
 def main():
     args = parse_args()
 
-    subs = pysubs2.SSAFile.from_string(extract_subtitles(args.path))
+    releases = json.loads(RELEASES_JSON_PATH.read_text())
 
-    version = get_version_from_file_name(args.path.name)
-    episode = get_episode_from_file_name(args.path.name)
-    title = get_title_from_subs(subs)
+    for path in (
+        [args.path] if args.path.is_file() else sorted(args.path.iterdir())
+    ):
+        version = get_version_from_file_name(path.name)
+        episode = get_episode_from_file_name(path.name)
 
-    release = {
-        "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
-        "file": args.path.name,
-        "version": version,
-        "episode": episode,
-        "title": title or "-",
-        "links": args.link,
-    }
+        subs = pysubs2.SSAFile.from_string(extract_subtitles(path))
+        title = get_title_from_subs(subs)
 
-    if args.dry_run:
-        print(json.dumps(release, indent=4))
-    else:
-        releases = json.loads(RELEASES_JSON_PATH.read_text())
+        release = {
+            "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
+            "file": path.name,
+            "version": version,
+            "episode": episode,
+            "title": title or "-",
+            "links": args.link,
+        }
+
         releases.append(release)
+        if args.dry_run:
+            print(json.dumps(release, indent=4))
+
+    if not args.dry_run:
         RELEASES_JSON_PATH.write_text(json.dumps(releases, indent=4) + "\n")
 
 
