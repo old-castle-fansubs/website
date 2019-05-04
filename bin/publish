@@ -2,6 +2,7 @@
 import argparse
 import hashlib
 import json
+import typing as T
 from getpass import getpass
 from pathlib import Path
 
@@ -27,7 +28,7 @@ ALLOWED_FILETYPES = [
 ]
 
 
-def collect_local_files(local_root):
+def collect_local_files(local_root: Path) -> T.Iterable[Path]:
     for path in local_root.iterdir():
         if path.name in IGNORE:
             continue
@@ -38,14 +39,14 @@ def collect_local_files(local_root):
             yield from collect_local_files(path)
 
 
-def get_local_info(local_paths):
+def get_local_info(local_paths: T.Iterable[Path]) -> T.Dict[Path, str]:
     return {
         path: hashlib.md5(path.read_bytes()).hexdigest()
         for path in local_paths
     }
 
 
-def get_remote_info(published_path):
+def get_remote_info(published_path: Path) -> T.Dict[Path, str]:
     if not published_path.exists():
         return {}
     return {
@@ -54,13 +55,15 @@ def get_remote_info(published_path):
     }
 
 
-def save_remote_info(published_path, info):
+def save_remote_info(published_path: Path, info: T.Dict[Path, str]) -> None:
     published_path.write_text(
         json.dumps({str(path): checksum for path, checksum in info.items()})
     )
 
 
-def collect_diff(local_info, remote_info):
+def collect_diff(
+    local_info: T.Dict[Path, str], remote_info: T.Dict[Path, str]
+) -> T.Tuple[T.Set[Path], T.Set[Path], T.Set[Path]]:
     local_paths = set(local_info.keys())
     remote_paths = set(remote_info.keys())
 
@@ -75,7 +78,12 @@ def collect_diff(local_info, remote_info):
     return files_to_create, files_to_update, files_to_delete
 
 
-def sync_files(base_url, local_root, files_to_upload, files_to_delete):
+def sync_files(
+    base_url: T.Optional[str],
+    local_root: Path,
+    files_to_upload: T.Set[Path],
+    files_to_delete: T.Set[Path],
+) -> None:
     if files_to_delete:
         for path in sorted(files_to_delete):
             print(f"Removing {path}")
@@ -95,13 +103,13 @@ def sync_files(base_url, local_root, files_to_upload, files_to_delete):
                 response.raise_for_status()
 
 
-def parse_args():
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--dry-run", action="store_true")
     return parser.parse_args()
 
 
-def main():
+def main() -> None:
     args = parse_args()
     dry_run = args.dry_run
 
