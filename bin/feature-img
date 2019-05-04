@@ -5,43 +5,42 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
-
 ROOT_DIR = Path(__file__).parent.parent
-IMAGES_DIR = ROOT_DIR / 'img' / 'featured'
-FEATURED_JSON_PATH = ROOT_DIR / 'data' / 'featured.json'
+IMAGES_DIR = ROOT_DIR / "img" / "featured"
+FEATURED_JSON_PATH = ROOT_DIR / "data" / "featured.json"
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path', type=Path)
+    parser.add_argument("path", type=Path)
     return parser.parse_args()
 
 
 def main():
     args = parse_args()
     featured = json.loads(FEATURED_JSON_PATH.read_text())
-    today = f'{datetime.today():%Y-%m-%d %H:%M:%S}'
+    today = f"{datetime.today():%Y-%m-%d %H:%M:%S}"
 
     source_path = args.path
 
     try:
-        today_entry = [f for f in featured if f['date'] == today][0]
+        today_entry = [f for f in featured if f["date"] == today][0]
     except IndexError:
         today_entry = None
 
     if today_entry:
-        target_path = IMAGES_DIR / today_entry['name']
+        target_path = IMAGES_DIR / today_entry["name"]
     else:
-        target_path = IMAGES_DIR / '{:04d}.{}'.format(
-            max(int(entry['name'][0:4]) for entry in featured) + 1,
-            source_path.suffix.lstrip('.')
+        target_path = IMAGES_DIR / "{:04d}.{}".format(
+            max(int(entry["name"][0:4]) for entry in featured) + 1,
+            source_path.suffix.lstrip("."),
         )
-        featured.insert(0, {'date': today, 'name': target_path.name})
+        featured.insert(0, {"date": today, "name": target_path.name})
 
     shutil.copy(source_path, target_path)
 
-    FEATURED_JSON_PATH.write_text(json.dumps(featured, indent=4) + '\n')
+    FEATURED_JSON_PATH.write_text(json.dumps(featured, indent=4) + "\n")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
