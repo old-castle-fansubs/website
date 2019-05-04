@@ -3,6 +3,7 @@ import json
 import os
 import subprocess
 import typing as T
+from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
@@ -25,10 +26,10 @@ class ProjectLoader(jinja2.BaseLoader):
         return (ProjectLoader.source, None, lambda: False)
 
 
+@dataclass
 class FeaturedImage:
-    def __init__(self, date: datetime, name: str) -> None:
-        self.date = date
-        self.name = name
+    date: datetime
+    name: str
 
     @property
     def url(self) -> str:
@@ -48,53 +49,40 @@ class FeaturedImage:
         return TARGET_DIR / self.thumbnail_url
 
 
+@dataclass
 class Release:
-    def __init__(
-        self,
-        date: datetime,
-        file_name: str,
-        file_version: int,
-        episode_number: str,
-        episode_title: str,
-        links: T.List[str],
-        is_visible: bool,
-    ) -> None:
-        self.date = date
-        self.file_name = file_name
-        self.file_version = file_version
-        self.episode_number = episode_number
-        self.episode_title = episode_title
-        self.links = links
-        self.is_visible = is_visible
+    date: datetime
+    file_name: str
+    file_version: int
+    episode_number: str
+    episode_title: str
+    links: T.List[str]
+    is_visible: bool
 
     @property
     def is_hidden(self) -> bool:
         return not self.is_visible
 
 
+@dataclass
 class Project:
-    def __init__(
-        self, title: str, content: str, stem: str, is_finished: bool
-    ) -> None:
-        self.title = title
-        self.content = content
-        self.stem = stem
-        self.is_finished = is_finished
+    title: str
+    content: str
+    stem: str
+    is_finished: bool
 
     @property
-    def url(self):
+    def url(self) -> str:
         return "project-" + self.stem + ".html"
 
 
+@dataclass
 class News:
-    def __init__(
-        self, date: datetime, title: str, author: str, content: str, path: Path
-    ) -> None:
-        self.date = date
-        self.title = title
-        self.content = content
-        self.path = path
-        self.author = author
+    date: datetime
+    title: str
+    author: str
+    content: str
+    path: Path
 
 
 def _save(path: Path, content: bytes) -> None:
@@ -118,6 +106,33 @@ def _copy(source: T.Union[str, Path]) -> None:
     for source_path in source_paths:
         target_path = TARGET_DIR / source_path
         _save(target_path, source_path.read_bytes())
+
+
+def _generate_thumbnail(
+    source: Path, target: Path, width: int = 320, height: int = 240
+) -> None:
+    if target.exists():
+        return
+
+    target.parent.mkdir(exist_ok=True, parents=True)
+
+    try:
+        image = PIL.Image.open(str(source))
+        image.thumbnail((width, height))
+        image.save(target, "JPEG")
+    except OSError:
+        subprocess.run(
+            [
+                "ffmpeg",
+                "-i",
+                str(source),
+                "-vframes",
+                "1",
+                "-s",
+                f"{width}x{height}",
+                str(target),
+            ]
+        )
 
 
 def _get_news() -> T.Iterable[News]:
@@ -205,28 +220,7 @@ def _render_featured_images(env: jinja2.Environment) -> None:
     featured_images = _get_featured_images()
 
     for featured_image in featured_images:
-        if featured_image.thumbnail_path.exists():
-            continue
-
-        featured_image.thumbnail_path.parent.mkdir(exist_ok=True, parents=True)
-
-        try:
-            image = PIL.Image.open(featured_image.path)
-            image.thumbnail((320, 240))
-            image.save(featured_image.thumbnail_path, "JPEG")
-        except OSError:
-            subprocess.run(
-                [
-                    "ffmpeg",
-                    "-i",
-                    str(featured_image.path),
-                    "-vframes",
-                    "1",
-                    "-s",
-                    "320x240",
-                    str(featured_image.thumbnail_path),
-                ]
-            )
+        _generate_thumbnail(featured_image.path, featured_image.thumbnail_path)
 
     _render(
         env,
