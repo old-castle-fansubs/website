@@ -59,6 +59,12 @@ class Release:
     links: T.List[str]
     is_visible: bool
 
+    def get_link(self, text: str) -> T.Optional[str]:
+        for link in self.links:
+            if text in link:
+                return link
+        return None
+
     @property
     def is_hidden(self) -> bool:
         return not self.is_visible
@@ -159,7 +165,7 @@ def _get_releases() -> T.Iterable[Release]:
             episode_number=item["episode"],
             episode_title=item["title"],
             links=item["links"],
-            is_visible=not item.get('hidden', False),
+            is_visible=not item.get("hidden", False),
         )
         for item in json.loads(
             (ROOT_DIR / "data" / "releases.json").read_text(encoding="utf-8")
@@ -282,10 +288,11 @@ def main() -> None:
         ),
         lstrip_blocks=True,
         trim_blocks=True,
+        extensions=["jinja2.ext.loopcontrols", "jinja2.ext.do"],
     )
 
     def match(a: str, b: str) -> bool:
-        return b.lower() in a .lower()
+        return b.lower() in a.lower()
 
     env.tests["match"] = match
 
