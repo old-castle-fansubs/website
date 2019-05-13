@@ -8,8 +8,8 @@
         </tr>
     </thead>
     <tbody>
-    {% for release in releases %}
-    {% if release.is_visible and (not filter or filter.lower() in release.file_name.lower()) %}
+    {% set filtered_releases = releases|rejectattr("is_hidden")|selectattr("file_name", "match", filter)|list %}
+    {% for release in filtered_releases %}
         <tr>
             <td class='date'>{{ release.date.strftime('%Y-%m-%d') }}</td>
             <td class='file'>{{ release.file_name }}
@@ -32,7 +32,6 @@
             {% endfor %}
             </td>
         </tr>
-    {% endif %}
     {% endfor %}
     </tbody>
 </table>

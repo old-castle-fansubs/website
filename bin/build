@@ -159,7 +159,7 @@ def _get_releases() -> T.Iterable[Release]:
             episode_number=item["episode"],
             episode_title=item["title"],
             links=item["links"],
-            is_visible="hidden" not in item or not item["hidden"],
+            is_visible=not item.get('hidden', False),
         )
         for item in json.loads(
             (ROOT_DIR / "data" / "releases.json").read_text(encoding="utf-8")
@@ -283,6 +283,12 @@ def main() -> None:
         lstrip_blocks=True,
         trim_blocks=True,
     )
+
+    def match(a: str, b: str) -> bool:
+        return b.lower() in a .lower()
+
+    env.tests["match"] = match
+
     _render_home(env)
     _render_featured_images(env)
     _render_news(env)
