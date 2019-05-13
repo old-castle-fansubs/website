@@ -66,6 +66,8 @@
 
             if (span > 1) {
                 cellAboveOld.setAttribute('rowspan', span);
+                cellAboveOld.classList.toggle("batch", !!html.trim());
+                cellAboveOld.classList.toggle("unavailable", !html.trim());
                 elem.style.display = 'none';
             }
         });
