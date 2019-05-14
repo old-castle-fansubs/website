@@ -5,6 +5,7 @@ import json
 import typing as T
 from getpass import getpass
 from pathlib import Path
+from subprocess import run
 
 import requests
 
@@ -103,6 +104,12 @@ def sync_files(
                 response.raise_for_status()
 
 
+def wipe_cache() -> None:
+    print("Wiping reverse proxy cache")
+    run(["ssh", "oc", "sudo", "rm", "-rf", "/var/nginx/cache/"])
+    run(["ssh", "oc", "sudo", "systemctl", "restart", "nginx"])
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("-d", "--dry-run", action="store_true")
@@ -139,6 +146,7 @@ def main() -> None:
 
     if not dry_run:
         save_remote_info(published_path, local_info)
+        wipe_cache()
 
 
 if __name__ == "__main__":
