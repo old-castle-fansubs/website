@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "_macros.jinja" as macros %}
+{% block title %}Guest book{% endblock %}
+{% block id %}guest-book{% endblock %}
+{% block content %}
+<h1 class='fancy-title'><span>Guest book</span></h1>
+
+<section id='thread'>
+  <p>
+    <strong>{{ comments|length }} comments</strong>
+    <span class="spacer">&bull;</span>
+    <a href="comment_add.html?tid={{ tid }}">Add new comment</a>
+  </p>
+
+  {{- macros.show_comments(comments) }}
+</section>
+{% endblock %}

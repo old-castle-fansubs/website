@@ -1,0 +1,77 @@
+import hashlib
+import json
+import typing as T
+from dataclasses import dataclass
+
+import arrow
+
+from oc_website.lib.common import ROOT_DIR
+from oc_website.lib.markdown import render_markdown
+
+COMMENTS_PATH = ROOT_DIR / "data" / "comments.json"
+
+
+@dataclass
+class Comment:
+    id: int
+    tid: int
+    pid: T.Optional[int]
+    created: arrow.Arrow
+    remote_addr: str
+    text: str
+    author: str
+    email: T.Optional[str]
+    website: T.Optional[str]
+    likes: int
+
+    @property
+    def html(self) -> str:
+        return render_markdown(self.text)
+
+    @property
+    def author_avatar_url(self) -> str:
+        chksum = hashlib.md5((self.email or self.author).encode()).hexdigest()
+        return f"https://www.gravatar.com/avatar/{chksum}?d=retro"
+
+
+def get_comments() -> T.Iterable[Comment]:
+    for entry in sorted(
+        json.loads(COMMENTS_PATH.read_text()),
+        key=lambda entry: entry["created"],
+        reverse=True,
+    ):
+        yield Comment(
+            id=entry["id"],
+            tid=entry["tid"],
+            pid=entry["pid"],
+            created=arrow.get(entry["created"]) if entry["created"] else None,
+            remote_addr=entry["remote_addr"],
+            text=entry["text"],
+            author=entry["author"],
+            email=entry["email"],
+            website=entry["website"],
+            likes=entry["likes"],
+        )
+
+
+def save_comments(comments: T.Iterable[Comment]) -> None:
+    COMMENTS_PATH.write_text(
+        json.dumps(
+            [
+                {
+                    "id": comment.id,
+                    "tid": comment.tid,
+                    "pid": comment.pid,
+                    "created": str(comment.created),
+                    "remote_addr": comment.remote_addr,
+                    "text": comment.text,
+                    "author": comment.author,
+                    "email": comment.email,
+                    "website": comment.website,
+                    "likes": comment.likes,
+                }
+                for comment in comments
+            ],
+            indent=4,
+        )
+    )

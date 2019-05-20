@@ -1,0 +1,8 @@
+{% macro show_comments(comments, pid=None) %}
+  {% for comment in comments %}
+    {% if comment.pid != pid %}
+      {% continue %}
+    {% endif %}
+    {% include "comment_with_children.html" %}
+  {% endfor %}
+{% endmacro %}

@@ -33,10 +33,10 @@ main {
     color: black;
     text-decoration: none;
 }
+
 #top-nav {
     margin-top: 1em;
 }
-
 #top-nav ul {
     margin: 0;
     padding: 0;
@@ -45,6 +45,7 @@ main {
 #top-nav ul li {
     display: inline-block;
     flex-grow: 1;
+    white-space: nowrap;
 }
 #top-nav ul li:not(:first-child) {
     margin-left: 0;
@@ -309,4 +310,39 @@ img.flag {
     margin-top: 0.5em;
     font-size: 85%;
     line-height: 130%;
+}
+
+#thread.loading:before {
+    content: 'Loading comments…';
+}
+
+textarea, input, button {
+    font-family: 'Roboto', sans-serif;
+    font-size: 12pt;
+    line-height: 15pt;
+    box-sizing: border-box;
+    padding: 0.3em 0.5em;
+}
+
+textarea,
+input {
+    background-color: white;
+    color: black;
+    outline: 0;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+}
+button {
+    background: silver;
+    border: 2px solid rgba(0, 0, 0, 0.3);
+}
+
+textarea {
+    width: 100%;
+    min-height: 10em;
+    margin: 0 0 0.25em 0;
+}
+
+textarea:focus,
+input:focus {
+    border-color: green;
 }

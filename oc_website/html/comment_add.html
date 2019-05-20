@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% import "_macros.jinja" as macros %}
+{% block title %}Guest book{% endblock %}
+{% block id %}guest-book{% endblock %}
+{% block content %}
+
+{% if pid %}
+  <p>Replying to a comment by <em>{{ parent_comment.author }}</em>:</p>
+  {{ parent_comment.html }}
+{% else %}
+  <p>Posting a new comment:</p>
+{% endif %}
+
+<form action="{{ form_url }}" method="post">
+  <div class="postbox">
+    <div class="form-wrapper">
+      <div class="textarea-wrapper">
+        <textarea name="content" placeholder="Type Comment Here (at least 3 chars)" required>{{ comment.text }}</textarea>
+      </div>
+
+      <section class="auth-section">
+        <p class="input-wrapper">
+          <input type="text" name="author" placeholder="Name" value="{{ comment.author }}" required>
+        </p>
+        <p class="input-wrapper">
+          <input type="email" name="email" placeholder="E-mail (optional)" value="{{ comment.email }}">
+        </p>
+        <p class="input-wrapper">
+          <input type="url" name="website" placeholder="Website (optional)" value="{{ comment.website }}">
+        </p>
+        <p class="post-action">
+          <button type="submit" name="submit" value="submit">Submit</button>
+        </p>
+        <p class="post-action">
+          <button type="submit" name="submit" value="preview">Preview</button>
+        </p>
+      </section>
+    </div>
+  </div>
+</form>
+
+{% if errors %}
+  <p>Errors:</p>
+  <ul>
+    {% for error in errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% if comment.text %}
+  <p>Preview of your comment:</p>
+  {% set is_preview = True %}
+  {% include "comment.html" %}
+{% endif %}
+
+{% endblock %}

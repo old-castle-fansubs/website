@@ -2,3 +2,8 @@ py-dateutil
 pysubs2
 jinja2
 Pillow
+misaka
+bleach
+humanfriendly
+flask
+arrow

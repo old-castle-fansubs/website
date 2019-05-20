@@ -1,0 +1,118 @@
+#root {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+#thread {
+    padding: 0;
+    margin: 0;
+}
+
+#thread .spacer {
+    padding: 0 0.5em;
+}
+
+.comment {
+    display: flex;
+    width: 100%;
+    margin-top: 0.75em;
+    padding-top: 0.75em;
+}
+.comment,
+.follow-up>.comment {
+    border-top: 5px solid transparent;
+    border-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAPCAYAAAA71pVKAAAAFUlEQVR4AWMgEjigC4xqpAUYBaMAALsAAUGk8YXgAAAAAElFTkSuQmCC') 5 round;
+}
+
+.comment.preview {
+    margin-top: 0;
+    padding-top: 0;
+    border: none;
+}
+
+.comment>.avatar,
+.postbox>.avatar {
+    box-sizing: border-box;
+    margin: 0.15em 0.75em 0 0;
+}
+.comment>.avatar img,
+.postbox>.avatar img {
+    max-width: 48px;
+    max-height: 48px;
+}
+
+.comment>.text-wrapper>.comment-header {
+    font-size: 0.85em;
+}
+.comment>.text-wrapper>.comment-header .spacer,
+.comment>.text-wrapper>.comment-header .permalink,
+.comment>.text-wrapper>.comment-header .parent {
+    color: rgba(0, 0, 0, 0.5);
+    font-weight: normal;
+}
+.comment>.text-wrapper>.comment-header .permalink:hover,
+.comment>.text-wrapper>.comment-header .parent:hover {
+    color: black;
+}
+.comment>.text-wrapper>.comment-header .author {
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.8);
+}
+
+.comment>.text-wrapper>.text p {
+    margin-top: 0.2em;
+}
+.comment>.text-wrapper>.text p:last-child {
+    margin-bottom: 0.2em;
+}
+.comment>.text-wrapper>.text h1,
+.comment>.text-wrapper>.text h2,
+.comment>.text-wrapper>.text h3,
+.comment>.text-wrapper>.text h4,
+.comment>.text-wrapper>.text h5,
+.comment>.text-wrapper>.text h6 {
+    font-size: 130%;
+    font-weight: bold;
+}
+.comment>.text-wrapper>.text blockquote {
+    border-left: 3px solid rgba(0, 60, 120, 0.4);
+    background: rgba(0, 30, 60, 0.075);
+    margin: 1em 0;
+    padding: 0.1em 0.1em 0.1em 0.5em;
+}
+.comment>.text-wrapper>.text img {
+    max-width: 100%;
+}
+
+.comment .postbox {
+    margin-top: 0.8em;
+}
+
+.postbox {
+    margin: 0 auto 2em;
+}
+.postbox>.form-wrapper {
+    display: block;
+    padding: 0;
+}
+.postbox>.form-wrapper>.auth-section {
+    display: flex;
+    margin: 0.25em 0 0 0;
+}
+.postbox>.form-wrapper>.auth-section>* {
+    margin: 0 0.5em 0 0;
+}
+.postbox>.form-wrapper>.auth-section>*:last-child {
+    margin: 0;
+}
+.postbox>.form-wrapper>.auth-section .input-wrapper {
+    flex-grow: 1;
+}
+.postbox>.form-wrapper>.auth-section .input-wrapper input {
+    width: 100%;
+}
+.postbox>.form-wrapper>.auth-section .post-action {
+    display: block;
+    max-width: 5em;
+    display: inline-block;
+}
