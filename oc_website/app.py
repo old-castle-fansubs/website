@@ -155,6 +155,8 @@ def app_comment_add() -> T.Union[str, Response]:
     errors: T.List[str] = []
 
     if request.method == "POST":
+        if request.form.get('phone') or request.form.get('message'):
+            errors.append("Human verification failed.")
         if not comment.text:
             errors.append("Comment content cannot be empty.")
         if not comment.author:

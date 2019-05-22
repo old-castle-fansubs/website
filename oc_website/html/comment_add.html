@@ -14,6 +14,12 @@
 <form action="{{ form_url }}" method="post">
   <div class="postbox">
     <div class="form-wrapper">
+      {# honeypot #}
+      <label tabindex="-1" class="khatiff">Leave this field empty:</label>
+      <input tabindex="-1" class="khatiff" type="text" name="phone" autocomplete="off"/>
+      <label tabindex="-1" class="khatiff">Leave this field empty:</label>
+      <textarea tabindex="-1" class="khatiff" type="text" name="message" autocomplete="off"></textarea>
+
       <div class="textarea-wrapper">
         <textarea name="content" placeholder="Type Comment Here (at least 3 chars)" required>{{ comment.text }}</textarea>
       </div>
