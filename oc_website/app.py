@@ -21,7 +21,7 @@ PROJECTS = list(sorted(get_projects(), key=lambda project: project.title))
 NEWS = sorted(get_news(), key=lambda news: news.path, reverse=True)
 RELEASES = list(get_releases())
 
-GUEST_BOOK_CACHE: T.Optional[None] = None
+GUEST_BOOK_CACHE: T.Optional[str] = None
 GUEST_BOOK_TID = 10
 
 
@@ -92,9 +92,8 @@ def app_featured_images() -> str:
     )
 
 
-@app.route("/guest_book.html")
-def app_guest_book() -> str:
-    return env.get_template("guest_book.html").render(
+def render_comments(tid: int) -> str:
+    env.get_template("guest_book.html").render(
         tid=GUEST_BOOK_TID,
         comments=[
             comment
@@ -102,6 +101,21 @@ def app_guest_book() -> str:
             if comment.tid == GUEST_BOOK_TID
         ],
     )
+
+
+@app.route("/guest_book.html")
+def app_guest_book() -> str:
+    global GUEST_BOOK_CACHE
+    if not GUEST_BOOK_CACHE:
+        GUEST_BOOK_CACHE = env.get_template("guest_book.html").render(
+            tid=GUEST_BOOK_TID,
+            comments=[
+                comment
+                for comment in get_comments()
+                if comment.tid == GUEST_BOOK_TID
+            ],
+        )
+    return GUEST_BOOK_CACHE
 
 
 @app.route("/comment_add.html", methods=["GET", "POST"])
@@ -155,7 +169,7 @@ def app_comment_add() -> T.Union[str, Response]:
     errors: T.List[str] = []
 
     if request.method == "POST":
-        if request.form.get('phone') or request.form.get('message'):
+        if request.form.get("phone") or request.form.get("message"):
             errors.append("Human verification failed.")
         if not comment.text:
             errors.append("Comment content cannot be empty.")
@@ -167,6 +181,8 @@ def app_comment_add() -> T.Union[str, Response]:
         if not errors and not is_preview:
             comments.insert(0, comment)
             save_comments(comments)
+            global GUEST_BOOK_CACHE
+            GUEST_BOOK_CACHE = None
             return redirect("guest_book.html", code=302)
 
     return env.get_template("comment_add.html").render(
