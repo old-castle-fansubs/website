@@ -5,10 +5,10 @@ from dataclasses import dataclass
 
 import arrow
 
-from oc_website.lib.common import ROOT_DIR
+from oc_website.lib.common import DATA_DIR
 from oc_website.lib.markdown import render_markdown
 
-COMMENTS_PATH = ROOT_DIR / "data" / "comments.json"
+COMMENTS_PATH = DATA_DIR / "comments.json"
 
 
 @dataclass

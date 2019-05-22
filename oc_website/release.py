@@ -9,9 +9,7 @@ from subprocess import run
 import pysubs2
 
 import ass_tag_parser
-
-ROOT_DIR = Path(__file__).parent.parent
-RELEASES_JSON_PATH = ROOT_DIR / "data" / "releases.json"
+from oc_website.lib.releases import RELEASES_PATH
 
 
 def parse_args() -> argparse.Namespace:
@@ -96,7 +94,7 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
 def main() -> None:
     args = parse_args()
 
-    releases = json.loads(RELEASES_JSON_PATH.read_text())
+    releases = json.loads(RELEASES_PATH.read_text())
 
     for path in (
         [args.path] if args.path.is_file() else sorted(args.path.iterdir())
@@ -121,7 +119,7 @@ def main() -> None:
             print(json.dumps(release, indent=4))
 
     if not args.dry_run:
-        RELEASES_JSON_PATH.write_text(json.dumps(releases, indent=4) + "\n")
+        RELEASES_PATH.write_text(json.dumps(releases, indent=4) + "\n")
 
 
 if __name__ == "__main__":

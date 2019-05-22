@@ -1,7 +1,7 @@
 import typing as T
 from dataclasses import dataclass
 
-from oc_website.lib.common import ROOT_DIR
+from oc_website.lib.common import PROJ_DIR
 
 
 @dataclass
@@ -17,7 +17,7 @@ class Project:
 
 
 def get_projects() -> T.Iterable[Project]:
-    projects_dir = ROOT_DIR / "html" / "projects"
+    projects_dir = PROJ_DIR / "html" / "projects"
     for path in projects_dir.iterdir():
         with path.open("r", encoding="utf-8") as handle:
             title = handle.readline().strip()

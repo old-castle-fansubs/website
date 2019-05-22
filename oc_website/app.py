@@ -5,7 +5,7 @@ import werkzeug.routing
 from flask import Flask, Response, redirect, request, send_from_directory
 
 from oc_website.lib.comments import Comment, get_comments, save_comments
-from oc_website.lib.common import ROOT_DIR, first
+from oc_website.lib.common import STATIC_DIR, first
 from oc_website.lib.env import ProjectLoader, get_env
 from oc_website.lib.featured_images import get_featured_images
 from oc_website.lib.news import get_news
@@ -40,9 +40,9 @@ def init() -> None:
 init()
 
 
-@app.route('/<regex("data|img|img-thumb"):folder>/<path:path>')
-def app_static(folder: str, path: str) -> T.Any:
-    return send_from_directory(ROOT_DIR / folder, path)
+@app.route('/<regex(".*\.css|img/.*|img-thumb/.*"):path>')
+def app_static(path: str) -> T.Any:
+    return send_from_directory(STATIC_DIR, path)
 
 
 @app.after_request

@@ -1,4 +1,2 @@
-public/
-oc_website/data/comments.json
-oc_website/img-thumb/
-.publish.json
+data/comments.json
+static/img-thumb/

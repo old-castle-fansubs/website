@@ -7,7 +7,9 @@ from pathlib import Path
 
 import arrow
 
-from oc_website.lib.common import ROOT_DIR
+from oc_website.lib.common import DATA_DIR, STATIC_DIR
+
+FEATURED_IMAGES_PATH = DATA_DIR / "featured.json"
 
 
 @dataclass
@@ -26,17 +28,17 @@ class FeaturedImage:
 
     @property
     def path(self) -> Path:
-        return ROOT_DIR / self.url
+        return STATIC_DIR / self.url
 
     @property
     def thumbnail_path(self) -> Path:
-        return ROOT_DIR / self.thumbnail_url
+        return STATIC_DIR / self.thumbnail_url
 
 
 def get_featured_images() -> T.Iterable[FeaturedImage]:
     return (
         FeaturedImage(arrow.get(item["date"]), item["name"])
         for item in json.loads(
-            (ROOT_DIR / "data" / "featured.json").read_text(encoding="utf-8")
+            FEATURED_IMAGES_PATH.read_text(encoding="utf-8")
         )
     )

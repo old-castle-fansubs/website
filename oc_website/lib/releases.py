@@ -5,7 +5,9 @@ from datetime import datetime
 
 import arrow
 
-from oc_website.lib.common import ROOT_DIR
+from oc_website.lib.common import DATA_DIR
+
+RELEASES_PATH = DATA_DIR / "releases.json"
 
 
 @dataclass
@@ -40,7 +42,5 @@ def get_releases() -> T.Iterable[Release]:
             links=item["links"],
             is_visible=not item.get("hidden", False),
         )
-        for item in json.loads(
-            (ROOT_DIR / "data" / "releases.json").read_text(encoding="utf-8")
-        )
+        for item in json.loads(RELEASES_PATH.read_text(encoding="utf-8"))
     ]
