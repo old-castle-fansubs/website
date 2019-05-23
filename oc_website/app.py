@@ -40,7 +40,7 @@ def init() -> None:
 init()
 
 
-@app.route('/<regex(".*\.css|img/.*|img-thumb/.*"):path>')
+@app.route('/<regex(".*\\.css|img/.*|img-thumb/.*"):path>')
 def app_static(path: str) -> T.Any:
     return send_from_directory(STATIC_DIR, path)
 
@@ -89,17 +89,6 @@ def app_about() -> str:
 def app_featured_images() -> str:
     return env.get_template("featured.html").render(
         featured_images=FEATURED_IMAGES
-    )
-
-
-def render_comments(tid: int) -> str:
-    env.get_template("guest_book.html").render(
-        tid=GUEST_BOOK_TID,
-        comments=[
-            comment
-            for comment in get_comments()
-            if comment.tid == GUEST_BOOK_TID
-        ],
     )
 
 
