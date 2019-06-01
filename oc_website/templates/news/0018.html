@@ -1,0 +1,45 @@
+{% extends "news_item.html" %}
+{% block date %}2019-06-02{% endblock %}
+{% block title %}Website changes{% endblock %}
+{% block author %}rr-{% endblock %}
+
+{% block news_content %}
+
+<ul>
+  <li>
+    We now have a favicon (the small icon near the address bar).<br/>
+    Can you guess who it is? :) Hint: it is not the main character of any
+    series.
+  </li>
+  <li>
+    There is now an experimental dedicated page for anime requests, available
+    from the guest book. Let us see how it plays out.
+  </li>
+  <li>
+    The website was rewritten to Flask, which lets us make changes to it more
+    easily.
+  </li>
+  <li>
+    The guest book is now handled by Flask rather than Isso, which means much
+    faster loading speed.
+  </li>
+  <li>
+    The option to vote for posts in the guest book was removed.
+  </li>
+  <li>
+    Due to technical reasons (making the website dynamic rather than just .html
+    files), we had to move away from Neocities. Their service is excellent like
+    it has always been, but it does not suit our needs anymore.
+  </li>
+  <li>
+    The website along with the menus were provided with fallback colors, and
+    the background images should load faster, which ought to improve experience
+    for users with poor connection speed.
+  </li>
+  <li>
+    The website is now completely Javascript-free (it used Javascript to
+    transform table cells in the release tables, now it is done by the server).
+  </li>
+</ul>
+
+{% endblock %}
