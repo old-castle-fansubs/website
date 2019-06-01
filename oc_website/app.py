@@ -25,7 +25,7 @@ app.jinja_env = get_env()
 
 FEATURED_IMAGES = list(get_featured_images())
 PROJECTS = list(sorted(get_projects(), key=lambda project: project.title))
-NEWS = sorted(get_news(), key=lambda news: news.path, reverse=True)
+NEWS = sorted(get_news(), key=lambda news: news.stem, reverse=True)
 RELEASES = list(get_releases())
 
 GUEST_BOOK_CACHE: T.Optional[str] = None
@@ -68,7 +68,7 @@ def app_home() -> str:
 
 @app.route("/news.html")
 def app_news() -> str:
-    return render_template("news.html", news_entries=NEWS)
+    return render_template("news_list.html", news_entries=NEWS)
 
 
 @app.route("/projects.html")

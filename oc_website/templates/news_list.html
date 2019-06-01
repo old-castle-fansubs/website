@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}News{% endblock %}
+{% block id %}news{% endblock %}
+{% block content %}
+<h1 class='fancy-title'><span>News</span></h1>
+
+{% for news_entry in news_entries %}
+    {% include "news/" + news_entry.stem + ".html" with context %}
+{% endfor %}
+
+{% endblock %}

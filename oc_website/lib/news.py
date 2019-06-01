@@ -1,11 +1,11 @@
 import typing as T
 from dataclasses import dataclass
 from datetime import datetime
-from pathlib import Path
 
 import arrow
 
-from oc_website.lib.common import PROJ_DIR
+from oc_website.lib.common import TEMPLATES_DIR
+from oc_website.lib.env import get_env
 
 
 @dataclass
@@ -13,20 +13,17 @@ class News:
     date: datetime
     title: str
     author: str
-    content: str
-    path: Path
+    stem: str
 
 
 def get_news() -> T.Iterable[News]:
-    news_dir = PROJ_DIR / "templates" / "news"
-    for news_path in news_dir.iterdir():
-        with news_path.open("r", encoding="utf-8") as handle:
-            date = arrow.get(handle.readline())
-            title = handle.readline().strip()
-            author = handle.readline().strip()
-            if handle.readline().strip():
-                raise ValueError(
-                    "Expected empty line in news " + news_path.name
-                )
-            content = handle.read()
-        yield News(date, title, author, content, news_path)
+    env = get_env()
+
+    for path in (TEMPLATES_DIR / "news").iterdir():
+        template = env.get_template(str(path.relative_to(TEMPLATES_DIR)))
+        context = template.new_context()
+        date = arrow.get("".join(template.blocks["date"](context)))
+        title = "".join(template.blocks["title"](context))
+        author = "".join(template.blocks["author"](context))
+
+        yield News(date=date, title=title, author=author, stem=path.stem)

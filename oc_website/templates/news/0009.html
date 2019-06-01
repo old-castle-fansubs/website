@@ -1,7 +1,9 @@
-2017-12-02
-Changes to website structure
-rr-
+{% extends "news_item.html" %}
+{% block date %}2017-12-02{% endblock %}
+{% block title %}Changes to website structure{% endblock %}
+{% block author %}rr-{% endblock %}
 
+{% block news_content %}
 <p>This has been on my mind for a while and I finally got down to it.</p>
 
 <p>List of things that were changed:</p>
@@ -37,3 +39,4 @@ rr-
 </ul>
 
 <p>If the website looks wrong, please try reloading it with Ctrl+F5.</p>
+{% endblock %}

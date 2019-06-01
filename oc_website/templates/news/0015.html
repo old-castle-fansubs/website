@@ -1,7 +1,9 @@
-2018-12-30
-End of the year update
-rr-
+{% extends "news_item.html" %}
+{% block date %}2018-12-30{% endblock %}
+{% block title %}End of the year update{% endblock %}
+{% block author %}rr-{% endblock %}
 
+{% block news_content %}
 <p>Yesterday we've switched to a cheaper service. The short downtime of the
 guestbook was caused by server migration. We've managed to reduce server costs
 more than threefold, from about 450 EUR a year to 120 EUR a year, at the
@@ -65,3 +67,4 @@ here when we find the time.</p>
     <li>Umi no Yami Tsuki no Kage</li>
     <li>Zambot 3</li>
 </ul>
+{% endblock %}
