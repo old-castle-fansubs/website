@@ -4,6 +4,8 @@
 {% block id %}guest-book{% endblock %}
 {% block content %}
 
+<h1 class='fancy-title'><span>Guest book</span></h1>
+
 {% if pid %}
   <p>Replying to a comment by <em>{{ parent_comment.author }}</em>:</p>
   {{ parent_comment.html }}
@@ -21,7 +23,7 @@
       <textarea tabindex="-1" class="khatiff" type="text" name="message" autocomplete="off"></textarea>
 
       <div class="textarea-wrapper">
-        <textarea name="content" placeholder="Type Comment Here (at least 3 chars)" required>{{ comment.text }}</textarea>
+        <textarea name="text" placeholder="Type comment here.&#10;For anime requests, please use the request list (reachable from guest book)." required>{{ comment.text }}</textarea>
       </div>
 
       <section class="auth-section">

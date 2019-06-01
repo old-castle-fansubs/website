@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Anime requests{% endblock %}
+{% block id %}requests{% endblock %}
+{% block content %}
+
+<h1 class='fancy-title'><span>Anime requests</span></h1>
+
+<p><strong>Disclaimer:</strong> This list is by no means binding, i.e. we may
+choose titles outside of this list for our future projects. This list is sorted
+alphabetically.</p>
+
+<p>If you don't see your title on this list,
+you can <a href="request_add.html">request one here</a>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Request date</th>
+      <th>AniDB link</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for request in requests %}
+      <tr>
+        <td>{{ request.title }}</td>
+
+        {% if request.date %}
+          <td>{{ request.date.strftime('%A, %d %b %Y') }}</td>
+        {% else %}
+          <td>?</td>
+        {% endif %}
+
+        {% if request.anidb_link %}
+          <td><a href="{{ request.anidb_link }}">here</a></td>
+        {% else %}
+          <td>?</td>
+        {% endif %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

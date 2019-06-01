@@ -18,6 +18,9 @@ from oc_website.lib.jinja_env import setup_jinja_env
 from oc_website.lib.news import get_news
 from oc_website.lib.projects import get_projects
 from oc_website.lib.releases import get_releases
+from oc_website.lib.requests import Request as SubRequest
+from oc_website.lib.requests import get_requests as get_sub_requests
+from oc_website.lib.requests import save_requests as save_sub_requests
 from oc_website.lib.thumbnails import generate_thumbnail
 
 app = Flask(__name__)
@@ -98,6 +101,64 @@ def app_featured_images() -> str:
     return render_template("featured.html", featured_images=FEATURED_IMAGES)
 
 
+@app.route("/requests.html")
+def app_requests() -> str:
+    return render_template(
+        "request_list.html",
+        requests=sorted(
+            get_sub_requests(),
+            key=lambda sub_request: sub_request.title.lower(),
+        ),
+    )
+
+
+@app.route("/request_add.html", methods=["GET", "POST"])
+def app_request_add() -> str:
+    title = request.form.get("title", "")
+    anidb_link = request.form.get("anidb_link", "")
+    comment = request.form.get("comment", "")
+
+    sub_requests = list(get_sub_requests())
+    if request.headers.getlist("X-Forwarded-For"):
+        remote_addr = request.headers.getlist("X-Forwarded-For")[0]
+    else:
+        remote_addr = request.remote_addr
+
+    sub_request = SubRequest(
+        title=title,
+        date=arrow.now(),
+        anidb_link=anidb_link,
+        comment=comment,
+        remote_addr=remote_addr,
+    )
+
+    errors: T.List[str] = []
+
+    if request.method == "POST":
+        if request.form.get("phone") or request.form.get("message"):
+            errors.append("Human verification failed.")
+        if not sub_request.title:
+            errors.append("Request title cannot be empty.")
+        if not sub_request.anidb_link:
+            errors.append("AniDB link cannot be empty.")
+        if not sub_request.anidb_link.startswith("https://anidb.net/"):
+            errors.append("The provided AniDB link appears to be invalid.")
+
+        if any(sub_request.anidb_link == r.anidb_link for r in sub_requests):
+            errors.append(
+                "Anime with this AniDB link had been already requested."
+            )
+
+        if not errors:
+            sub_requests.append(sub_request)
+            save_sub_requests(sub_requests)
+            return redirect("requests.html", code=302)
+
+    return render_template(
+        "request_add.html", request=sub_request, errors=errors
+    )
+
+
 @app.route("/guest_book.html")
 def app_guest_book() -> str:
     global GUEST_BOOK_CACHE
@@ -128,7 +189,7 @@ def app_comment_add() -> T.Union[str, Response]:
         tid = 0
 
     is_preview = request.form.get("submit") == "preview"
-    content = request.form.get("content", "")
+    text = request.form.get("text", "")
     author = request.form.get("author", "")
     website = request.form.get("website", "")
     email = request.form.get("email", "")
@@ -155,7 +216,7 @@ def app_comment_add() -> T.Union[str, Response]:
         pid=pid or None,
         created=arrow.now(),
         remote_addr=remote_addr,
-        text=content,
+        text=text,
         author=author,
         email=email,
         website=website,

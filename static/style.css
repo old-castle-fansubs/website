@@ -346,3 +346,11 @@ textarea:focus,
 input:focus {
     border-color: green;
 }
+
+#requests table th:nth-child(2),
+#requests table td:nth-child(2),
+#requests table th:nth-child(3),
+#requests table td:nth-child(3) {
+    white-space: nowrap;
+    font-size: smaller;
+}
