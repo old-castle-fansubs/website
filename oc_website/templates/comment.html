@@ -15,7 +15,7 @@
       {% endif %}
     </div>
     <div class="text">
-      {{ comment.html }}
+      {{ comment.html|safe }}
     </div>
     <div class="follow-up">
       {% block follow_up %}{% endblock %}

@@ -2,7 +2,7 @@ import typing as T
 from dataclasses import dataclass
 
 from oc_website.lib.common import TEMPLATES_DIR
-from oc_website.lib.env import get_env
+from oc_website.lib.jinja_env import get_jinja_env
 
 
 @dataclass
@@ -17,10 +17,10 @@ class Project:
 
 
 def get_projects() -> T.Iterable[Project]:
-    env = get_env()
+    jinja_env = get_jinja_env()
 
     for path in (TEMPLATES_DIR / "projects").iterdir():
-        template = env.get_template(str(path.relative_to(TEMPLATES_DIR)))
+        template = jinja_env.get_template(str(path.relative_to(TEMPLATES_DIR)))
         context = template.new_context()
         title = "".join(template.blocks["title"](context))
         status = "".join(template.blocks["status"](context))

@@ -6,22 +6,22 @@ from flask import (
     Flask,
     Response,
     redirect,
+    render_template,
     request,
     send_from_directory,
-    render_template,
 )
 
 from oc_website.lib.comments import Comment, get_comments, save_comments
 from oc_website.lib.common import STATIC_DIR, first
-from oc_website.lib.env import get_env
 from oc_website.lib.featured_images import get_featured_images
+from oc_website.lib.jinja_env import setup_jinja_env
 from oc_website.lib.news import get_news
 from oc_website.lib.projects import get_projects
 from oc_website.lib.releases import get_releases
 from oc_website.lib.thumbnails import generate_thumbnail
 
 app = Flask(__name__)
-app.jinja_env = get_env()
+setup_jinja_env(app.jinja_env)
 
 FEATURED_IMAGES = list(get_featured_images())
 PROJECTS = list(sorted(get_projects(), key=lambda project: project.title))
@@ -101,7 +101,7 @@ def app_featured_images() -> str:
 @app.route("/guest_book.html")
 def app_guest_book() -> str:
     global GUEST_BOOK_CACHE
-    if not GUEST_BOOK_CACHE:
+    if not GUEST_BOOK_CACHE or app.debug:
         GUEST_BOOK_CACHE = render_template(
             "guest_book.html",
             tid=GUEST_BOOK_TID,
