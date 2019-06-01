@@ -40,7 +40,9 @@ def init() -> None:
 init()
 
 
-@app.route('/<regex(".*\\.css|img/.*|img-thumb/.*"):path>')
+@app.route(
+    '/<regex(".*\\.css|img(-thumb)?/.*|favicon\\.ico|robots\\.txt"):path>'
+)
 def app_static(path: str) -> T.Any:
     return send_from_directory(STATIC_DIR, path)
 
