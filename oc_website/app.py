@@ -2,7 +2,14 @@ import typing as T
 
 import arrow
 import werkzeug.routing
-from flask import Flask, Response, redirect, request, send_from_directory
+from flask import (
+    Flask,
+    Response,
+    redirect,
+    request,
+    send_from_directory,
+    render_template,
+)
 
 from oc_website.lib.comments import Comment, get_comments, save_comments
 from oc_website.lib.common import STATIC_DIR, first
@@ -14,7 +21,7 @@ from oc_website.lib.releases import get_releases
 from oc_website.lib.thumbnails import generate_thumbnail
 
 app = Flask(__name__)
-env = get_env()
+app.jinja_env = get_env()
 
 FEATURED_IMAGES = list(get_featured_images())
 PROJECTS = list(sorted(get_projects(), key=lambda project: project.title))
@@ -56,19 +63,17 @@ def cors(response: Response) -> Response:
 @app.route("/")
 @app.route("/index.html")
 def app_home() -> str:
-    return env.get_template("home.html").render(
-        featured_images=FEATURED_IMAGES
-    )
+    return render_template("home.html", featured_images=FEATURED_IMAGES)
 
 
 @app.route("/news.html")
 def app_news() -> str:
-    return env.get_template("news.html").render(news_entries=NEWS)
+    return render_template("news.html", news_entries=NEWS)
 
 
 @app.route("/projects.html")
 def app_projects() -> str:
-    return env.get_template("projects.html").render(projects=PROJECTS)
+    return render_template("projects.html", projects=PROJECTS)
 
 
 @app.route("/project-<string:project_name>.html")
@@ -76,29 +81,30 @@ def app_project(project_name: str) -> str:
     for project in PROJECTS:
         if project_name in project.url:
             ProjectLoader.source = project.content
-            return env.get_template("project.html").render(
-                project=project, releases=RELEASES
+            return render_template(
+                "project.html",
+                project=project,
+                releases=RELEASES,
             )
-    return env.get_template("projects.html").render(projects=PROJECTS)
+    return render_template("projects.html", projects=PROJECTS)
 
 
 @app.route("/about.html")
 def app_about() -> str:
-    return env.get_template("about.html").render()
+    return render_template("about.html")
 
 
 @app.route("/featured.html")
 def app_featured_images() -> str:
-    return env.get_template("featured.html").render(
-        featured_images=FEATURED_IMAGES
-    )
+    return render_template("featured.html", featured_images=FEATURED_IMAGES)
 
 
 @app.route("/guest_book.html")
 def app_guest_book() -> str:
     global GUEST_BOOK_CACHE
     if not GUEST_BOOK_CACHE:
-        GUEST_BOOK_CACHE = env.get_template("guest_book.html").render(
+        GUEST_BOOK_CACHE = render_template(
+            "guest_book.html",
             tid=GUEST_BOOK_TID,
             comments=[
                 comment
@@ -176,7 +182,8 @@ def app_comment_add() -> T.Union[str, Response]:
             GUEST_BOOK_CACHE = None
             return redirect("guest_book.html", code=302)
 
-    return env.get_template("comment_add.html").render(
+    return render_template(
+        "comment_add.html",
         form_url=form_url,
         parent_comment=parent_comment,
         comment=comment,
