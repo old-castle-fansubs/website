@@ -18,7 +18,7 @@ class News:
 
 
 def get_news() -> T.Iterable[News]:
-    news_dir = PROJ_DIR / "html" / "news"
+    news_dir = PROJ_DIR / "templates" / "news"
     for news_path in news_dir.iterdir():
         with news_path.open("r", encoding="utf-8") as handle:
             date = arrow.get(handle.readline())

@@ -19,7 +19,10 @@ class ProjectLoader(jinja2.BaseLoader):
 def get_env() -> jinja2.Environment:
     env = jinja2.Environment(
         loader=jinja2.ChoiceLoader(
-            [ProjectLoader(), jinja2.FileSystemLoader(str(PROJ_DIR / "html"))]
+            [
+                ProjectLoader(),
+                jinja2.FileSystemLoader(str(PROJ_DIR / "templates")),
+            ]
         ),
         lstrip_blocks=True,
         trim_blocks=True,

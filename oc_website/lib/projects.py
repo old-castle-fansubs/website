@@ -17,7 +17,7 @@ class Project:
 
 
 def get_projects() -> T.Iterable[Project]:
-    projects_dir = PROJ_DIR / "html" / "projects"
+    projects_dir = PROJ_DIR / "templates" / "projects"
     for path in projects_dir.iterdir():
         with path.open("r", encoding="utf-8") as handle:
             title = handle.readline().strip()
