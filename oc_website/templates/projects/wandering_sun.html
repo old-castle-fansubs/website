@@ -1,6 +1,8 @@
-Wandering Sun
-ongoing
+{% extends "project.html" %}
+{% block title %}Wandering Sun{% endblock %}
+{% block status %}ongoing{% endblock %}
 
+{% block project_content %}
 <p>Two baby girls were born in the same hospital: one of them is the daughter
 of an aristocratic family while the other belongs to a depraved household which
 lives in the slums of the city. However, the nurse-in-charge, Michiko, secretly
@@ -17,3 +19,4 @@ poor Nozomi, yet both of them hold similar dreams to become a singer.
 
 {% import 'release-table.html' as release_table %}
 {{ release_table.table(releases, 'Wandering Sun') }}
+{% endblock %}

@@ -1,6 +1,8 @@
-Monster Hunter Stories:<wbr/> Ride On
-finished
+{% extends "project.html" %}
+{% block title %}Monster Hunter Stories:<wbr/> Ride On{% endblock %}
+{% block status %}finished{% endblock %}
 
+{% block project_content %}
 <p>Lute and his friends Cheval, Lilia, and Navirou live in Hakum Village,
 where chosen children learn to be Riders. Riders form a bond with friendly
 monsters called Monsties hatched from eggs, riding them as mounts for travel
@@ -20,3 +22,4 @@ way to stop the blighted monsters without having to destroy them outright.
 
 {% import 'release-table.html' as release_table %}
 {{ release_table.table(releases, 'Monster Hunter') }}
+{% endblock %}

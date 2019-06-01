@@ -13,7 +13,7 @@ from flask import (
 
 from oc_website.lib.comments import Comment, get_comments, save_comments
 from oc_website.lib.common import STATIC_DIR, first
-from oc_website.lib.env import ProjectLoader, get_env
+from oc_website.lib.env import get_env
 from oc_website.lib.featured_images import get_featured_images
 from oc_website.lib.news import get_news
 from oc_website.lib.projects import get_projects
@@ -79,10 +79,9 @@ def app_projects() -> str:
 @app.route("/project-<string:project_name>.html")
 def app_project(project_name: str) -> str:
     for project in PROJECTS:
-        if project_name in project.url:
-            ProjectLoader.source = project.content
+        if project_name == project.stem:
             return render_template(
-                "project.html",
+                "projects/" + project.stem + ".html",
                 project=project,
                 releases=RELEASES,
             )

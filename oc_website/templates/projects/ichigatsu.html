@@ -1,6 +1,8 @@
-Ichigatsu ni wa Christmas
-finished
+{% extends "project.html" %}
+{% block title %}Ichigatsu ni wa Christmas{% endblock %}
+{% block status %}finished{% endblock %}
 
+{% block project_content %}
 <p>This is a character study of a rather traumatized young woman who develops a crush on a man who lives next door to her.
 <br/>
 —The TechnoGirls</p>
@@ -11,4 +13,4 @@ finished
 
 {% import 'release-table.html' as release_table %}
 {{ release_table.table(releases, 'Ichigatsu ni wa Christmas') }}
-
+{% endblock %}

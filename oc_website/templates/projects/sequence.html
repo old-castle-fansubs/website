@@ -1,6 +1,8 @@
-Sequence
-finished
+{% extends "project.html" %}
+{% block title %}Sequence{% endblock %}
+{% block status %}finished{% endblock %}
 
+{% block project_content %}
 <p>Suffering from a crippling memory loss ever since an accident at the age of
 six, Toshiaki finds new hope, and a new mystery, when he is visited by a girl
 from his own future.
@@ -13,3 +15,4 @@ from his own future.
 
 {% import 'release-table.html' as release_table %}
 {{ release_table.table(releases, 'Sequence') }}
+{% endblock %}

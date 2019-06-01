@@ -2,27 +2,13 @@ import typing as T
 
 import jinja2
 
-from oc_website.lib.common import PROJ_DIR
-
-
-class ProjectLoader(jinja2.BaseLoader):
-    source = ""
-
-    def get_source(
-        self, environment: jinja2.Environment, template: str
-    ) -> T.Any:
-        if template != "generated_project.html":
-            raise jinja2.TemplateNotFound(template)
-        return (ProjectLoader.source, None, lambda: False)
+from oc_website.lib.common import TEMPLATES_DIR
 
 
 def get_env() -> jinja2.Environment:
     env = jinja2.Environment(
         loader=jinja2.ChoiceLoader(
-            [
-                ProjectLoader(),
-                jinja2.FileSystemLoader(str(PROJ_DIR / "templates")),
-            ]
+            [jinja2.FileSystemLoader(str(TEMPLATES_DIR))]
         ),
         lstrip_blocks=True,
         trim_blocks=True,

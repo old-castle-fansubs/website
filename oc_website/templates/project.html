@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% block title %}{{ project.title }}{% endblock %}
 {% block id %}project{% endblock %}
-{% block content %}
-<header>
-    <h1 class='fancy-title'><span>{{ project.title }}</span></h1>
-    <img src='img/projects/{{ project.stem }}-big.jpg' alt='{{ project.title }}'/>
-</header>
 
-{% include 'generated_project.html' %}
+{% block content %}
+    <header>
+        <h1 class='fancy-title'><span>{{ project.title }}</span></h1>
+        <img src='img/projects/{{ project.stem }}-big.jpg' alt='{{ project.title }}'/>
+    </header>
+
+    {% block project_content %}
+    {% endblock %}
 {% endblock %}

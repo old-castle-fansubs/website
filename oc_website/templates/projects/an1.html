@@ -1,6 +1,8 @@
-Attack No. 1
-ongoing
+{% extends "project.html" %}
+{% block title %}Attack No. 1{% endblock %}
+{% block status %}ongoing{% endblock %}
 
+{% block project_content %}
 <p>The story is about Ayuhara Kozue, a 12-year-old girl who transferred to
 Fujimi College and tried out for the school volleyball team. She develops a
 friendship with her teammate Hayakawa Midori, and her talents impress coach
@@ -17,3 +19,4 @@ eventually the world, set the tone for the drama to follow.
 
 {% import 'release-table.html' as release_table %}
 {{ release_table.table(releases, 'Attack no. 1') }}
+{% endblock %}
