@@ -8,7 +8,8 @@
         "links": [
             "https://nyaa.si/view/932047",
             "https://anidex.info/torrent/81353"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-06-19",
@@ -19,7 +20,8 @@
         "links": [
             "https://nyaa.si/view/932050",
             "https://anidex.info/torrent/81354"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-06-26",
@@ -30,7 +32,8 @@
         "links": [
             "https://nyaa.si/view/933807",
             "https://anidex.info/torrent/81355"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-07-03",
@@ -41,7 +44,8 @@
         "links": [
             "https://nyaa.si/view/935567",
             "https://anidex.info/torrent/81356"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-07-10",
@@ -52,7 +56,8 @@
         "links": [
             "https://nyaa.si/view/937484",
             "https://anidex.info/torrent/81357"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-07-17",
@@ -63,7 +68,8 @@
         "links": [
             "https://nyaa.si/view/939680",
             "https://anidex.info/torrent/81358"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-07-24",
@@ -74,7 +80,8 @@
         "links": [
             "https://nyaa.si/view/941917",
             "https://anidex.info/torrent/81359"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-07-31",
@@ -85,7 +92,8 @@
         "links": [
             "https://nyaa.si/view/944639",
             "https://anidex.info/torrent/81360"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-08-07",
@@ -97,7 +105,8 @@
             "https://nyaa.si/view/947119",
             "https://anidex.info/torrent/81361"
         ],
-        "note": "<p>I'm not sure if it is a creators' slip-up, but Ayuhara-san mistakes Ozawa-san for Kudou-san and Ozawa-san doesn't try to correct that. Please don't be confused.</p>"
+        "note": "<p>I'm not sure if it is a creators' slip-up, but Ayuhara-san mistakes Ozawa-san for Kudou-san and Ozawa-san doesn't try to correct that. Please don't be confused.</p>",
+        "hidden": true
     },
     {
         "date": "2017-08-07",
@@ -109,7 +118,8 @@
             "https://nyaa.si/view/947121",
             "https://anidex.info/torrent/81362"
         ],
-        "note": "<p><a href='https://www.youtube.com/watch?v=L3AXiLH0jD0'>A little bonus :)</a></p>"
+        "note": "<p><a href='https://www.youtube.com/watch?v=L3AXiLH0jD0'>A little bonus :)</a></p>",
+        "hidden": true
     },
     {
         "date": "2017-08-11",
@@ -120,7 +130,8 @@
         "links": [
             "https://nyaa.si/view/948391",
             "https://anidex.info/torrent/81363"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-08-21",
@@ -131,7 +142,8 @@
         "links": [
             "https://nyaa.si/view/951601",
             "https://anidex.info/torrent/81364"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-08-28",
@@ -142,7 +154,8 @@
         "links": [
             "https://nyaa.si/view/953819",
             "https://anidex.info/torrent/81365"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-09-04",
@@ -154,7 +167,8 @@
             "https://nyaa.si/view/956015",
             "https://anidex.info/torrent/81366"
         ],
-        "note": "<p>Oyoshi and Okei are nicknames of Katori Yoshiko-san and Kudou Keiko-san respectively."
+        "note": "<p>Oyoshi and Okei are nicknames of Katori Yoshiko-san and Kudou Keiko-san respectively.",
+        "hidden": true
     },
     {
         "date": "2017-09-11",
@@ -166,7 +180,8 @@
             "https://nyaa.si/view/958321",
             "https://anidex.info/torrent/81367"
         ],
-        "note": "<p>PS: around 04:17 Ooyama-san is drawn with glasses even though he doesn't wear them during the rest of the episode.</p>"
+        "note": "<p>PS: around 04:17 Ooyama-san is drawn with glasses even though he doesn't wear them during the rest of the episode.</p>",
+        "hidden": true
     },
     {
         "date": "2017-09-18",
@@ -177,7 +192,8 @@
         "links": [
             "https://nyaa.si/view/960166",
             "https://anidex.info/torrent/81368"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-09-25",
@@ -188,7 +204,8 @@
         "links": [
             "https://nyaa.si/view/962615",
             "https://anidex.info/torrent/81369"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-10-02",
@@ -200,7 +217,8 @@
             "https://nyaa.si/view/964800",
             "https://anidex.info/torrent/82001"
         ],
-        "note": "<p>Unfortunately, the video quality in the latter half is rather bad, but it's the fault of the source material rather than encode. I couldn't get to the bottom of this.</p>"
+        "note": "<p>Unfortunately, the video quality in the latter half is rather bad, but it's the fault of the source material rather than encode. I couldn't get to the bottom of this.</p>",
+        "hidden": true
     },
     {
         "date": "2017-10-09",
@@ -211,7 +229,8 @@
         "links": [
             "https://nyaa.si/view/967400",
             "https://anidex.info/torrent/83761"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-10-16",
@@ -222,7 +241,8 @@
         "links": [
             "https://nyaa.si/view/969651",
             "https://anidex.info/torrent/85561"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-10-23",
@@ -233,7 +253,8 @@
         "links": [
             "https://nyaa.si/view/972096",
             "https://anidex.info/torrent/87927"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-10-30",
@@ -244,7 +265,8 @@
         "links": [
             "https://nyaa.si/view/974282",
             "https://anidex.info/torrent/90375"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-11-06",
@@ -255,7 +277,8 @@
         "links": [
             "https://nyaa.si/view/976472",
             "https://anidex.info/torrent/92575"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-11-13",
@@ -266,7 +289,8 @@
         "links": [
             "https://nyaa.si/view/978660",
             "https://anidex.info/torrent/95168"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-11-20",
@@ -277,7 +301,8 @@
         "links": [
             "https://nyaa.si/view/980564",
             "https://anidex.info/torrent/97404"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-11-27",
@@ -288,7 +313,8 @@
         "links": [
             "https://nyaa.si/view/982483",
             "https://anidex.info/torrent/99453"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-10-09",
@@ -431,7 +457,8 @@
         "links": [
             "https://nyaa.si/view/984513",
             "https://anidex.info/torrent/101160"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-12-10",
@@ -454,7 +481,8 @@
         "links": [
             "https://nyaa.si/view/986554",
             "https://anidex.info/torrent/102723"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-12-14",
@@ -489,7 +517,8 @@
         "links": [
             "https://nyaa.si/view/988813",
             "https://anidex.info/torrent/104462"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-12-25",
@@ -500,7 +529,8 @@
         "links": [
             "https://nyaa.si/view/990934",
             "https://anidex.info/torrent/106397"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2017-12-31",
@@ -523,7 +553,8 @@
         "links": [
             "https://nyaa.si/view/992634",
             "https://anidex.info/torrent/108015"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-01-08",
@@ -534,7 +565,8 @@
         "links": [
             "https://nyaa.si/view/994483",
             "https://anidex.info/torrent/109807"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-01-08",
@@ -568,7 +600,8 @@
         "links": [
             "https://nyaa.si/view/996682",
             "https://anidex.info/torrent/111848"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-01-15",
@@ -591,7 +624,8 @@
         "links": [
             "https://nyaa.si/view/998783",
             "https://anidex.info/torrent/113498"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-01-22",
@@ -614,7 +648,8 @@
         "links": [
             "https://nyaa.si/view/1001285",
             "https://anidex.info/torrent/115568"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-01-29",
@@ -637,7 +672,8 @@
         "links": [
             "https://nyaa.si/view/1003862",
             "https://anidex.info/torrent/117474"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-02-05",
@@ -660,7 +696,8 @@
         "links": [
             "https://nyaa.si/view/1006166",
             "https://anidex.info/torrent/119760"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-02-18",
@@ -683,7 +720,8 @@
         "links": [
             "https://nyaa.si/view/1008354",
             "https://anidex.info/torrent/122016"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-02-24",
@@ -706,7 +744,8 @@
         "links": [
             "https://nyaa.si/view/1010375",
             "https://anidex.info/torrent/123873"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-03-05",
@@ -717,7 +756,8 @@
         "links": [
             "https://nyaa.si/view/1012634",
             "https://anidex.info/torrent/125592"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-03-13",
@@ -728,7 +768,8 @@
         "links": [
             "https://nyaa.si/view/1015031",
             "https://anidex.info/torrent/128008"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-03-13",
@@ -751,7 +792,8 @@
         "links": [
             "https://nyaa.si/view/1017203",
             "https://anidex.info/torrent/129704"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-03-26",
@@ -786,7 +828,8 @@
         "links": [
             "https://nyaa.si/view/1019812",
             "https://anidex.info/torrent/131580"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-04-02",
@@ -797,7 +840,8 @@
         "links": [
             "https://nyaa.si/view/1022463",
             "https://anidex.info/torrent/133830"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-04-04",
@@ -820,7 +864,8 @@
         "links": [
             "https://nyaa.si/view/1025048",
             "https://anidex.info/torrent/135953"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-04-16",
@@ -843,7 +888,8 @@
         "links": [
             "https://nyaa.si/view/1027503",
             "https://anidex.info/torrent/138152"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-04-23",
@@ -854,7 +900,8 @@
         "links": [
             "https://nyaa.si/view/1029624",
             "https://anidex.info/torrent/140275"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-04-26",
@@ -1162,7 +1209,8 @@
         "links": [
             "https://nyaa.si/view/1032375",
             "https://anidex.info/torrent/142694"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-05-08 20:43:52",
@@ -1173,7 +1221,8 @@
         "links": [
             "https://nyaa.si/view/1035107",
             "https://anidex.info/torrent/144653"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-05-14 22:37:32",
@@ -1184,7 +1233,8 @@
         "links": [
             "https://nyaa.si/view/1037219",
             "https://anidex.info/torrent/146367"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-05-22 20:12:02",
@@ -1195,7 +1245,8 @@
         "links": [
             "https://nyaa.si/view/1039916",
             "https://anidex.info/torrent/148337"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-05-22 22:27:53",
@@ -1218,7 +1269,8 @@
         "links": [
             "https://nyaa.si/view/1042175",
             "https://anidex.info/torrent/150497"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-05-29 22:05:26",
@@ -1253,7 +1305,8 @@
         "links": [
             "https://nyaa.si/view/1044418",
             "https://anidex.info/torrent/152134"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-06-13 18:59:16",
@@ -1264,7 +1317,8 @@
         "links": [
             "https://nyaa.si/view/1046914",
             "https://anidex.info/torrent/154281"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-06-15 21:42:19",
@@ -1299,7 +1353,8 @@
         "links": [
             "https://nyaa.si/view/1049109",
             "https://anidex.info/torrent/156856"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-06-23 08:19:53",
@@ -1322,7 +1377,8 @@
         "links": [
             "https://nyaa.si/view/1052987",
             "https://anidex.info/torrent/160922"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-07-09 22:29:09",
@@ -1333,7 +1389,8 @@
         "links": [
             "https://nyaa.si/view/1055120",
             "https://anidex.info/torrent/163269"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-07-11 22:23:49",
@@ -1368,7 +1425,8 @@
         "links": [
             "https://nyaa.si/view/1057354",
             "https://anidex.info/torrent/165786"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-07-21 14:26:56",
@@ -1391,7 +1449,8 @@
         "links": [
             "https://nyaa.si/view/1059548",
             "https://anidex.info/torrent/168148"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-07-31 00:16:59",
@@ -1402,7 +1461,8 @@
         "links": [
             "https://nyaa.si/view/1061744",
             "https://anidex.info/torrent/170591"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-08-07 21:24:17",
@@ -1413,7 +1473,8 @@
         "links": [
             "https://nyaa.si/view/1064361",
             "https://anidex.info/torrent/172929"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-08-13 19:24:20",
@@ -1436,7 +1497,8 @@
         "links": [
             "https://nyaa.si/view/1066164",
             "https://anidex.info/torrent/174662"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-08-20 13:34:32",
@@ -1459,7 +1521,8 @@
         "links": [
             "https://nyaa.si/view/1068333",
             "https://anidex.info/torrent/176845"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-08-27 16:35:58",
@@ -1482,7 +1545,8 @@
         "links": [
             "https://nyaa.si/view/1070361",
             "https://anidex.info/torrent/178402"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-09-04 00:05:02",
@@ -1505,7 +1569,8 @@
         "links": [
             "https://nyaa.si/view/1072467",
             "https://anidex.info/torrent/180442"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-09-11 14:37:17",
@@ -1528,7 +1593,8 @@
         "links": [
             "https://nyaa.si/view/1074927",
             "https://anidex.info/torrent/182637"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-09-17 15:49:43",
@@ -1539,7 +1605,8 @@
         "links": [
             "https://nyaa.si/view/1076338",
             "https://anidex.info/torrent/184077"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-09-24 19:13:43",
@@ -1550,7 +1617,8 @@
         "links": [
             "https://nyaa.si/view/1078244",
             "https://anidex.info/torrent/186273"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-09-24 20:29:23",
@@ -1573,7 +1641,8 @@
         "links": [
             "https://nyaa.si/view/1080184",
             "https://anidex.info/torrent/188377"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-10-01 19:33:46",
@@ -1596,7 +1665,8 @@
         "links": [
             "https://nyaa.si/view/1082411",
             "https://anidex.info/torrent/190436"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-10-17 19:07:28",
@@ -1607,7 +1677,8 @@
         "links": [
             "https://nyaa.si/view/1085390",
             "https://anidex.info/torrent/193500"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-10-17 20:34:30",
@@ -1618,7 +1689,8 @@
         "links": [
             "https://nyaa.si/view/1085424",
             "https://anidex.info/torrent/193524"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-10-23 13:15:49",
@@ -1641,7 +1713,8 @@
         "links": [
             "https://nyaa.si/view/1087202",
             "https://anidex.info/torrent/195204"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-10-29 19:41:40",
@@ -1652,7 +1725,8 @@
         "links": [
             "https://nyaa.si/view/1089226",
             "https://anidex.info/torrent/197489"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-11-01 11:32:51",
@@ -1675,7 +1749,8 @@
         "links": [
             "https://nyaa.si/view/1091641",
             "https://anidex.info/torrent/200143"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-11-12 10:59:08",
@@ -1698,7 +1773,8 @@
         "links": [
             "https://nyaa.si/view/1093409",
             "https://anidex.info/torrent/202856"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-11-19 20:45:22",
@@ -1709,7 +1785,8 @@
         "links": [
             "https://nyaa.si/view/1095590",
             "https://anidex.info/torrent/205194"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-11-19 21:48:11",
@@ -1732,7 +1809,8 @@
         "links": [
             "https://nyaa.si/view/1097546",
             "https://anidex.info/torrent/207286"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-11-28 14:34:12",
@@ -1755,7 +1833,8 @@
         "links": [
             "https://nyaa.si/view/1099522",
             "https://anidex.info/torrent/209444"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-12-04 21:15:00",
@@ -1778,7 +1857,8 @@
         "links": [
             "https://nyaa.si/view/1101258",
             "https://anidex.info/torrent/210870"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-12-10 20:57:38",
@@ -1813,7 +1893,8 @@
         "links": [
             "https://nyaa.si/view/1103204",
             "https://anidex.info/torrent/212635"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2018-12-24 11:54:46",
@@ -1824,7 +1905,8 @@
         "links": [
             "https://nyaa.si/view/1104819",
             "https://anidex.info/torrent/214293"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-01-01 19:43:15",
@@ -1835,7 +1917,8 @@
         "links": [
             "https://nyaa.si/view/1106809",
             "https://anidex.info/torrent/215972"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-01-09 11:55:59",
@@ -1846,7 +1929,8 @@
         "links": [
             "https://nyaa.si/view/1108368",
             "https://anidex.info/torrent/217377"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-01-14 17:50:22",
@@ -1857,7 +1941,8 @@
         "links": [
             "https://nyaa.si/view/1109846",
             "https://anidex.info/torrent/218602"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-01-16 13:52:17",
@@ -1879,7 +1964,8 @@
         "links": [
             "https://nyaa.si/view/1112466",
             "https://anidex.info/torrent/220642"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-01-26 22:34:35",
@@ -1901,7 +1987,8 @@
         "links": [
             "https://nyaa.si/view/1114155",
             "https://anidex.info/torrent/221920"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-02-03 16:10:32",
@@ -1923,7 +2010,8 @@
         "links": [
             "https://nyaa.si/view/1115979",
             "https://anidex.info/torrent/223376"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-02-10 16:07:53",
@@ -1945,7 +2033,8 @@
         "links": [
             "https://nyaa.si/view/1118169",
             "https://anidex.info/torrent/224977"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-02-17 17:37:03",
@@ -1967,7 +2056,8 @@
         "links": [
             "https://nyaa.si/view/1120473",
             "https://anidex.info/torrent/226961"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-02-24 11:57:41",
@@ -1989,7 +2079,8 @@
         "links": [
             "https://nyaa.si/view/1121985",
             "https://anidex.info/torrent/228188"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-03-04 14:39:41",
@@ -2011,7 +2102,8 @@
         "links": [
             "https://nyaa.si/view/1124010",
             "https://anidex.info/torrent/229585"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-03-10 20:14:37",
@@ -2033,7 +2125,8 @@
         "links": [
             "https://nyaa.si/view/1126136",
             "https://anidex.info/torrent/231281"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-03-18 21:19:49",
@@ -2055,7 +2148,8 @@
         "links": [
             "https://nyaa.si/view/1127851",
             "https://anidex.info/torrent/232791"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-03-25 23:10:40",
@@ -2077,7 +2171,8 @@
         "links": [
             "https://nyaa.si/view/1129901",
             "https://anidex.info/torrent/234515"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-04-03 00:20:13",
@@ -2099,7 +2194,8 @@
         "links": [
             "https://nyaa.si/view/1132097",
             "https://anidex.info/torrent/236271"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-04-09 00:17:59",
@@ -2121,7 +2217,8 @@
         "links": [
             "https://nyaa.si/view/1133784",
             "https://anidex.info/torrent/237590"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-04-16 19:21:02",
@@ -2143,7 +2240,8 @@
         "links": [
             "https://nyaa.si/view/1136030",
             "https://anidex.info/torrent/239285"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-04-22 14:55:26",
@@ -2165,7 +2263,8 @@
         "links": [
             "https://nyaa.si/view/1137579",
             "https://anidex.info/torrent/240466"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-04-30 09:57:56",
@@ -2187,7 +2286,8 @@
         "links": [
             "https://nyaa.si/view/1140030",
             "https://anidex.info/torrent/242143"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-05-04 10:42:39",
@@ -2461,7 +2561,8 @@
         "title": "The tornado drop, at risk!?",
         "links": [
             "https://nyaa.si/view/1141618"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-05-13 22:05:36",
@@ -2481,7 +2582,8 @@
         "title": "The fall of the Japanese team",
         "links": [
             "https://nyaa.si/view/1143265"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-05-20 18:08:00",
@@ -2503,7 +2605,8 @@
         "links": [
             "https://nyaa.si/view/1145099",
             "https://anidex.info/torrent/246326"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-05-28 11:41:45",
@@ -2525,7 +2628,8 @@
         "links": [
             "https://nyaa.si/view/1147017",
             "https://anidex.info/torrent/247842"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-06-03 17:16:35",
@@ -2546,6 +2650,1151 @@
         "links": [
             "https://nyaa.si/view/1148622",
             "https://anidex.info/torrent/249212"
+        ],
+        "hidden": true
+    },
+    {
+        "date": "2019-06-04 11:17:22",
+        "file": "[OldCastle] Attack No. 1 - 001 [A22B3001].mkv",
+        "version": 3,
+        "episode": "001",
+        "title": "Fujimi Academy's new star",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:17:28",
+        "file": "[OldCastle] Attack No. 1 - 002 [C61C2002].mkv",
+        "version": 2,
+        "episode": "002",
+        "title": "The gamble for tomorrow",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:17:35",
+        "file": "[OldCastle] Attack No. 1 - 003 [82452003].mkv",
+        "version": 2,
+        "episode": "003",
+        "title": "New captain arrives!",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:17:41",
+        "file": "[OldCastle] Attack No. 1 - 004 [75E22004].mkv",
+        "version": 2,
+        "episode": "004",
+        "title": "Ball torn to pieces",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:17:47",
+        "file": "[OldCastle] Attack No. 1 - 005 [25462005].mkv",
+        "version": 2,
+        "episode": "005",
+        "title": "Demon coach's challenge",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:17:53",
+        "file": "[OldCastle] Attack No. 1 - 006 [66FF2006].mkv",
+        "version": 2,
+        "episode": "006",
+        "title": "Make it through! Attack duo",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:17:56",
+        "file": "[OldCastle] Attack No. 1 - 007 [32232007].mkv",
+        "version": 2,
+        "episode": "007",
+        "title": "Meeting The Big Four",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:17:59",
+        "file": "[OldCastle] Attack No. 1 - 008 [B32B2008].mkv",
+        "version": 2,
+        "episode": "008",
+        "title": "The secret behind \"falling leaf\"",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:02",
+        "file": "[OldCastle] Attack No. 1 - 009 [40AC2009].mkv",
+        "version": 2,
+        "episode": "009",
+        "title": "Torn resignation letters",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:05",
+        "file": "[OldCastle] Attack No. 1 - 010 [C1D6200A].mkv",
+        "version": 2,
+        "episode": "010",
+        "title": "Creeping conspiracy",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:08",
+        "file": "[OldCastle] Attack No. 1 - 011 [D611200B].mkv",
+        "version": 2,
+        "episode": "011",
+        "title": "Tears sparkling in sunrise",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:11",
+        "file": "[OldCastle] Attack No. 1 - 012 [D858200C].mkv",
+        "version": 2,
+        "episode": "012",
+        "title": "An ominous enemy",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:14",
+        "file": "[OldCastle] Attack No. 1 - 013 [C2DD200D].mkv",
+        "version": 2,
+        "episode": "013",
+        "title": "Strategy without strategy",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:18",
+        "file": "[OldCastle] Attack No. 1 - 014 [0A5A200E].mkv",
+        "version": 2,
+        "episode": "014",
+        "title": "The deciding serve",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:21",
+        "file": "[OldCastle] Attack No. 1 - 015 [08B7200F].mkv",
+        "version": 2,
+        "episode": "015",
+        "title": "After victory",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:24",
+        "file": "[OldCastle] Attack No. 1 - 016 [6D072010].mkv",
+        "version": 2,
+        "episode": "016",
+        "title": "High life",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:27",
+        "file": "[OldCastle] Attack No. 1 - 017 [20222011].mkv",
+        "version": 2,
+        "episode": "017",
+        "title": "Victory is not everything",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:31",
+        "file": "[OldCastle] Attack No. 1 - 018 [B63A2012].mkv",
+        "version": 2,
+        "episode": "018",
+        "title": "A promise to Shellenina",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:34",
+        "file": "[OldCastle] Attack No. 1 - 019 [C5AA2013].mkv",
+        "version": 2,
+        "episode": "019",
+        "title": "The revived rivals",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:37",
+        "file": "[OldCastle] Attack No. 1 - 020 [BB5E2014].mkv",
+        "version": 2,
+        "episode": "020",
+        "title": "Unforgivable special training",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:40",
+        "file": "[OldCastle] Attack No. 1 - 021 [2E9C2015].mkv",
+        "version": 2,
+        "episode": "021",
+        "title": "Captain's responsibility",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:43",
+        "file": "[OldCastle] Attack No. 1 - 022 [60772016].mkv",
+        "version": 2,
+        "episode": "022",
+        "title": "Fight in despair",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:47",
+        "file": "[OldCastle] Attack No. 1 - 023 [0B1E2017].mkv",
+        "version": 2,
+        "episode": "023",
+        "title": "What was hidden",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:50",
+        "file": "[OldCastle] Attack No. 1 - 024 [E8B62018].mkv",
+        "version": 2,
+        "episode": "024",
+        "title": "Revolving receive",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:54",
+        "file": "[OldCastle] Attack No. 1 - 025 [220D2019].mkv",
+        "version": 2,
+        "episode": "025",
+        "title": "And the winner is\u2026",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:18:58",
+        "file": "[OldCastle] Attack No. 1 - 026 [CBA5201A].mkv",
+        "version": 2,
+        "episode": "026",
+        "title": "A disturbing warning",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:01",
+        "file": "[OldCastle] Attack No. 1 - 027 [B9CD201B].mkv",
+        "version": 2,
+        "episode": "027",
+        "title": "11 rivals",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:05",
+        "file": "[OldCastle] Attack No. 1 - 028 [9141201C].mkv",
+        "version": 2,
+        "episode": "028",
+        "title": "Between light and dark",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:07",
+        "file": "[OldCastle] Attack No. 1 - 029 [BB47201D].mkv",
+        "version": 2,
+        "episode": "029",
+        "title": "Miserable training",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:10",
+        "file": "[OldCastle] Attack No. 1 - 030 [46CD201E].mkv",
+        "version": 2,
+        "episode": "030",
+        "title": "The volleyball demon",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:13",
+        "file": "[OldCastle] Attack No. 1 - 031 [E209201F].mkv",
+        "version": 2,
+        "episode": "031",
+        "title": "The secret of the bad arm",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:17",
+        "file": "[OldCastle] Attack No. 1 - 032 [78EE2020].mkv",
+        "version": 2,
+        "episode": "032",
+        "title": "The court both loved and hated",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:20",
+        "file": "[OldCastle] Attack No. 1 - 033 [2BE52021].mkv",
+        "version": 2,
+        "episode": "033",
+        "title": "The scoop",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:23",
+        "file": "[OldCastle] Attack No. 1 - 034 [AE6A2022].mkv",
+        "version": 2,
+        "episode": "034",
+        "title": "A long-awaited smile",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:27",
+        "file": "[OldCastle] Attack No. 1 - 035 [EA022023].mkv",
+        "version": 2,
+        "episode": "035",
+        "title": "Facing the world",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:30",
+        "file": "[OldCastle] Attack No. 1 - 036 [43C32024].mkv",
+        "version": 2,
+        "episode": "036",
+        "title": "The Black Whirlwind",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:33",
+        "file": "[OldCastle] Attack No. 1 - 037 [9BE42025].mkv",
+        "version": 2,
+        "episode": "037",
+        "title": "The two-stage reception",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:37",
+        "file": "[OldCastle] Attack No. 1 - 038 [B1C92026].mkv",
+        "version": 2,
+        "episode": "038",
+        "title": "Secret operation with friends",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:41",
+        "file": "[OldCastle] Attack No. 1 - 039 [57442027].mkv",
+        "version": 2,
+        "episode": "039",
+        "title": "The World Championship Finals",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:44",
+        "file": "[OldCastle] Attack No. 1 - 040 [001D2028].mkv",
+        "version": 2,
+        "episode": "040",
+        "title": "Rally to glory",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:47",
+        "file": "[OldCastle] Attack No. 1 - 041 [568F2029].mkv",
+        "version": 2,
+        "episode": "041",
+        "title": "Headhunters",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:51",
+        "file": "[OldCastle] Attack No. 1 - 042 [F011202A].mkv",
+        "version": 2,
+        "episode": "042",
+        "title": "Crossroads",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:54",
+        "file": "[OldCastle] Attack No. 1 - 043 [EADD202B].mkv",
+        "version": 2,
+        "episode": "043",
+        "title": "The queen's challenge",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:19:58",
+        "file": "[OldCastle] Attack No. 1 - 044 [767A202C].mkv",
+        "version": 2,
+        "episode": "044",
+        "title": "Spike machine",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:01",
+        "file": "[OldCastle] Attack No. 1 - 045 [D54C202D].mkv",
+        "version": 2,
+        "episode": "045",
+        "title": "Machine gun attack",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:04",
+        "file": "[OldCastle] Attack No. 1 - 046 [3055202E].mkv",
+        "version": 2,
+        "episode": "046",
+        "title": "The fearsome invitation letter",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:07",
+        "file": "[OldCastle] Attack No. 1 - 047 [B089202F].mkv",
+        "version": 2,
+        "episode": "047",
+        "title": "The three sisters of Jid\u014din High School",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:11",
+        "file": "[OldCastle] Attack No. 1 - 048 [EE1B2030].mkv",
+        "version": 2,
+        "episode": "048",
+        "title": "Dash of youth",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:14",
+        "file": "[OldCastle] Attack No. 1 - 049 [141C2031].mkv",
+        "version": 2,
+        "episode": "049",
+        "title": "The secret double attack",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:18",
+        "file": "[OldCastle] Attack No. 1 - 050 [851D2032].mkv",
+        "version": 2,
+        "episode": "050",
+        "title": "Tough love",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:22",
+        "file": "[OldCastle] Attack No. 1 - 051 [70AC2033].mkv",
+        "version": 2,
+        "episode": "051",
+        "title": "The pledge under Mt. Fuji",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:25",
+        "file": "[OldCastle] Attack No. 1 - 052 [10C12034].mkv",
+        "version": 2,
+        "episode": "052",
+        "title": "An extraordinary game resumption",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:28",
+        "file": "[OldCastle] Attack No. 1 - 053 [7F1A2035].mkv",
+        "version": 2,
+        "episode": "053",
+        "title": "Tsutomu",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:31",
+        "file": "[OldCastle] Attack No. 1 - 054 [61DD2036].mkv",
+        "version": 2,
+        "episode": "054",
+        "title": "The blind spot",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:34",
+        "file": "[OldCastle] Attack No. 1 - 055 [86812037].mkv",
+        "version": 2,
+        "episode": "055",
+        "title": "Go for it! Interhigh",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:38",
+        "file": "[OldCastle] Attack No. 1 - 056 [EB6D2038].mkv",
+        "version": 2,
+        "episode": "056",
+        "title": "A living miracle",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:41",
+        "file": "[OldCastle] Attack No. 1 - 057 [FB8C2039].mkv",
+        "version": 2,
+        "episode": "057",
+        "title": "A betrayal",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:45",
+        "file": "[OldCastle] Attack No. 1 - 058 [D200203A].mkv",
+        "version": 2,
+        "episode": "058",
+        "title": "The decisive blow: vanishing attack",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:49",
+        "file": "[OldCastle] Attack No. 1 - 059 [A56B203B].mkv",
+        "version": 2,
+        "episode": "059",
+        "title": "The ominous lightning attack",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:53",
+        "file": "[OldCastle] Attack No. 1 - 060 [0BF3203C].mkv",
+        "version": 2,
+        "episode": "060",
+        "title": "The wheel-chaired supervisor",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:20:57",
+        "file": "[OldCastle] Attack No. 1 - 061 [E9B7203D].mkv",
+        "version": 2,
+        "episode": "061",
+        "title": "The Interhigh finals",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:00",
+        "file": "[OldCastle] Attack No. 1 - 062 [C1B7203E].mkv",
+        "version": 2,
+        "episode": "062",
+        "title": "A friendly match: the night before",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:02",
+        "file": "[OldCastle] Attack No. 1 - 063 [629C203F].mkv",
+        "version": 2,
+        "episode": "063",
+        "title": "The player change misunderstanding",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:05",
+        "file": "[OldCastle] Attack No. 1 - 064 [E7D22040].mkv",
+        "version": 2,
+        "episode": "064",
+        "title": "Great rivals",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:09",
+        "file": "[OldCastle] Attack No. 1 - 065 [58722041].mkv",
+        "version": 2,
+        "episode": "065",
+        "title": "Burning hostility",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:12",
+        "file": "[OldCastle] Attack No. 1 - 066 [C1BF2042].mkv",
+        "version": 2,
+        "episode": "066",
+        "title": "The identity of Makimura Kyouko",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:16",
+        "file": "[OldCastle] Attack No. 1 - 067 [52102043].mkv",
+        "version": 2,
+        "episode": "067",
+        "title": "The ruthless Captain Kozue",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:19",
+        "file": "[OldCastle] Attack No. 1 - 068 [013B2044].mkv",
+        "version": 2,
+        "episode": "068",
+        "title": "Birth of a new trio",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:22",
+        "file": "[OldCastle] Attack No. 1 - 069 [3CBF2045].mkv",
+        "version": 2,
+        "episode": "069",
+        "title": "The black shadow approaches",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:29",
+        "file": "[OldCastle] Attack No. 1 - 070 [FB2E3046].mkv",
+        "version": 3,
+        "episode": "070",
+        "title": "Kozue's suspension",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:32",
+        "file": "[OldCastle] Attack No. 1 - 071 [38CF2047].mkv",
+        "version": 2,
+        "episode": "071",
+        "title": "A setter's responsibility",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:36",
+        "file": "[OldCastle] Attack No. 1 - 072 [171D2048].mkv",
+        "version": 2,
+        "episode": "072",
+        "title": "The Okinawan attacker",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:39",
+        "file": "[OldCastle] Attack No. 1 - 073 [453F2049].mkv",
+        "version": 2,
+        "episode": "073",
+        "title": "\"Phantom\": The bold operation",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:42",
+        "file": "[OldCastle] Attack No. 1 - 074 [8DA8204A].mkv",
+        "version": 2,
+        "episode": "074",
+        "title": "Mysterious player No. 4",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:46",
+        "file": "[OldCastle] Attack No. 1 - 075 [9FF9204B].mkv",
+        "version": 2,
+        "episode": "075",
+        "title": "The somersault smokescreen",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:49",
+        "file": "[OldCastle] Attack No. 1 - 076 [BB39204C].mkv",
+        "version": 2,
+        "episode": "076",
+        "title": "Taken on the stretcher",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:53",
+        "file": "[OldCastle] Attack No. 1 - 077 [D176204D].mkv",
+        "version": 2,
+        "episode": "077",
+        "title": "Confrontation with the machine",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:21:57",
+        "file": "[OldCastle] Attack No. 1 - 078 [443F204E].mkv",
+        "version": 2,
+        "episode": "078",
+        "title": "An excellent victory",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:00",
+        "file": "[OldCastle] Attack No. 1 - 079 [7732204F].mkv",
+        "version": 2,
+        "episode": "079",
+        "title": "The girl who wears a leather jacket",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:04",
+        "file": "[OldCastle] Attack No. 1 - 080 [4F1E2050].mkv",
+        "version": 2,
+        "episode": "080",
+        "title": "Bitter determination",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:08",
+        "file": "[OldCastle] Attack No. 1 - 081 [AA4D2051].mkv",
+        "version": 2,
+        "episode": "081",
+        "title": "A one-set match",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:11",
+        "file": "[OldCastle] Attack No. 1 - 082 [1E912052].mkv",
+        "version": 2,
+        "episode": "082",
+        "title": "Run, Mighty Six",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:14",
+        "file": "[OldCastle] Attack No. 1 - 083 [2CDD2053].mkv",
+        "version": 2,
+        "episode": "083",
+        "title": "The whistling fellow",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:17",
+        "file": "[OldCastle] Attack No. 1 - 084 [01192054].mkv",
+        "version": 2,
+        "episode": "084",
+        "title": "That person is my rival",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:21",
+        "file": "[OldCastle] Attack No. 1 - 085 [CDBD2055].mkv",
+        "version": 2,
+        "episode": "085",
+        "title": "The devilish mammoth spike",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:24",
+        "file": "[OldCastle] Attack No. 1 - 086 [03B12056].mkv",
+        "version": 2,
+        "episode": "086",
+        "title": "The twisting reception",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:28",
+        "file": "[OldCastle] Attack No. 1 - 087 [5CFE2057].mkv",
+        "version": 2,
+        "episode": "087",
+        "title": "The phantom spike",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:31",
+        "file": "[OldCastle] Attack No. 1 - 088 [31332058].mkv",
+        "version": 2,
+        "episode": "088",
+        "title": "The great test at the Interhigh",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:35",
+        "file": "[OldCastle] Attack No. 1 - 089 [BE202059].mkv",
+        "version": 2,
+        "episode": "089",
+        "title": "The fleeting spike",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:38",
+        "file": "[OldCastle] Attack No. 1 - 090 [A5C8205A].mkv",
+        "version": 2,
+        "episode": "090",
+        "title": "The finals! 13 to 7",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:42",
+        "file": "[OldCastle] Attack No. 1 - 091 [2810205B].mkv",
+        "version": 2,
+        "episode": "091",
+        "title": "She made it to the All-Japan",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:45",
+        "file": "[OldCastle] Attack No. 1 - 092 [00F8205C].mkv",
+        "version": 2,
+        "episode": "092",
+        "title": "The training camp in Hokkaid\u014d",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:48",
+        "file": "[OldCastle] Attack No. 1 - 093 [D5D7205D].mkv",
+        "version": 2,
+        "episode": "093",
+        "title": "The player No. 12",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:52",
+        "file": "[OldCastle] Attack No. 1 - 094 [0C5B205E].mkv",
+        "version": 2,
+        "episode": "094",
+        "title": "What will you do, Ayuhara?!",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:55",
+        "file": "[OldCastle] Attack No. 1 - 095 [CD2C205F].mkv",
+        "version": 2,
+        "episode": "095",
+        "title": "The birth of the tornado drop",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:22:59",
+        "file": "[OldCastle] Attack No. 1 - 096 [99402060].mkv",
+        "version": 2,
+        "episode": "096",
+        "title": "And so, the World Championships begin!",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:23:02",
+        "file": "[OldCastle] Attack No. 1 - 097 [73772061].mkv",
+        "version": 2,
+        "episode": "097",
+        "title": "Backed into a corner",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:23:06",
+        "file": "[OldCastle] Attack No. 1 - 098 [42162062].mkv",
+        "version": 2,
+        "episode": "098",
+        "title": "The first match",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:23:10",
+        "file": "[OldCastle] Attack No. 1 - 099 [7FA32063].mkv",
+        "version": 2,
+        "episode": "099",
+        "title": "The birth of a new heroine",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:23:14",
+        "file": "[OldCastle] Attack No. 1 - 100 [6A032064].mkv",
+        "version": 2,
+        "episode": "100",
+        "title": "The tornado drop, at risk!?",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:23:18",
+        "file": "[OldCastle] Attack No. 1 - 101 [B9EE2065].mkv",
+        "version": 2,
+        "episode": "101",
+        "title": "The fall of the Japanese team",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:23:22",
+        "file": "[OldCastle] Attack No. 1 - 102 [E4BA2066].mkv",
+        "version": 2,
+        "episode": "102",
+        "title": "A trace of the next miracle ball",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:23:25",
+        "file": "[OldCastle] Attack No. 1 - 103 [33302067].mkv",
+        "version": 2,
+        "episode": "103",
+        "title": "The final match with the Soviet Union",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
+        ]
+    },
+    {
+        "date": "2019-06-04 11:23:28",
+        "file": "[OldCastle] Attack No. 1 - 104 [FA0B2068].mkv",
+        "version": 2,
+        "episode": "104",
+        "title": "She's the No. 1",
+        "links": [
+            "https://nyaa.si/view/1148702",
+            "https://anidex.info/torrent/249284"
         ]
     }
 ]
