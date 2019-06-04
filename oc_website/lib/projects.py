@@ -22,8 +22,8 @@ def get_projects() -> T.Iterable[Project]:
     for path in (TEMPLATES_DIR / "projects").iterdir():
         template = jinja_env.get_template(str(path.relative_to(TEMPLATES_DIR)))
         context = template.new_context()
-        title = "".join(template.blocks["title"](context))
-        status = "".join(template.blocks["status"](context))
+        title = "".join(template.blocks["project_title"](context))
+        status = "".join(template.blocks["project_status"](context))
 
         if status not in ("finished", "ongoing"):
             raise ValueError(f'Unknown status "{status}" in project "{path}"')

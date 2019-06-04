@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %}{{ project.title }}{% endblock %}
+{% block title %}{{ project.title|striptags }}{% endblock %}
 {% block id %}project{% endblock %}
 
 {% block content %}
     <header>
-        <h1 class='fancy-title'><span>{{ project.title }}</span></h1>
-        <img src='img/projects/{{ project.stem }}-big.jpg' alt='{{ project.title }}'/>
+        <h1 class='fancy-title'><span>{{ project.title|safe }}</span></h1>
+        <img src='img/projects/{{ project.stem }}-big.jpg' alt='{{ project.title|striptags }}'/>
     </header>
 
     {% block project_content %}
