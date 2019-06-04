@@ -22,8 +22,8 @@ def get_news() -> T.Iterable[News]:
     for path in (TEMPLATES_DIR / "news").iterdir():
         template = jinja_env.get_template(str(path.relative_to(TEMPLATES_DIR)))
         context = template.new_context()
-        date = arrow.get("".join(template.blocks["date"](context)))
-        title = "".join(template.blocks["title"](context))
-        author = "".join(template.blocks["author"](context))
+        date = arrow.get("".join(template.blocks["news_date"](context)))
+        title = "".join(template.blocks["news_title"](context))
+        author = "".join(template.blocks["news_author"](context))
 
         yield News(date=date, title=title, author=author, stem=path.stem)
