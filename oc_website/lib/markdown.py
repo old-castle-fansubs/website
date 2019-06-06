@@ -72,7 +72,7 @@ def render_markdown(text: str) -> str:
     renderer = Unofficial()
     md = misaka.Markdown(
         renderer,
-        extensions=("strikethrough", "superscript", "autolink", "fenced-code"),
+        extensions=("strikethrough", "autolink", "fenced-code"),
     )
 
     ret = md(text).rstrip("\n")
