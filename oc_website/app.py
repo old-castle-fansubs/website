@@ -114,9 +114,9 @@ def app_requests() -> str:
 
 @app.route("/request_add.html", methods=["GET", "POST"])
 def app_request_add() -> str:
-    title = request.form.get("title", "")
-    anidb_link = request.form.get("anidb_link", "")
-    comment = request.form.get("comment", "")
+    title = request.form.get("title", "").strip()
+    anidb_link = request.form.get("anidb_link", "").strip()
+    comment = request.form.get("comment", "").strip()
 
     sub_requests = list(get_sub_requests())
     if request.headers.getlist("X-Forwarded-For"):
@@ -189,10 +189,10 @@ def app_comment_add() -> T.Union[str, Response]:
         tid = 0
 
     is_preview = request.form.get("submit") == "preview"
-    text = request.form.get("text", "")
-    author = request.form.get("author", "")
-    website = request.form.get("website", "")
-    email = request.form.get("email", "")
+    text = request.form.get("text", "").strip()
+    author = request.form.get("author", "").strip()
+    website = request.form.get("website", "").strip()
+    email = request.form.get("email", "").strip()
 
     comments = list(get_comments())
     parent_comment: T.Optional[Comment] = first(
