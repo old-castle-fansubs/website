@@ -1,3 +1,4 @@
+import re
 import typing as T
 
 import jinja2
@@ -14,7 +15,11 @@ def setup_jinja_env(jinja_env: jinja2.Environment) -> None:
     def match(haystack: str, needle: str) -> bool:
         return needle.lower() in haystack.lower()
 
+    def regex_match(pattern: str, needle: str) -> bool:
+        return re.search(needle, pattern, re.I)
+
     jinja_env.tests["match"] = match
+    jinja_env.tests["regex_match"] = regex_match
 
 
 def get_jinja_env() -> jinja2.Environment:

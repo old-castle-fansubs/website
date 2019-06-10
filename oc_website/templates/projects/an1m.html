@@ -1,0 +1,14 @@
+{% extends "project.html" %}
+{% block project_title %}Attack No. 1 movies{% endblock %}
+{% block project_status %}ongoing{% endblock %}
+
+{% block project_content %}
+<p>Recap movies of Attack No. 1.</p>
+
+<p><strong>Used Johnny's BD rips.</strong></p>
+
+<h2>Releases</h2>
+
+{% import 'release-table.html' as release_table %}
+{{ release_table.table(releases, 'Attack No. 1 - Movie') }}
+{% endblock %}

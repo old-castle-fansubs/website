@@ -35,7 +35,7 @@
         </tr>
     </thead>
     <tbody>
-    {% set filtered_releases = releases|rejectattr('is_hidden')|selectattr('file_name', 'match', filter)|list %}
+    {% set filtered_releases = releases|rejectattr('is_hidden')|selectattr('file_name', 'regex_match', filter)|list %}
     {% for release in filtered_releases %}
         <tr>
             <td class='date'>{{ release.date.strftime('%Y-%m-%d') }}</td>
