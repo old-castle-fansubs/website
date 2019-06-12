@@ -354,3 +354,20 @@ input:focus {
     white-space: nowrap;
     font-size: smaller;
 }
+
+#about #friends {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0;
+}
+#about #friends li {
+    display: inline-block;
+    margin: 0 10px 0 0;
+    padding: 0;
+}
+#about #friends a {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
