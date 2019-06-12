@@ -1,3 +1,4 @@
+import datetime
 import re
 import typing as T
 
@@ -18,6 +19,7 @@ def setup_jinja_env(jinja_env: jinja2.Environment) -> None:
     def regex_match(pattern: str, needle: str) -> bool:
         return re.search(needle, pattern, re.I)
 
+    jinja_env.globals["deployment_id"] = datetime.datetime.now().isoformat()
     jinja_env.tests["match"] = match
     jinja_env.tests["regex_match"] = regex_match
 
