@@ -145,6 +145,9 @@ table.releases {
     font-size: 80%;
     margin-bottom: 3em;
 }
+table.releases td {
+  vertical-align: top;
+}
 table.releases .date,
 table.releases .link,
 table.releases .links {
