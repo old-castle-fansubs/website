@@ -3,13 +3,21 @@
 {% block id %}project{% endblock %}
 
 {% block content %}
-  <header>
-    <h1 class='fancy-title'><span>{{ project.title|safe }}</span></h1>
-    <img src='img/projects/{{ project.stem }}-big.jpg' alt='{{ project.title|striptags }}'/>
-  </header>
+  <h1 class='fancy-title'><span>{{ project.title|safe }}</span></h1>
 
-  {% block project_synopsis %}{% endblock %}
-  {% block project_notes %}{% endblock %}
+  <div id='project-wrapper'>
+    <aside id='project-aside'>
+      <a href='img/projects/{{ project.stem }}-big.jpg'>
+        <img src='img/projects/{{ project.stem }}-big.jpg' alt='{{ project.title|striptags }}'/>
+      </a>
+    </aside>
+
+    <section id='project-synopsis'>
+      {% block project_synopsis %}{% endblock %}
+      {% block project_notes %}{% endblock %}
+    </section>
+
+  </div>
 
   <h2>Releases</h2>
 
