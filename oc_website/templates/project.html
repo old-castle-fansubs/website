@@ -8,6 +8,13 @@
     <img src='img/projects/{{ project.stem }}-big.jpg' alt='{{ project.title|striptags }}'/>
   </header>
 
-  {% block project_content %}
+  {% block project_synopsis %}{% endblock %}
+  {% block project_notes %}{% endblock %}
+
+  <h2>Releases</h2>
+
+  {% block project_releases %}
+    {% import 'release-table.html' as release_table %}
+    {{ release_table.table(releases, project.release_filter) }}
   {% endblock %}
 {% endblock %}

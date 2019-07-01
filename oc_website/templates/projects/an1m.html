@@ -1,14 +1,12 @@
 {% extends "project.html" %}
 {% block project_title %}Attack No. 1 movies{% endblock %}
 {% block project_status %}finished{% endblock %}
+{% block project_release_filter %}Attack No. 1 - Movie{% endblock %}
 
-{% block project_content %}
-<p>Recap movies of Attack No. 1.</p>
+{% block project_synopsis %}
+  <p>Recap movies of Attack No. 1.</p>
+{% endblock %}
 
-<p><strong>Used Johnny's BD rips.</strong></p>
-
-<h2>Releases</h2>
-
-{% import 'release-table.html' as release_table %}
-{{ release_table.table(releases, 'Attack No. 1 - Movie') }}
+{% block project_notes %}
+  <p><strong>Used Johnny's BD rips.</strong></p>
 {% endblock %}

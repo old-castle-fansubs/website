@@ -1,16 +1,15 @@
 {% extends "project.html" %}
 {% block project_title %}Ichigatsu ni wa Christmas{% endblock %}
 {% block project_status %}finished{% endblock %}
+{% block project_release_filter %}Ichigatsu ni wa Christmas{% endblock %}
 
-{% block project_content %}
-<p>This is a character study of a rather traumatized young woman who develops a crush on a man who lives next door to her.
-<br/>
-—The TechnoGirls</p>
+{% block project_synopsis %}
+  <p>This is a character study of a rather traumatized young woman who develops
+  a crush on a man who lives next door to her.
+  <br/>
+  —The TechnoGirls</p>
+{% endblock %}
 
-<p><strong>Used unknown RAWs.</strong></p>
-
-<h2>Releases</h2>
-
-{% import 'release-table.html' as release_table %}
-{{ release_table.table(releases, 'Ichigatsu ni wa Christmas') }}
+{% block project_notes %}
+  <p><strong>Used unknown RAWs.</strong></p>
 {% endblock %}

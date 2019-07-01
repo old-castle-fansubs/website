@@ -1,25 +1,24 @@
 {% extends "project.html" %}
 {% block project_title %}Monster Hunter Stories:<wbr/> Ride On{% endblock %}
 {% block project_status %}finished{% endblock %}
+{% block project_release_filter %}Monster Hunter{% endblock %}
 
-{% block project_content %}
-<p>Lute and his friends Cheval, Lilia, and Navirou live in Hakum Village,
-where chosen children learn to be Riders. Riders form a bond with friendly
-monsters called Monsties hatched from eggs, riding them as mounts for travel
-and combat. Due to monster riding being a taboo skill in a society filled with
-monster hunters, Hakum Village is isolated from the outside world and keeps its
-riding tradition a secret to all but a few privileged individuals. As Lute
-adventures with his friends and learns more about monster riding, a past threat
-remerges called the Dark Blight, infecting the nearby forest and leading to
-more aggressive monster attacks. A new generation of riders now has to find a
-way to stop the blighted monsters without having to destroy them outright.
-<br/>
-—Wikipedia</p>
+{% block project_synopsis %}
+  <p>Lute and his friends Cheval, Lilia, and Navirou live in Hakum Village,
+  where chosen children learn to be Riders. Riders form a bond with friendly
+  monsters called Monsties hatched from eggs, riding them as mounts for travel
+  and combat. Due to monster riding being a taboo skill in a society filled
+  with monster hunters, Hakum Village is isolated from the outside world and
+  keeps its riding tradition a secret to all but a few privileged individuals.
+  As Lute adventures with his friends and learns more about monster riding, a
+  past threat remerges called the Dark Blight, infecting the nearby forest and
+  leading to more aggressive monster attacks. A new generation of riders now
+  has to find a way to stop the blighted monsters without having to destroy
+  them outright.
+  <br/>
+  —Wikipedia</p>
+{% endblock %}
 
-<p><strong>Used web release.</strong></p>
-
-<h2>Releases</h2>
-
-{% import 'release-table.html' as release_table %}
-{{ release_table.table(releases, 'Monster Hunter') }}
+{% block project_notes %}
+  <p><strong>Used web release.</strong></p>
 {% endblock %}

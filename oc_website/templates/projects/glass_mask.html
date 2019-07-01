@@ -1,22 +1,20 @@
 {% extends "project.html" %}
 {% block project_title %}Glass Mask{% endblock %}
 {% block project_status %}finished{% endblock %}
+{% block project_release_filter %}Glass Mask{% endblock %}
 
-{% block project_content %}
-<p>Maya is a young girl who is not the prettiest nor smartest girl in the world,
-but is a devout actress. She dreams of becoming a famous actress, but her
-mother forbids it. So one day, Maya runs away to go to an acting school run by
-a hasbeen actress, Chigusa Tsukikage, whose face was scarred during a
-performance. There, Maya endures and the trials and tribulations of acting in
-order to triumph.
-<br/>
-—anidb</p>
+{% block project_synopsis %}
+  <p>Maya is a young girl who is not the prettiest nor smartest girl in the
+  world, but is a devout actress. She dreams of becoming a famous actress, but
+  her mother forbids it. So one day, Maya runs away to go to an acting school
+  run by a hasbeen actress, Chigusa Tsukikage, whose face was scarred during a
+  performance. There, Maya endures and the trials and tribulations of acting in
+  order to triumph.
+  <br/>
+  —anidb</p>
+{% endblock %}
 
-<p><strong>Used Moozzi2's RAWs.<br/>
-Based on Odyssey-Oppai VHS hardsubs.</strong></p>
-
-<h2>Releases</h2>
-
-{% import 'release-table.html' as release_table %}
-{{ release_table.table(releases, 'Glass Mask') }}
+{% block project_notes %}
+  <p><strong>Used Moozzi2's RAWs.<br/>
+  Based on Odyssey-Oppai VHS hardsubs.</strong></p>
 {% endblock %}

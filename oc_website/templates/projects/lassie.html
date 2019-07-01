@@ -1,40 +1,37 @@
 {% extends "project.html" %}
 {% block project_title %}Meiken Lassie{% endblock %}
 {% block project_status %}ongoing{% endblock %}
+{% block project_release_filter %}Lassie - \d{% endblock %}
 
-{% block project_content %}
+{% block project_synopsis %}
+  <p>John is a cheerful and energetic young boy, who lives in a small
+  coal-mining town in England. One day he finds a small dog lost in a flock of
+  sheep. John takes the puppy, which is called Lassie, back home. Soon they
+  become good friends, just like real siblings. Lassie is a lovely and smart
+  dog, so everyone in town is very fond of her.</p>
 
-<p>John is a cheerful and energetic young boy, who lives in a small
-coal-mining town in England. One day he finds a small dog lost in a
-flock of sheep. John takes the puppy, which is called Lassie, back home.
-Soon they become good friends, just like real siblings. Lassie is a
-lovely and smart dog, so everyone in town is very fond of her.</p>
+  <p>But their happy life is about to end: The owner of the coal-mine closes
+  his company because there is no coal left. John goes to meet the owner to
+  request a further investigation, hoping to save the villagers from losing
+  their livelihoods. The owner accepts John's request, but in return he wants
+  to own Lassie and take her to Scotland.</p>
 
-<p>But their happy life is about to end: The owner of the coal-mine
-closes his company because there is no coal left. John goes to meet
-the owner to request a further investigation, hoping to save the villagers
-from losing their livelihoods. The owner accepts John's request, but
-in return he wants to own Lassie and take her to Scotland.</p>
+  <p>Although time passes by, Lassie remains unhappy in her new home.
+  Priscilla, the owner's granddaughter, doesn't want to keep Lassie locked up
+  to prevent her from running away and decides to set her free. Lassie then
+  sets out on a long and hard journey from Scotland to her hometown, to return
+  to John, her friend and brother.</p>
 
-<p>Although time passes by, Lassie remains unhappy in her new home.
-Priscilla, the owner's granddaughter, doesn't want to keep Lassie locked up
-to prevent her from running away and decides to set her free.
-Lassie then sets out on a long and hard journey from Scotland
-to her hometown, to return to John, her friend and brother.</p>
+  <p>Based on the book Lassie Come-Home by Eric Mowbray Knight.</p>
+{% endblock %}
 
-<p>Based on the book Lassie Come-Home by Eric Mowbray Knight.</p>
-
-<p>
-  <strong>
-    Joint release with
-    <a href="https://southwindsubs.wordpress.com/">South Wind Subs</a>.
-    <br/>
-    Used unknown DVD rip.
-  </strong>
-</p>
-
-<h2>Releases</h2>
-
-{% import 'release-table.html' as release_table %}
-{{ release_table.table(releases, 'Lassie - \d') }}
+{% block project_notes %}
+  <p>
+    <strong>
+      Joint release with
+      <a href="https://southwindsubs.wordpress.com/">South Wind Subs</a>.
+      <br/>
+      Used unknown DVD rip.
+    </strong>
+  </p>
 {% endblock %}

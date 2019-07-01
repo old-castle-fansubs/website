@@ -1,28 +1,26 @@
 {% extends "project.html" %}
 {% block project_title %}Saint Tail{% endblock %}
 {% block project_status %}ongoing{% endblock %}
+{% block project_release_filter %}Saint Tail{% endblock %}
 
-{% block project_content %}
-<p>School girl Haneoka Meimi transforms into the mysterious thief St. Tail,
-and steals back what was stolen or taken dishonestly. She's assisted by a
-classmate and sister-in-training, Mimori Seira, whose position in the church
-after school each day allows her to hear the troubles of those who have been
-wronged and have come to pray to God.</p>
+{% block project_synopsis %}
+  <p>School girl Haneoka Meimi transforms into the mysterious thief St. Tail,
+  and steals back what was stolen or taken dishonestly. She's assisted by a
+  classmate and sister-in-training, Mimori Seira, whose position in the church
+  after school each day allows her to hear the troubles of those who have been
+  wronged and have come to pray to God.</p>
 
-<p>While St. Tail steals to right the wrongs done to innocent people, she's a
-thief to the police force. Her classmate Asuka Daiki Jr., called Asuka Jr., and
-son of Detective Asuka, is hot on her trail. St. Tail delivers notices of her
-planned capers to Asuka Jr., to give him a fair chance to catch her.</p>
+  <p>While St. Tail steals to right the wrongs done to innocent people, she's a
+  thief to the police force. Her classmate Asuka Daiki Jr., called Asuka Jr.,
+  and son of Detective Asuka, is hot on her trail. St. Tail delivers notices of
+  her planned capers to Asuka Jr., to give him a fair chance to catch her.</p>
 
-<p>—Wikipedia</p>
+  <p>—Wikipedia</p>
+{% endblock %}
 
-<p>
-  <strong>Used Johnny's bluray rip.</strong><br/>
-  <strong>Based on unknown subtitles.</strong>
-</p>
-
-<h2>Releases</h2>
-
-{% import 'release-table.html' as release_table %}
-{{ release_table.table(releases, 'Saint Tail') }}
+{% block project_notes %}
+  <p>
+    <strong>Used Johnny's bluray rip.</strong><br/>
+    <strong>Based on unknown subtitles.</strong>
+  </p>
 {% endblock %}
