@@ -1,53 +1,53 @@
 {% macro link_cell(release, loop, filtered_releases, filter) %}
-    {% if not loop.previtem or loop.previtem.get_link(filter) != release.get_link(filter) %}
-        {% set ctx = {'count': 0} %}
-        {% for item in filtered_releases[loop.index0:] %}
-            {% if item.get_link(filter) == release.get_link(filter) %}
-                {% do ctx.update({'count': ctx['count'] + 1}) %}
-            {% else %}
-                {% break %}
-            {% endif %}
-        {% endfor %}
+  {% if not loop.previtem or loop.previtem.get_link(filter) != release.get_link(filter) %}
+    {% set ctx = {'count': 0} %}
+    {% for item in filtered_releases[loop.index0:] %}
+      {% if item.get_link(filter) == release.get_link(filter) %}
+        {% do ctx.update({'count': ctx['count'] + 1}) %}
+      {% else %}
+        {% break %}
+      {% endif %}
+    {% endfor %}
 
-        {% if release.get_link(filter) and ctx['count'] > 1 %}
-            {% set class = 'batch' %}
-        {% elif not release.get_link(filter) %}
-            {% set class = 'unavailable' %}
-        {% else %}
-            {% set class = 'normal' %}
-        {% endif %}
-
-        <td class='link {{ filter }} {{ class }}' rowspan='{{ ctx['count'] }}'>
-            {% if release.get_link(filter) %}
-                <a href='{{ release.get_link(filter) }}'>{{ filter }}</a>
-            {% endif %}
-        </td>
+    {% if release.get_link(filter) and ctx['count'] > 1 %}
+      {% set class = 'batch' %}
+    {% elif not release.get_link(filter) %}
+      {% set class = 'unavailable' %}
+    {% else %}
+      {% set class = 'normal' %}
     {% endif %}
+
+    <td class='link {{ filter }} {{ class }}' rowspan='{{ ctx['count'] }}'>
+      {% if release.get_link(filter) %}
+        <a href='{{ release.get_link(filter) }}'>{{ filter }}</a>
+      {% endif %}
+    </td>
+  {% endif %}
 {% endmacro %}
 
 {% macro table(releases, filter) %}
 <table class='fancy releases'>
-    <thead>
-        <tr>
-            <th class='date'>Date</th>
-            <th class='file'>File</th>
-            <th class='links' colspan='2'>Links</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% set filtered_releases = releases|rejectattr('is_hidden')|selectattr('file_name', 'regex_match', filter)|list %}
-    {% for release in filtered_releases %}
-        <tr>
-            <td class='date'>{{ release.date.strftime('%Y-%m-%d') }}</td>
-            <td class='file'>{{ release.file_name }}
-                {% if release.file_version > 1 %}
-                    (v{{ release.file_version }})
-                {% endif %}
-            </td>
-            {{ link_cell(release, loop, filtered_releases, 'nyaa.si') }}
-            {{ link_cell(release, loop, filtered_releases, 'anidex') }}
-        </tr>
-    {% endfor %}
-    </tbody>
+  <thead>
+    <tr>
+      <th class='date'>Date</th>
+      <th class='file'>File</th>
+      <th class='links' colspan='2'>Links</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% set filtered_releases = releases|rejectattr('is_hidden')|selectattr('file_name', 'regex_match', filter)|list %}
+  {% for release in filtered_releases %}
+    <tr>
+      <td class='date'>{{ release.date.strftime('%Y-%m-%d') }}</td>
+      <td class='file'>{{ release.file_name }}
+        {% if release.file_version > 1 %}
+          (v{{ release.file_version }})
+        {% endif %}
+      </td>
+      {{ link_cell(release, loop, filtered_releases, 'nyaa.si') }}
+      {{ link_cell(release, loop, filtered_releases, 'anidex') }}
+    </tr>
+  {% endfor %}
+  </tbody>
 </table>
 {% endmacro %}

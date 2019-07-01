@@ -1,39 +1,39 @@
 <!DOCTYPE html>
 <html lang='en'>
 <head>
-    {% block head %}
-    <meta charset='utf-8'/>
-    <title>Old Castle Fansubs - {% block title %}{{ title }}{% endblock %}</title>
-    <link rel='preload' href='style.css?{{ deployment_id }}' as='style'>
-    <link rel='preload' href='img/blue.jpg' as='image' type='image/jpeg'>
-    <link rel='preload' href='img/stone.jpg' as='image' type='image/jpeg'>
-    <link rel='stylesheet' href='style.css?{{ deployment_id }}'>
+  {% block head %}
+  <meta charset='utf-8'/>
+  <title>Old Castle Fansubs - {% block title %}{{ title }}{% endblock %}</title>
+  <link rel='preload' href='style.css?{{ deployment_id }}' as='style'>
+  <link rel='preload' href='img/blue.jpg' as='image' type='image/jpeg'>
+  <link rel='preload' href='img/stone.jpg' as='image' type='image/jpeg'>
+  <link rel='stylesheet' href='style.css?{{ deployment_id }}'>
 
-    {% endblock %}
+  {% endblock %}
 </head>
 <body id='{% block id %}{% endblock %}'>
-    <main>
-        <header id='top-header'>
-            <h1><a href='index.html'>Old Castle<br/>
-            <small>fansub group</small></a></h1>
-            <nav id='top-nav'>
-                <ul>
-                    <li><a href='index.html'>Home</a></li>
-                    <li><a href='news.html'>News</a></li>
-                    <li><a href='projects.html'>Releases</a></li>
-                    <li><a href='about.html'>About</a></li>
-                    <li><a href='guest_book.html'>Guest book</a></li>
-                </ul>
-            </nav>
-            <!--
-            <div id='attention'>
-                We're looking for an English editor. (<a href='attention.html'>click here for details</a>)
-            </div>
-            -->
-        </header>
-        <div id='body'>
-            {% block content %}{{ content }}{% endblock %}
-        </div>
-    </main>
+  <main>
+    <header id='top-header'>
+      <h1><a href='index.html'>Old Castle<br/>
+      <small>fansub group</small></a></h1>
+      <nav id='top-nav'>
+        <ul>
+          <li><a href='index.html'>Home</a></li>
+          <li><a href='news.html'>News</a></li>
+          <li><a href='projects.html'>Releases</a></li>
+          <li><a href='about.html'>About</a></li>
+          <li><a href='guest_book.html'>Guest book</a></li>
+        </ul>
+      </nav>
+      <!--
+      <div id='attention'>
+          We're looking for an English editor. (<a href='attention.html'>click here for details</a>)
+      </div>
+      -->
+    </header>
+    <div id='body'>
+      {% block content %}{{ content }}{% endblock %}
+    </div>
+  </main>
 </body>
 </html>

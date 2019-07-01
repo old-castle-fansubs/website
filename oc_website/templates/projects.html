@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% macro project_list_item(project) %}
-    <li>
-        <a href='{{ project.url }}'>
-            <div class='cover' style='background-image: url("img/projects/{{ project.stem }}-small.jpg")'><!--
-                --><div></div><!--
-            --></div><!--
-            --><br/><!--
-            -->{{ project.title|safe }}
-        </a>
-    </li>
+  <li>
+    <a href='{{ project.url }}'>
+      <div class='cover' style='background-image: url("img/projects/{{ project.stem }}-small.jpg")'><!--
+        --><div></div><!--
+      --></div><!--
+      --><br/><!--
+      -->{{ project.title|safe }}
+    </a>
+  </li>
 {% endmacro %}
 {% block title %}Projects{% endblock %}
 {% block id %}projects{% endblock %}
@@ -16,20 +16,20 @@
 <h1 class='fancy-title'><span>Ongoing projects</span></h1>
 
 <ul class='anime'>
-    {% for project in projects %}
-        {% if not project.is_finished %}
-            {{- project_list_item(project) }}
-        {% endif %}
-    {% endfor %}
+  {% for project in projects %}
+    {% if not project.is_finished %}
+      {{- project_list_item(project) }}
+    {% endif %}
+  {% endfor %}
 </ul>
 
 <h1 class='fancy-title'><span>Finished projects</span></h1>
 
 <ul class='anime'>
-    {% for project in projects %}
-        {% if project.is_finished %}
-            {{- project_list_item(project) }}
-        {% endif %}
-    {% endfor %}
+  {% for project in projects %}
+    {% if project.is_finished %}
+      {{- project_list_item(project) }}
+    {% endif %}
+  {% endfor %}
 </ul>
 {% endblock %}

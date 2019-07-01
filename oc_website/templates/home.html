@@ -4,9 +4,9 @@
 {% block content %}
 <a href='news.html' id='featured-image'>
 {% if featured_images[0].url.endswith(('jpg', 'png')) %}
-    <img src='{{ featured_images[0].url }}' alt='Featured image'/>
+  <img src='{{ featured_images[0].url }}' alt='Featured image'/>
 {% elif featured_images[0].url.endswith('webm') %}
-    <video src='{{ featured_images[0].url }}' autoplay loop/>
+  <video src='{{ featured_images[0].url }}' autoplay loop/>
 {% endif %}
 </a>
 
