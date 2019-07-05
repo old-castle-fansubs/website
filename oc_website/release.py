@@ -256,9 +256,6 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
 
 
 def do_release(path: Path, args: argparse.Namespace) -> None:
-    subs = pysubs2.SSAFile.from_string(extract_subtitles(path))
-    title = get_title_from_subs(subs)
-
     rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")
 
     local_torrent_path = LOCAL_TORRENT_DIR / get_torrent_name(path)
@@ -287,14 +284,7 @@ def do_release(path: Path, args: argparse.Namespace) -> None:
         if link:
             links.append(link)
 
-    return {
-        "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
-        "file": path.name,
-        "version": get_version_from_file_name(path.name),
-        "episode": get_episode_from_file_name(path.name),
-        "title": title or "-",
-        "links": links,
-    }
+    return links
 
 
 def main() -> None:
@@ -302,10 +292,23 @@ def main() -> None:
 
     releases = json.loads(RELEASES_PATH.read_text())
 
+    links = do_release(args.path, args)
+    print(links)
+
     for path in (
         [args.path] if args.path.is_file() else sorted(args.path.iterdir())
     ):
-        release = do_release(path, args)
+        subs = pysubs2.SSAFile.from_string(extract_subtitles(path))
+        title = get_title_from_subs(subs)
+
+        release = {
+            "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
+            "file": path.name,
+            "version": get_version_from_file_name(path.name),
+            "episode": get_episode_from_file_name(path.name),
+            "title": title or "-",
+            "links": links,
+        }
 
         if args.dry_run:
             print(json.dumps(release, indent=4))
