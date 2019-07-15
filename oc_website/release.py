@@ -43,7 +43,7 @@ NYAA_SI_INFO = "https://oldcastle.moe"
 NYAA_SI_CATEGORY_ID = "1_2"
 
 
-def publish_anidex(torrent_path: Path, dry_run: bool) -> None:
+def publish_anidex(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
     with torrent_path.open("rb") as handle:
         data = {
             "api_key": ANIDEX_API_KEY,
@@ -58,7 +58,7 @@ def publish_anidex(torrent_path: Path, dry_run: bool) -> None:
         if dry_run:
             print(data)
             print(files)
-            return
+            return None
 
         response = requests.post(ANIDEX_API_URL, data=data, files=files)
 
@@ -68,7 +68,7 @@ def publish_anidex(torrent_path: Path, dry_run: bool) -> None:
     return response.text
 
 
-def publish_nyaa_si(torrent_path: Path, dry_run: bool) -> None:
+def publish_nyaa_si(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
     with torrent_path.open("rb") as handle:
         data = {
             "torrent_data": json.dumps(
@@ -90,7 +90,8 @@ def publish_nyaa_si(torrent_path: Path, dry_run: bool) -> None:
         if dry_run:
             print(data)
             print(files)
-            return
+            return None
+
         response = requests.post(
             NYAA_SI_API_URL,
             auth=(NYAA_SI_USER, NYAA_SI_PASS),
@@ -102,7 +103,7 @@ def publish_nyaa_si(torrent_path: Path, dry_run: bool) -> None:
     result = response.json()
     if result.get("errors"):
         raise ValueError(result["errors"])
-    return result["url"]
+    return T.cast(str, result["url"])
 
 
 def rsync(source: T.Union[Path, str], target: T.Union[Path, str]) -> None:
@@ -113,7 +114,7 @@ def rsync(source: T.Union[Path, str], target: T.Union[Path, str]) -> None:
     )
 
 
-def get_torrent_name(local_data_path: Path) -> Path:
+def get_torrent_name(local_data_path: Path) -> str:
     if local_data_path.is_file():
         return local_data_path.stem + ".torrent"
     return local_data_path.name + ".torrent"
@@ -143,7 +144,12 @@ def build_torrent_file(
 
     with tqdm.tqdm(total=9e9) as bar:
 
-        def callback(_torrent, filepath, pieces_done, pieces_total):
+        def callback(
+            _torrent: T.Any,
+            filepath: Path,
+            pieces_done: int,
+            pieces_total: int,
+        ) -> None:
             bar.set_description(filepath)
             bar.update(pieces_done - bar.n)
             bar.total = pieces_total
@@ -183,12 +189,12 @@ def extract_subtitles(source_path: Path) -> str:
         ["mkvmerge", "-i", source_path], capture_output=True, text=True
     ).stdout
 
-    results = re.search(r"Track ID (\d+): subtitles \(SubStationAlpha\)", out)
-    if not results:
+    match = re.search(r"Track ID (\d+): subtitles \(SubStationAlpha\)", out)
+    if not match:
         raise RuntimeError("No subtiles found in the file")
-    track_id = int(results.group(1))
+    track_id = int(match.group(1))
 
-    return run(
+    result = run(
         [
             "mkvextract",
             "tracks",
@@ -199,7 +205,9 @@ def extract_subtitles(source_path: Path) -> str:
         ],
         capture_output=True,
         text=True,
-    ).stdout
+    )
+
+    return T.cast(str, result.stdout)
 
 
 def extract_text(ass_string: str) -> str:
@@ -210,7 +218,7 @@ def extract_text(ass_string: str) -> str:
     return ret.replace("\\N", "\n")
 
 
-def get_checksum_from_file_name(file_name: str) -> int:
+def get_checksum_from_file_name(file_name: str) -> str:
     result = re.search(r"\[([0-9a-f]{8})\]", file_name, re.I)
     assert result
     return result.group(1)
@@ -255,7 +263,7 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
     return None
 
 
-def do_release(path: Path, args: argparse.Namespace) -> None:
+def do_release(path: Path, args: argparse.Namespace) -> T.List[str]:
     rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")
 
     local_torrent_path = LOCAL_TORRENT_DIR / get_torrent_name(path)
@@ -273,7 +281,7 @@ def do_release(path: Path, args: argparse.Namespace) -> None:
     submit_to_transmission(target_torrent_path)
 
     links: T.List[str] = []
-    funcs: T.List[T.Callable[[Path, bool], str]] = []
+    funcs: T.List[T.Callable[[Path, bool], T.Optional[str]]] = []
     if args.publish_anidex:
         funcs.append(publish_anidex)
     if args.publish_nyaa_si:
