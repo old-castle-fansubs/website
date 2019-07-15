@@ -273,16 +273,20 @@ def do_release(path: Path, args: argparse.Namespace) -> None:
     submit_to_transmission(target_torrent_path)
 
     links: T.List[str] = []
-
+    funcs: T.List[T.Callable[[Path, bool], str]] = []
     if args.publish_anidex:
-        link = publish_anidex(local_torrent_path, args.dry_run)
-        if link:
-            links.append(link)
-
+        funcs.append(publish_anidex)
     if args.publish_nyaa_si:
-        link = publish_nyaa_si(local_torrent_path, args.dry_run)
-        if link:
-            links.append(link)
+        funcs.append(publish_nyaa_si)
+
+    for func in funcs:
+        try:
+            link = func(local_torrent_path, args.dry_run)
+            if link:
+                links.append(link)
+        except Exception as ex:
+            print(ex, file=sys.stderr)
+            continue
 
     return links
 
@@ -293,7 +297,6 @@ def main() -> None:
     releases = json.loads(RELEASES_PATH.read_text())
 
     links = do_release(args.path, args)
-    print(links)
 
     for path in (
         [args.path] if args.path.is_file() else sorted(args.path.iterdir())
