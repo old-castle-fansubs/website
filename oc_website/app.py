@@ -141,7 +141,7 @@ def app_request_add() -> T.Any:
             errors.append("Request title cannot be empty.")
         if not sub_request.anidb_link:
             errors.append("AniDB link cannot be empty.")
-        if not sub_request.anidb_link.startswith("https://anidb.net/"):
+        elif not sub_request.anidb_link.startswith("https://anidb.net/"):
             errors.append("The provided AniDB link appears to be invalid.")
 
         if any(sub_request.anidb_link == r.anidb_link for r in sub_requests):
