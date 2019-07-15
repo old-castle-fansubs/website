@@ -80,4 +80,4 @@ def render_markdown(text: str) -> str:
         ret = "<p>" + ret + "</p>"
     ret = sanitize(ret)
 
-    return ret
+    return T.cast(str, ret)

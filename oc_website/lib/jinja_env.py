@@ -16,7 +16,7 @@ def setup_jinja_env(jinja_env: jinja2.Environment) -> None:
     def match(haystack: str, needle: str) -> bool:
         return needle.lower() in haystack.lower()
 
-    def regex_match(pattern: str, needle: str) -> bool:
+    def regex_match(pattern: str, needle: str) -> T.Optional[T.Match[str]]:
         return re.search(needle, pattern, re.I)
 
     jinja_env.globals["deployment_id"] = datetime.datetime.now().isoformat()

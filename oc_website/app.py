@@ -31,7 +31,7 @@ PROJECTS = list(sorted(get_projects(), key=lambda project: project.title))
 NEWS = sorted(get_news(), key=lambda news: news.stem, reverse=True)
 RELEASES = list(get_releases())
 
-GUEST_BOOK_CACHE: T.Optional[str] = None
+GUEST_BOOK_CACHE = ''
 GUEST_BOOK_TID = 10
 
 
@@ -113,7 +113,7 @@ def app_requests() -> str:
 
 
 @app.route("/request_add.html", methods=["GET", "POST"])
-def app_request_add() -> str:
+def app_request_add() -> T.Any:
     title = request.form.get("title", "").strip()
     anidb_link = request.form.get("anidb_link", "").strip()
     comment = request.form.get("comment", "").strip()
@@ -176,7 +176,7 @@ def app_guest_book() -> str:
 
 
 @app.route("/comment_add.html", methods=["GET", "POST"])
-def app_comment_add() -> T.Union[str, Response]:
+def app_comment_add() -> T.Any:
     pid: int
     try:
         pid = int(request.args.get("pid", ""))
@@ -239,7 +239,7 @@ def app_comment_add() -> T.Union[str, Response]:
             comments.insert(0, comment)
             save_comments(comments)
             global GUEST_BOOK_CACHE
-            GUEST_BOOK_CACHE = None
+            GUEST_BOOK_CACHE = ''
             return redirect("guest_book.html", code=302)
 
     return render_template(
