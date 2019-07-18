@@ -1,0 +1,45 @@
+body {
+  background: black;
+  color: #EEE;
+}
+#top-header h1 a {
+  color: #EEE;
+}
+hr {
+  background: #EEE;
+}
+table.fancy th,
+table.fancy td {
+  border-color: #EEE;
+}
+a {
+  color: dodgerblue;
+}
+a:visited {
+  color: orchid;
+}
+
+.news .date {
+  color: rgba(232, 232, 232, 0.5);
+}
+
+textarea,
+input {
+  background-color: black;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.comment>.text-wrapper>.comment-header .spacer,
+.comment>.text-wrapper>.comment-header .permalink,
+.comment>.text-wrapper>.comment-header .parent {
+    color: rgba(232, 232, 232, 0.5);
+    font-weight: normal;
+}
+.comment>.text-wrapper>.comment-header .permalink:hover,
+.comment>.text-wrapper>.comment-header .parent:hover {
+    color: white;
+}
+.comment>.text-wrapper>.comment-header .author {
+    color: rgba(232, 232, 232, 0.8);
+}
