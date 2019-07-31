@@ -1976,7 +1976,8 @@
         "links": [
             "https://nyaa.si/view/1113593",
             "https://anidex.info/torrent/221510"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-01-28 21:34:52",
@@ -1999,7 +2000,8 @@
         "links": [
             "https://nyaa.si/view/1115690",
             "https://anidex.info/torrent/223226"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-02-04 17:28:32",
@@ -2022,7 +2024,8 @@
         "links": [
             "https://nyaa.si/view/1117860",
             "https://anidex.info/torrent/224727"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-02-12 00:48:56",
@@ -2045,7 +2048,8 @@
         "links": [
             "https://nyaa.si/view/1119814",
             "https://anidex.info/torrent/226413"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-02-20 13:24:35",
@@ -2068,7 +2072,8 @@
         "links": [
             "https://nyaa.si/view/1121578",
             "https://anidex.info/torrent/227856"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-02-25 23:58:22",
@@ -2091,7 +2096,8 @@
         "links": [
             "https://nyaa.si/view/1123891",
             "https://anidex.info/torrent/229506"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-03-05 00:56:08",
@@ -2114,7 +2120,8 @@
         "links": [
             "https://nyaa.si/view/1125621",
             "https://anidex.info/torrent/230799"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-03-12 21:12:45",
@@ -2137,7 +2144,8 @@
         "links": [
             "https://nyaa.si/view/1127828",
             "https://anidex.info/torrent/232786"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-03-18 22:07:11",
@@ -2160,7 +2168,8 @@
         "links": [
             "https://nyaa.si/view/1129890",
             "https://anidex.info/torrent/234508"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-03-25 23:56:21",
@@ -2183,7 +2192,8 @@
         "links": [
             "https://nyaa.si/view/1132089",
             "https://anidex.info/torrent/236268"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-04-03 01:33:09",
@@ -2206,7 +2216,8 @@
         "links": [
             "https://nyaa.si/view/1133765",
             "https://anidex.info/torrent/237560"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-04-09 01:03:58",
@@ -2229,7 +2240,8 @@
         "links": [
             "https://nyaa.si/view/1136012",
             "https://anidex.info/torrent/239276"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-04-16 20:12:28",
@@ -2252,7 +2264,8 @@
         "links": [
             "https://nyaa.si/view/1137555",
             "https://anidex.info/torrent/240420"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-04-22 15:56:38",
@@ -2275,7 +2288,8 @@
         "links": [
             "https://nyaa.si/view/1139865",
             "https://anidex.info/torrent/242002"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-04-30 22:56:55",
@@ -2551,7 +2565,8 @@
         "links": [
             "https://nyaa.si/view/1141602",
             "https://anidex.info/torrent/243509"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-05-07 16:30:08",
@@ -2572,7 +2587,8 @@
         "title": "Singing In The Sunset",
         "links": [
             "https://nyaa.si/view/1143263"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-05-13 22:11:42",
@@ -2594,7 +2610,8 @@
         "links": [
             "https://nyaa.si/view/1145082",
             "https://anidex.info/torrent/246314"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-05-20 19:11:04",
@@ -2617,7 +2634,8 @@
         "links": [
             "https://nyaa.si/view/1146993",
             "https://anidex.info/torrent/247825"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-05-28 12:55:43",
@@ -2639,7 +2657,8 @@
         "title": "A Long Way Up",
         "links": [
             "https://nyaa.si/view/1148590"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-06-03 21:04:24",
@@ -3806,7 +3825,8 @@
         "links": [
             "https://nyaa.si/view/1150244",
             "https://anidex.info/torrent/250484"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-06-10 23:41:20",
@@ -3839,7 +3859,8 @@
         "links": [
             "https://nyaa.si/view/1152046",
             "https://anidex.info/torrent/251667"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-06-22 12:26:13",
@@ -3859,9 +3880,10 @@
         "episode": "22",
         "title": "Nozomi's Debut",
         "links": [
-            "https://nyaa.si/view/1153695",
-            "https://anidex.info/torrent/252796"
-        ]
+            "https://anidex.info/torrent/252796",
+            "https://nyaa.si/view/1153695"
+        ],
+        "hidden": true
     },
     {
         "date": "2019-06-25 00:44:30",
@@ -3895,7 +3917,8 @@
         "links": [
             "https://nyaa.si/view/1155487",
             "https://anidex.info/torrent/254033"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-07-01 19:04:32",
@@ -3915,8 +3938,8 @@
         "episode": "01",
         "title": "Saint Tail",
         "links": [
-            "https://anidex.info/torrent/254053",
-            "https://nyaa.si/view/1155560"
+            "https://nyaa.si/view/1155560",
+            "https://anidex.info/torrent/254053"
         ]
     },
     {
@@ -3928,7 +3951,8 @@
         "links": [
             "https://nyaa.si/view/1157464",
             "https://anidex.info/torrent/255211"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-07-09 07:51:19",
@@ -3937,8 +3961,8 @@
         "episode": "03",
         "title": "Goodbye, Lassie",
         "links": [
-            "https://anidex.info/torrent/255212",
-            "https://nyaa.si/view/1157465"
+            "https://nyaa.si/view/1157465",
+            "https://anidex.info/torrent/255212"
         ]
     },
     {
@@ -3959,9 +3983,10 @@
         "episode": "25",
         "title": "Goodbye, Dad",
         "links": [
-            "https://anidex.info/torrent/256278",
-            "https://nyaa.si/view/1159393"
-        ]
+            "https://nyaa.si/view/1159393",
+            "https://anidex.info/torrent/256278"
+        ],
+        "hidden": true
     },
     {
         "date": "2019-07-15 21:20:54",
@@ -3992,9 +4017,10 @@
         "episode": "26",
         "title": "Song Of Heart: My Dearest Friend",
         "links": [
-            "https://nyaa.si/view/1161242",
-            "https://anidex.info/torrent/257303"
-        ]
+            "https://anidex.info/torrent/257303",
+            "https://nyaa.si/view/1161242"
+        ],
+        "hidden": true
     },
     {
         "date": "2019-07-23 06:16:47",
@@ -4038,6 +4064,292 @@
         "links": [
             "https://anidex.info/torrent/258330",
             "https://nyaa.si/view/1162995"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:10:52",
+        "file": "[OldCastle] Wandering Sun - 01 [C0422001].mkv",
+        "version": 2,
+        "episode": "01",
+        "title": "The Exchange",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:10:54",
+        "file": "[OldCastle] Wandering Sun - 02 [9C5F2002].mkv",
+        "version": 2,
+        "episode": "02",
+        "title": "Double Birthday Party",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:10:56",
+        "file": "[OldCastle] Wandering Sun - 03 [8E3E2003].mkv",
+        "version": 2,
+        "episode": "03",
+        "title": "The Stolen Melody",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:10:57",
+        "file": "[OldCastle] Wandering Sun - 04 [FCA62004].mkv",
+        "version": 2,
+        "episode": "04",
+        "title": "There's A Song Within Me",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:10:59",
+        "file": "[OldCastle] Wandering Sun - 05 [F6452005].mkv",
+        "version": 2,
+        "episode": "05",
+        "title": "The First Encore",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:00",
+        "file": "[OldCastle] Wandering Sun - 06 [1F452006].mkv",
+        "version": 2,
+        "episode": "06",
+        "title": "A Golden Opportunity",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:01",
+        "file": "[OldCastle] Wandering Sun - 07 [9BA42007].mkv",
+        "version": 2,
+        "episode": "07",
+        "title": "The Canary That Forgot Its Song",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:03",
+        "file": "[OldCastle] Wandering Sun - 08 [CF702008].mkv",
+        "version": 2,
+        "episode": "08",
+        "title": "The Promise Between The Two",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:05",
+        "file": "[OldCastle] Wandering Sun - 09 [DB522009].mkv",
+        "version": 2,
+        "episode": "09",
+        "title": "Farewell, Fanni",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:06",
+        "file": "[OldCastle] Wandering Sun - 10 [5DF4200A].mkv",
+        "version": 2,
+        "episode": "10",
+        "title": "A Journey Towards Tomorrow",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:09",
+        "file": "[OldCastle] Wandering Sun - 11 [8748200B].mkv",
+        "version": 2,
+        "episode": "11",
+        "title": "The Golden Trumpet",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:11",
+        "file": "[OldCastle] Wandering Sun - 12 [BB5D200C].mkv",
+        "version": 2,
+        "episode": "12",
+        "title": "Don't Cry, Dear",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:13",
+        "file": "[OldCastle] Wandering Sun - 13 [1EC6200D].mkv",
+        "version": 2,
+        "episode": "13",
+        "title": "The Grass That Grows Again",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:14",
+        "file": "[OldCastle] Wandering Sun - 14 [0219200E].mkv",
+        "version": 2,
+        "episode": "14",
+        "title": "A Model Employee",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:16",
+        "file": "[OldCastle] Wandering Sun - 15 [F66B200F].mkv",
+        "version": 2,
+        "episode": "15",
+        "title": "Aim For The Stars",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:17",
+        "file": "[OldCastle] Wandering Sun - 16 [F65B2010].mkv",
+        "version": 2,
+        "episode": "16",
+        "title": "Singing In The Sunset",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:19",
+        "file": "[OldCastle] Wandering Sun - 17 [05082011].mkv",
+        "version": 2,
+        "episode": "17",
+        "title": "Training By The Sea",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:20",
+        "file": "[OldCastle] Wandering Sun - 18 [24802012].mkv",
+        "version": 2,
+        "episode": "18",
+        "title": "The Song Of The Port",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:22",
+        "file": "[OldCastle] Wandering Sun - 19 [5C472013].mkv",
+        "version": 2,
+        "episode": "19",
+        "title": "A Long Way Up",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:11:23",
+        "file": "[OldCastle] Wandering Sun - 20 [AE912014].mkv",
+        "version": 2,
+        "episode": "20",
+        "title": "Welcome Back, Fanni",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:29:14",
+        "file": "[OldCastle] Wandering Sun - 21 [7EA71015].mkv",
+        "version": 1,
+        "episode": "21",
+        "title": "A Cry To The Sea",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:29:17",
+        "file": "[OldCastle] Wandering Sun - 22 [054B1016].mkv",
+        "version": 1,
+        "episode": "22",
+        "title": "Nozomi's Debut",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:29:20",
+        "file": "[OldCastle] Wandering Sun - 23 [1E0E1017].mkv",
+        "version": 1,
+        "episode": "23",
+        "title": "The Phantom Singer",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:29:21",
+        "file": "[OldCastle] Wandering Sun - 24 [A8551018].mkv",
+        "version": 1,
+        "episode": "24",
+        "title": "The Secret Is Out",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:29:23",
+        "file": "[OldCastle] Wandering Sun - 25 [5D9B1019].mkv",
+        "version": 1,
+        "episode": "25",
+        "title": "Goodbye, Dad",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
+        ]
+    },
+    {
+        "date": "2019-07-31 14:29:25",
+        "file": "[OldCastle] Wandering Sun - 26 [31C3101A].mkv",
+        "version": 1,
+        "episode": "26",
+        "title": "Song Of Heart: My Dearest Friend",
+        "links": [
+            "https://anidex.info/torrent/258610",
+            "https://nyaa.si/view/1163449"
         ]
     }
 ]
