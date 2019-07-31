@@ -354,10 +354,13 @@ def main() -> None:
     releases = json.loads(RELEASES_PATH.read_text())
 
     links = do_release(args.path, args)
+    print("Collected links:", links, file=sys.stderr)
 
     for path in (
         [args.path] if args.path.is_file() else sorted(args.path.iterdir())
     ):
+        print("Processing", path, file=sys.stderr)
+
         subs = pysubs2.SSAFile.from_string(extract_subtitles(path))
         title = get_title_from_subs(subs)
 
