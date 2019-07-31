@@ -370,7 +370,7 @@ def main() -> None:
             "version": get_version_from_file_name(path.name),
             "episode": get_episode_from_file_name(path.name),
             "title": title or "-",
-            "links": links,
+            "links": list(sorted(links)),
         }
 
         if args.dry_run:
@@ -381,7 +381,7 @@ def main() -> None:
             tmp_chksum = get_checksum_from_file_name(item["file"])
             if tmp_chksum == file_chksum and not item.get("hidden"):
                 releases[i]["links"] = list(
-                    set(releases[i]["links"]) | set(release["links"])
+                    sorted(set(releases[i]["links"]) | set(release["links"]))
                 )
                 break
         else:
