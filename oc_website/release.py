@@ -327,7 +327,7 @@ def main() -> None:
         file_chksum = get_checksum_from_file_name(release["file"])
         for i, item in enumerate(releases):
             tmp_chksum = get_checksum_from_file_name(item["file"])
-            if tmp_chksum == file_chksum:
+            if tmp_chksum == file_chksum and not item.get("hidden"):
                 releases[i]["links"] = list(
                     set(releases[i]["links"]) | set(release["links"])
                 )
