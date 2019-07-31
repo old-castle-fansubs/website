@@ -22,6 +22,7 @@ from oc_website.lib.releases import RELEASES_PATH
 TRACKERS = [
     "http://anidex.moe:6969/announce",
     "http://nyaa.tracker.wf:7777/announce",
+    "udp://tracker.uw0.xyz:6969",
 ]
 
 TARGET_HOST = "oldcastle.moe"
@@ -41,6 +42,14 @@ NYAA_SI_USER = os.environ.get("NYAA_SI_USER")
 NYAA_SI_PASS = os.environ.get("NYAA_SI_PASS")
 NYAA_SI_INFO = "https://oldcastle.moe"
 NYAA_SI_CATEGORY_ID = "1_2"
+
+NYAA_PANTSU_API_URL = "https://nyaa.pantsu.cat/api/upload"
+NYAA_PANTSU_USER = os.environ.get("NYAA_PANTSU_USER")
+NYAA_PANTSU_PASS = os.environ.get("NYAA_PANTSU_PASS")
+NYAA_PANTSU_API_KEY = os.environ.get("NYAA_PANTSU_API_KEY")
+NYAA_PANTSU_WEBSITE = "https://oldcastle.moe"
+NYAA_PANTSU_CATEGORY_ID = "3_5"
+NYAA_PANTSU_LANGUAGES = "en"
 
 
 def publish_anidex(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
@@ -104,6 +113,41 @@ def publish_nyaa_si(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
     if result.get("errors"):
         raise ValueError(result["errors"])
     return T.cast(str, result["url"])
+
+
+def publish_nyaa_pantsu(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
+    with torrent_path.open("rb") as handle:
+        data = {
+            "username": NYAA_PANTSU_USER,
+            "name": torrent_path.stem,
+            "magnet": None,
+            "c": NYAA_PANTSU_CATEGORY_ID,
+            "remake": False,
+            "desc": "",
+            "status": None,
+            "hidden": False,
+            "website_link": NYAA_PANTSU_WEBSITE,
+            "languages": NYAA_PANTSU_LANGUAGES,
+        }
+        files = {"torrent": handle}
+        headers = {"Authorization": NYAA_PANTSU_API_KEY}
+
+        if dry_run:
+            print(data)
+            print(headers)
+            print(files)
+            return None
+
+        response = requests.post(
+            NYAA_PANTSU_API_URL, headers=headers, data=data, files=files
+        )
+
+    response.raise_for_status()
+    result = response.json()
+    if result.get("errors"):
+        raise ValueError(result["errors"])
+    torrent_id = result["data"]["id"]
+    return f"https://nyaa.pantsu.cat/view/{torrent_id}"
 
 
 def rsync(source: T.Union[Path, str], target: T.Union[Path, str]) -> None:
@@ -180,6 +224,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--anidex", dest="publish_anidex", action="store_true")
     parser.add_argument(
         "--nyaa-si", dest="publish_nyaa_si", action="store_true"
+    )
+    parser.add_argument(
+        "--nyaa-pantsu", dest="publish_nyaa_pantsu", action="store_true"
     )
     return parser.parse_args()
 
@@ -286,6 +333,8 @@ def do_release(path: Path, args: argparse.Namespace) -> T.List[str]:
         funcs.append(publish_anidex)
     if args.publish_nyaa_si:
         funcs.append(publish_nyaa_si)
+    if args.publish_nyaa_pantsu:
+        funcs.append(publish_nyaa_pantsu)
 
     for func in funcs:
         try:
