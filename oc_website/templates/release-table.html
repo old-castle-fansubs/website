@@ -31,7 +31,7 @@
     <tr>
       <th class='date'>Date</th>
       <th class='file'>File</th>
-      <th class='links' colspan='2'>Links</th>
+      <th class='links' colspan='3'>Links</th>
     </tr>
   </thead>
   <tbody>
@@ -45,6 +45,7 @@
         {% endif %}
       </td>
       {{ link_cell(release, loop, filtered_releases, 'nyaa.si') }}
+      {{ link_cell(release, loop, filtered_releases, 'nyaa.pantsu') }}
       {{ link_cell(release, loop, filtered_releases, 'anidex') }}
     </tr>
   {% endfor %}
