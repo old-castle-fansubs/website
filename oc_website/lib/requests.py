@@ -20,6 +20,8 @@ class Request:
 
 
 def get_requests() -> T.Iterable[Request]:
+    if not REQUESTS_PATH.exists():
+        return
     for item in json.loads(REQUESTS_PATH.read_text()):
         date = item.pop("date", None)
         date = arrow.get(date) if date is not None else None
