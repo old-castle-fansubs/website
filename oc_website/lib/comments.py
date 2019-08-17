@@ -35,6 +35,8 @@ class Comment:
 
 
 def get_comments() -> T.Iterable[Comment]:
+    if not COMMENTS_PATH.exists():
+        return
     for entry in sorted(
         json.loads(COMMENTS_PATH.read_text()),
         key=lambda entry: entry["created"],
