@@ -8,7 +8,7 @@ import tempfile
 import typing as T
 from datetime import datetime
 from pathlib import Path
-from subprocess import run
+from subprocess import run, PIPE
 
 import humanfriendly
 import pysubs2
@@ -232,9 +232,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def extract_subtitles(source_path: Path) -> str:
-    out = run(
-        ["mkvmerge", "-i", source_path], capture_output=True, text=True
-    ).stdout
+    out = run(["mkvmerge", "-i", source_path], stdout=PIPE).stdout.decode()
 
     match = re.search(r"Track ID (\d+): subtitles \(SubStationAlpha\)", out)
     if not match:
@@ -250,11 +248,10 @@ def extract_subtitles(source_path: Path) -> str:
             source_path,
             f"{track_id}:/dev/stdout",
         ],
-        capture_output=True,
-        text=True,
+        stdout=PIPE,
     )
 
-    return T.cast(str, result.stdout)
+    return T.cast(str, result.stdout.decode())
 
 
 def extract_text(ass_string: str) -> str:
