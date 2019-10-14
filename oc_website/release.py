@@ -43,7 +43,7 @@ NYAA_SI_PASS = os.environ.get("NYAA_SI_PASS")
 NYAA_SI_INFO = "https://oldcastle.moe"
 NYAA_SI_CATEGORY_ID = "1_2"
 
-NYAA_PANTSU_API_URL = "https://nyaa.pantsu.cat/api/upload"
+NYAA_PANTSU_API_URL = "https://nyaa.net/api/upload"
 NYAA_PANTSU_USER = os.environ.get("NYAA_PANTSU_USER")
 NYAA_PANTSU_PASS = os.environ.get("NYAA_PANTSU_PASS")
 NYAA_PANTSU_API_KEY = os.environ.get("NYAA_PANTSU_API_KEY")
@@ -147,7 +147,7 @@ def publish_nyaa_pantsu(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
     if result.get("errors"):
         raise ValueError(result["errors"])
     torrent_id = result["data"]["id"]
-    return f"https://nyaa.pantsu.cat/view/{torrent_id}"
+    return f"https://nyaa.net/view/{torrent_id}"
 
 
 def rsync(source: T.Union[Path, str], target: T.Union[Path, str]) -> None:
