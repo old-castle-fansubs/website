@@ -1,0 +1,78 @@
+body, main {
+  margin-top: 0;
+  padding-top: 0;
+}
+body {
+  background: black;
+  color: #FFC080;
+}
+#body h1:before,
+#body h1:after {
+  display: inline-block;
+  background: url('img/pumpkin.png');
+  background-size: 20px 20px;
+  content: '';
+  width: 20px;
+  height: 20px;
+  margin: 0 10px;
+}
+#top-header {
+  background-image: url('img/halloween-bk.png');
+  background-size: auto 300px;
+  background-position: -100px 30px;
+  background-repeat: no-repeat;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 0;
+}
+#top-header-logo {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-end;
+}
+#top-header h1 {
+  font-size: 70px;
+  line-height: 70px;
+  margin-top: 40px;
+  margin-right: 50px;
+}
+#top-header h1 a {
+  color: #FFFFD8;
+}
+hr {
+  background: #FFC080;
+}
+table.fancy th,
+table.fancy td {
+  border-color: #FFC080;
+}
+a {
+  color: orange;
+}
+a:visited {
+  color: violet;
+}
+
+textarea,
+input {
+  background-color: black;
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.comment>.text-wrapper>.comment-header .spacer,
+.comment>.text-wrapper>.comment-header .permalink,
+.comment>.text-wrapper>.comment-header .parent {
+    color: rgba(232, 232, 232, 0.5);
+    font-weight: normal;
+}
+.comment>.text-wrapper>.comment-header .permalink:hover,
+.comment>.text-wrapper>.comment-header .parent:hover {
+    color: white;
+}
+.comment>.text-wrapper>.comment-header .author {
+    color: rgba(232, 232, 232, 0.8);
+}

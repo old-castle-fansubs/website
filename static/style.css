@@ -8,7 +8,7 @@ body {
   color: black;
   font-family: 'Roboto', sans-serif;
   font-size: 13pt;
-  line-height: 15pt;
+  line-height: 16.5pt;
 }
 main {
   width: 40em;
@@ -35,6 +35,7 @@ main {
 }
 
 #top-nav {
+  width: 100%;
   margin-top: 1em;
 }
 #top-nav ul {
@@ -110,7 +111,7 @@ main {
   text-align: center;
   margin-bottom: 1em;
   margin-top: -0.75em;
-  color: rgba(0, 0, 0, 0.5);
+  opacity: 0.5;
 }
 
 
@@ -258,7 +259,7 @@ img.flag {
 #home #attention {
   display: none;
 }
-#home img, video {
+#home #featured {
   margin: 0 auto;
   display: inline-block;
   max-width: 100%;

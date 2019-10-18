@@ -19,10 +19,6 @@ a:visited {
   color: orchid;
 }
 
-.news .date {
-  color: rgba(232, 232, 232, 0.5);
-}
-
 textarea,
 input {
   background-color: black;

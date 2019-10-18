@@ -5,17 +5,21 @@
   <meta charset='utf-8'/>
   <title>Old Castle Fansubs - {% block title %}{{ title }}{% endblock %}</title>
   <link rel='preload' href='style.css?{{ deployment_id }}' as='style'>
+  <link rel='preload' href='halloween.css?{{ deployment_id }}' as='style'>
   <link rel='preload' href='img/blue.jpg' as='image' type='image/jpeg'>
   <link rel='preload' href='img/stone.jpg' as='image' type='image/jpeg'>
   <link rel='stylesheet' href='style.css?{{ deployment_id }}'>
+  <link rel='stylesheet' href='halloween.css?{{ deployment_id }}'>
 
   {% endblock %}
 </head>
 <body id='{% block id %}{% endblock %}'>
   <main>
     <header id='top-header'>
-      <h1><a href='index.html'>Old Castle<br/>
-      <small>fansub group</small></a></h1>
+      <div id='top-header-logo'>
+        <h1><a href='index.html'>Old Castle<br/>
+        <small>fansub group</small></a></h1>
+      </div>
       <nav id='top-nav'>
         <ul>
           <li><a href='index.html'>Home</a></li>
