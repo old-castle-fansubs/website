@@ -231,12 +231,12 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def extract_subtitles(source_path: Path) -> str:
+def extract_subtitles(source_path: Path) -> T.Optional[str]:
     out = run(["mkvmerge", "-i", source_path], stdout=PIPE).stdout.decode()
 
     match = re.search(r"Track ID (\d+): subtitles \(SubStationAlpha\)", out)
     if not match:
-        raise RuntimeError("No subtitles found in the file")
+        return None
     track_id = int(match.group(1))
 
     result = run(
@@ -358,8 +358,12 @@ def main() -> None:
     ):
         print("Processing", path, file=sys.stderr)
 
-        subs = pysubs2.SSAFile.from_string(extract_subtitles(path))
-        title = get_title_from_subs(subs)
+        subs_text = extract_subtitles(path)
+        if subs_text:
+            subs = pysubs2.SSAFile.from_string(subs_text)
+            title = get_title_from_subs(subs)
+        else:
+            title = "unknown"
 
         release = {
             "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
