@@ -317,7 +317,7 @@ def do_release(path: Path, args: argparse.Namespace) -> T.List[str]:
         if target_path_exists(target_torrent_path):
             rsync(f"{TARGET_HOST}:{target_torrent_path}", local_torrent_path)
         else:
-            build_torrent_file(args.path, local_torrent_path)
+            build_torrent_file(path, local_torrent_path)
 
     if not target_path_exists(target_torrent_path):
         rsync(local_torrent_path, f"{TARGET_HOST}:{target_torrent_path}")
