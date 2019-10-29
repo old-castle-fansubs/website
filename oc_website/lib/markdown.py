@@ -71,8 +71,7 @@ class Unofficial(misaka.HtmlRenderer):
 def render_markdown(text: str) -> str:
     renderer = Unofficial()
     md = misaka.Markdown(
-        renderer,
-        extensions=("strikethrough", "autolink", "fenced-code"),
+        renderer, extensions=("strikethrough", "autolink", "fenced-code")
     )
 
     ret = md(text).rstrip("\n")

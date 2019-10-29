@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
 
-import arrow
+import dateutil.parser
 
 from oc_website.lib.common import DATA_DIR, STATIC_DIR
 
@@ -37,7 +37,7 @@ class FeaturedImage:
 
 def get_featured_images() -> T.Iterable[FeaturedImage]:
     return (
-        FeaturedImage(arrow.get(item["date"]), item["name"])
+        FeaturedImage(dateutil.parser.parse(item["date"]), item["name"])
         for item in json.loads(
             FEATURED_IMAGES_PATH.read_text(encoding="utf-8")
         )

@@ -1,6 +1,6 @@
 import typing as T
+from datetime import datetime
 
-import arrow
 import werkzeug.routing
 from flask import (
     Flask,
@@ -31,7 +31,7 @@ PROJECTS = list(sorted(get_projects(), key=lambda project: project.title))
 NEWS = sorted(get_news(), key=lambda news: news.stem, reverse=True)
 RELEASES = list(get_releases())
 
-GUEST_BOOK_CACHE = ''
+GUEST_BOOK_CACHE = ""
 GUEST_BOOK_TID = 10
 
 
@@ -126,7 +126,7 @@ def app_request_add() -> T.Any:
 
     sub_request = SubRequest(
         title=title,
-        date=arrow.now(),
+        date=datetime.now(),
         anidb_link=anidb_link,
         comment=comment,
         remote_addr=remote_addr,
@@ -214,7 +214,7 @@ def app_comment_add() -> T.Any:
         tid=tid,
         id=id,
         pid=pid or None,
-        created=arrow.now(),
+        created=datetime.now(),
         remote_addr=remote_addr,
         text=text,
         author=author,
@@ -239,7 +239,7 @@ def app_comment_add() -> T.Any:
             comments.insert(0, comment)
             save_comments(comments)
             global GUEST_BOOK_CACHE
-            GUEST_BOOK_CACHE = ''
+            GUEST_BOOK_CACHE = ""
             return redirect("guest_book.html", code=302)
 
     return render_template(

@@ -3,7 +3,7 @@ import typing as T
 from dataclasses import dataclass
 from datetime import datetime
 
-import arrow
+import dateutil.parser
 
 from oc_website.lib.common import DATA_DIR
 
@@ -34,7 +34,7 @@ class Release:
 def get_releases() -> T.Iterable[Release]:
     return [
         Release(
-            date=arrow.get(item["date"]),
+            date=dateutil.parser.parse(item["date"]),
             file_name=item["file"],
             file_version=item["version"],
             episode_number=item["episode"],

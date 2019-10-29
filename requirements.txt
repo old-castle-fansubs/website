@@ -6,4 +6,3 @@ misaka
 bleach
 humanfriendly
 flask
-arrow

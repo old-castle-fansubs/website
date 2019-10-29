@@ -8,7 +8,7 @@ import tempfile
 import typing as T
 from datetime import datetime
 from pathlib import Path
-from subprocess import run, PIPE
+from subprocess import PIPE, run
 
 import humanfriendly
 import pysubs2

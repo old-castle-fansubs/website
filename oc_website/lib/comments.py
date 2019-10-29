@@ -2,8 +2,9 @@ import hashlib
 import json
 import typing as T
 from dataclasses import dataclass
+from datetime import datetime
 
-import arrow
+import dateutil.parser
 
 from oc_website.lib.common import DATA_DIR
 from oc_website.lib.markdown import render_markdown
@@ -16,7 +17,7 @@ class Comment:
     id: int
     tid: int
     pid: T.Optional[int]
-    created: arrow.Arrow
+    created: datetime
     remote_addr: str
     text: str
     author: str
@@ -46,7 +47,11 @@ def get_comments() -> T.Iterable[Comment]:
             id=entry["id"],
             tid=entry["tid"],
             pid=entry["pid"],
-            created=arrow.get(entry["created"]) if entry["created"] else None,
+            created=(
+                dateutil.parser.pare(entry["created"])
+                if entry["created"]
+                else None
+            ),
             remote_addr=entry["remote_addr"],
             text=entry["text"],
             author=entry["author"],

@@ -2,7 +2,7 @@ import typing as T
 from dataclasses import dataclass
 from datetime import datetime
 
-import arrow
+import dateutil.parser
 
 from oc_website.lib.common import TEMPLATES_DIR
 from oc_website.lib.jinja_env import get_jinja_env
@@ -22,7 +22,9 @@ def get_news() -> T.Iterable[News]:
     for path in (TEMPLATES_DIR / "news").iterdir():
         template = jinja_env.get_template(str(path.relative_to(TEMPLATES_DIR)))
         context = template.new_context()
-        date = arrow.get("".join(template.blocks["news_date"](context)))
+        date = dateutil.parser.parse(
+            "".join(template.blocks["news_date"](context))
+        )
         title = "".join(template.blocks["news_title"](context))
         author = "".join(template.blocks["news_author"](context))
 
