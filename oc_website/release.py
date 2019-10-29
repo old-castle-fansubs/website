@@ -236,7 +236,7 @@ def extract_subtitles(source_path: Path) -> str:
 
     match = re.search(r"Track ID (\d+): subtitles \(SubStationAlpha\)", out)
     if not match:
-        raise RuntimeError("No subtiles found in the file")
+        raise RuntimeError("No subtitles found in the file")
     track_id = int(match.group(1))
 
     result = run(
