@@ -4883,5 +4883,53 @@
             "https://nyaa.net/view/1024569",
             "https://nyaa.si/view/1188888"
         ]
+    },
+    {
+        "date": "2019-10-30 20:00:46",
+        "file": "[OldCastle] Umi no Yami, Tsuki no Kage - 01 [A7761001].mkv",
+        "version": 1,
+        "episode": "01",
+        "title": "Volume 1:\nWaking the Curse",
+        "links": [
+            "https://anidex.info/torrent/279296",
+            "https://nyaa.net/view/1024633",
+            "https://nyaa.si/view/1189430"
+        ]
+    },
+    {
+        "date": "2019-10-30 20:00:46",
+        "file": "[OldCastle] Umi no Yami, Tsuki no Kage - 02 [A7171002].mkv",
+        "version": 1,
+        "episode": "02",
+        "title": "Volume 2:\nA Nightmarish Premonition",
+        "links": [
+            "https://anidex.info/torrent/279296",
+            "https://nyaa.net/view/1024633",
+            "https://nyaa.si/view/1189430"
+        ]
+    },
+    {
+        "date": "2019-10-30 20:00:46",
+        "file": "[OldCastle] Umi no Yami, Tsuki no Kage - 03 [C4821003].mkv",
+        "version": 1,
+        "episode": "03",
+        "title": "Volume 3:\nThe Final Confrontation",
+        "links": [
+            "https://anidex.info/torrent/279296",
+            "https://nyaa.net/view/1024633",
+            "https://nyaa.si/view/1189430"
+        ]
+    },
+    {
+        "date": "2019-10-30 20:00:46",
+        "file": "[OldCastle] Umi no Yami, Tsuki no Kage - extra [F54A6935].mp4",
+        "version": 1,
+        "episode": null,
+        "title": "extra",
+        "links": [
+            "https://anidex.info/torrent/279296",
+            "https://nyaa.net/view/1024633",
+            "https://nyaa.si/view/1189430"
+        ]
     }
 ]
