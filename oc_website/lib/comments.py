@@ -48,7 +48,7 @@ def get_comments() -> T.Iterable[Comment]:
             tid=entry["tid"],
             pid=entry["pid"],
             created=(
-                dateutil.parser.pare(entry["created"])
+                dateutil.parser.parse(entry["created"])
                 if entry["created"]
                 else None
             ),
