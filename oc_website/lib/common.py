@@ -15,3 +15,13 @@ def first(source: T.Iterable[TItem]) -> T.Optional[TItem]:
         return next(source)
     except StopIteration:
         return None
+
+
+def format_size(num, binary=False):
+    suffix = "iB" if binary else "B"
+    div = 1024 if binary else 1000
+    for prefix in ["", "K", "M", "G", "T", "P", "E", "Z"]:
+        if abs(num) < div:
+            return f"{num:.1f} {prefix}{suffix}"
+        num /= div
+    return f"{num:.1f} Y{suffix}"

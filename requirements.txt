@@ -4,5 +4,4 @@ jinja2
 Pillow
 misaka
 bleach
-humanfriendly
 flask

@@ -10,13 +10,13 @@ from datetime import datetime
 from pathlib import Path
 from subprocess import PIPE, run
 
-import humanfriendly
 import pysubs2
 import requests
 import torf
 import tqdm
 
 import ass_tag_parser
+from oc_website.lib.common import format_size
 from oc_website.lib.releases import RELEASES_PATH
 
 TRACKERS = [
@@ -182,7 +182,7 @@ def build_torrent_file(
         torrent.piece_size = MAX_TORRENT_PIECE_SIZE
     print(
         "Piece size:",
-        humanfriendly.format_size(torrent.piece_size, binary=True),
+        format_size(torrent.piece_size, binary=True),
         file=sys.stderr,
     )
 
