@@ -55,6 +55,9 @@ a {
 a:visited {
   color: violet;
 }
+a:hover {
+  color: red;
+}
 
 textarea,
 input {
@@ -63,16 +66,15 @@ input {
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
-.comment>.text-wrapper>.comment-header .spacer,
-.comment>.text-wrapper>.comment-header .permalink,
-.comment>.text-wrapper>.comment-header .parent {
-    color: rgba(232, 232, 232, 0.5);
-    font-weight: normal;
+.comment>.text-wrapper>.text blockquote {
+  background: rgb(31, 26, 22);
+  border-left: 3px solid rgb(72, 57, 45);
 }
-.comment>.text-wrapper>.comment-header .permalink:hover,
-.comment>.text-wrapper>.comment-header .parent:hover {
-    color: white;
-}
+
 .comment>.text-wrapper>.comment-header .author {
-    color: rgba(232, 232, 232, 0.8);
+  color: #FFC080;
+}
+.comment>.text-wrapper>.comment-header .spacer,
+.comment>.text-wrapper>.comment-header .permalink:not(:hover) {
+  color: rgb(130, 104, 82);
 }

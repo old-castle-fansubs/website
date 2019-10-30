@@ -19,6 +19,16 @@ main {
   clear: both;
 }
 
+a {
+  color: blue;
+}
+a:visited {
+  color: purple;
+}
+a:hover {
+  color: green;
+}
+
 #top-header {
   margin: 1.5em auto;
   text-align: center;

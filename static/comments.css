@@ -44,19 +44,13 @@
 .comment>.text-wrapper>.comment-header {
     font-size: 0.85em;
 }
-.comment>.text-wrapper>.comment-header .spacer,
-.comment>.text-wrapper>.comment-header .permalink,
-.comment>.text-wrapper>.comment-header .parent {
-    color: rgba(0, 0, 0, 0.5);
-    font-weight: normal;
-}
-.comment>.text-wrapper>.comment-header .permalink:hover,
-.comment>.text-wrapper>.comment-header .parent:hover {
-    color: black;
-}
 .comment>.text-wrapper>.comment-header .author {
     font-weight: bold;
     color: rgba(0, 0, 0, 0.8);
+}
+.comment>.text-wrapper>.comment-header .spacer,
+.comment>.text-wrapper>.comment-header .permalink:not(:hover) {
+    color: rgba(0, 0, 0, 0.5);
 }
 
 .comment>.text-wrapper>.text {
@@ -78,8 +72,8 @@
     font-weight: bold;
 }
 .comment>.text-wrapper>.text blockquote {
-    border-left: 3px solid rgba(0, 60, 120, 0.4);
-    background: rgba(0, 30, 60, 0.075);
+    border-left: 3px solid rgba(128, 128, 128, 0.4);
+    background: rgba(128, 128, 128, 0.1);
     margin: 1em 0;
     padding: 0.1em 0.1em 0.1em 0.5em;
 }
