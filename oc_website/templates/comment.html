@@ -6,9 +6,9 @@
     <div role="meta" class="comment-header">
       <span class="author">{{ comment.author }}</span>
       <span class="spacer">&bull;</span>
-      <a href="#comment-{{ comment.id }}" class="permalink">
-        <time title="{{ comment.created }}" datetime="{{ comment.created }}">{{ comment.created.humanize() }}</time>
-      </a>
+      <a href="#comment-{{ comment.id }}" class="permalink"
+        ><time title="{{ comment.created }}" datetime="{{ comment.created }}">{{ comment.created.strftime('%A, %d %B %Y') }}</time
+      ></a>
       {% if not is_preview %}
           <span class="spacer">&bull;</span>
           <a href="comment_add.html?pid={{ comment.id }}" class="reply">Reply</a>
