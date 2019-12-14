@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_macros.jinja" as macros %}
 {% block title %}About{% endblock %}
 {% block id %}about{% endblock %}
 {% block content %}
@@ -12,12 +13,12 @@ especially older stuff, Old Castle favors quality over speed.</p>
 
 <table>
   <tr>
-    <td class='flag'><img class='flag' src='img/icon_pl.svg' alt='Poland'/></td>
+    <td class='flag'>{{ macros.flag('pl') }}</td>
     <td class='name'>rr-</td>
     <td class='desc'>Founder, translator, publisher</td>
   </tr>
   <tr>
-    <td class='flag'><img class='flag' src='img/icon_us.svg' alt='United States'/></td>
+    <td class='flag'>{{ macros.flag('us') }}</td>
     <td class='name'>BlackRose108</td>
     <td class='desc'>Editor{# for Attack No. 1, Monster Hunter Stories: Ride On, Lassie and Paris no Isabelle #}</td>
   </tr>
@@ -27,27 +28,27 @@ especially older stuff, Old Castle favors quality over speed.</p>
 
 <table>
   <tr>
-    <td class='flag'><img class='flag' src='img/icon_us.svg' alt='United States'/></td>
+    <td class='flag'>{{ macros.flag('us') }}</td>
     <td class='name'>DranzerX13</td>
     <td class='desc'>RAW provider for Monster Hunter Stories: Ride On</td>
   </tr>
   <tr>
-    <td class='flag'><img class='flag' src='img/icon_ca.svg' alt='Canada'/></td>
+    <td class='flag'>{{ macros.flag('ca') }}</td>
     <td class='name'>Greg</td>
     <td class='desc'>Editor for Glass Mask</td>
   </tr>
   <tr>
-    <td class='flag'><img class='flag' src='img/icon_fr.svg' alt='France'/></td>
+    <td class='flag'>{{ macros.flag('fr') }}</td>
     <td class='name'>Johnny</td>
     <td class='desc'>RAW provider for Attack No. 1 movies, Saint Tail and Paris no Isabelle ep 1</td>
   </tr>
   <tr>
-    <td class='flag'><img class='flag' src='img/icon_pl.svg' alt='Poland'/></td>
+    <td class='flag'>{{ macros.flag('pl') }}</td>
     <td class='name'>kropiciel</td>
     <td class='desc'>Translation assistance</td>
   </tr>
   <tr>
-    <td class='flag'><img class='flag' src='img/icon_pirate.svg' alt='Republic of Pirates'/></td>
+    <td class='flag'>{{ macros.flag('pirate') }}</td>
     <td class='name'>R-Raws</td>
     <td class='desc'>RAW provider for Umi no Yami and Paris no Isabelle ep 2+</td>
   </tr>
