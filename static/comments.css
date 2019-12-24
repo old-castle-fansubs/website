@@ -46,11 +46,12 @@
 }
 .comment>.text-wrapper>.comment-header .author {
     font-weight: bold;
-    color: rgba(0, 0, 0, 0.8);
+    opacity: 0.8;
 }
 .comment>.text-wrapper>.comment-header .spacer,
 .comment>.text-wrapper>.comment-header .permalink:not(:hover) {
-    color: rgba(0, 0, 0, 0.5);
+    color: var(--text-color);
+    opacity: 0.5;
 }
 
 .comment>.text-wrapper>.text {
@@ -72,8 +73,8 @@
     font-weight: bold;
 }
 .comment>.text-wrapper>.text blockquote {
-    border-left: 3px solid rgba(128, 128, 128, 0.4);
-    background: rgba(128, 128, 128, 0.1);
+    border-left: 3px solid var(--blockquote-border-color);
+    background: var(--blockquote-background-color);
     margin: 1em 0;
     padding: 0.1em 0.1em 0.1em 0.5em;
 }
