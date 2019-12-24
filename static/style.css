@@ -46,7 +46,7 @@ a:hover {
 }
 
 #top-header {
-  margin: 1.5em auto;
+  margin: 1.5em auto 0 auto;
   text-align: center;
 }
 #top-header h1 {
@@ -98,6 +98,9 @@ a:hover {
   border-style: inset;
 }
 
+#body {
+  padding-top: 1.5em;
+}
 #body h1 {
   font-size: 16pt;
 }

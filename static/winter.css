@@ -1,0 +1,31 @@
+:root {
+  --background-color: aliceblue;
+  --text-color: black;
+  --link-text-color: #1565C0;
+  --visited-link-text-color: #633974;
+  --hovered-link-text-color: green;
+  --input-background-color: white;
+  --input-border-color: dodgerblue;
+  --button-background-color: #29B6F6;
+  --blockquote-background-color: rgb(150, 180, 220, 0.2);
+  --blockquote-border-color: dodgerblue;
+}
+
+a:hover {
+  text-shadow: 0 0 0.5em rgba(0, 150, 0, 0.5);
+}
+
+body {
+  background-image: linear-gradient(dodgerblue, aliceblue);
+  background-image: url('img/blue-bokeh.jpg');
+  background-position: center;
+}
+
+body:not(#home) #body {
+  background: rgba(100, 175, 225, 0.3);
+  padding: 1em;
+}
+#top-header h1 a {
+  text-shadow: 0 0 0.2em white;
+  color: white;
+}

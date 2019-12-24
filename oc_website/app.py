@@ -51,7 +51,7 @@ init()
 
 
 @app.route(
-    '/<regex(".*\\.css|data/.*|img(-thumb)?/.*|favicon\\.ico|robots\\.txt"):path>'
+    '/<regex(".*\\.(cs|j)s|data/.*|img(-thumb)?/.*|favicon\\.ico|robots\\.txt"):path>'
 )
 def app_static(path: str) -> T.Any:
     return send_from_directory(STATIC_DIR, path)
