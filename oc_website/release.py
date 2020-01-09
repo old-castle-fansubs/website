@@ -294,6 +294,9 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
                 extract_text(sub.text),
                 flags=re.I,
             )
+            clean_title = re.sub(r"^[-–—\s]+", "", clean_title)
+            clean_title = re.sub(r"[-–—\s]+$", "", clean_title)
+            clean_title = clean_title.replace("\n", " ")
             titles.append((extract_text(sub.text), clean_title))
 
     def sort(item: T.Tuple[str, str]) -> T.Any:
