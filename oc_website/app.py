@@ -20,6 +20,7 @@ from oc_website.lib.projects import get_projects
 from oc_website.lib.releases import get_releases
 from oc_website.lib.requests import Request as SubRequest
 from oc_website.lib.requests import get_requests as get_sub_requests
+from oc_website.lib.requests import is_same_anidb_link, is_valid_anidb_link
 from oc_website.lib.requests import save_requests as save_sub_requests
 from oc_website.lib.thumbnails import generate_thumbnail
 
@@ -141,10 +142,13 @@ def app_request_add() -> T.Any:
             errors.append("Request title cannot be empty.")
         if not sub_request.anidb_link:
             errors.append("AniDB link cannot be empty.")
-        elif not sub_request.anidb_link.startswith("https://anidb.net/"):
+        elif not is_valid_anidb_link(sub_request.anidb_link):
             errors.append("The provided AniDB link appears to be invalid.")
 
-        if any(sub_request.anidb_link == r.anidb_link for r in sub_requests):
+        if any(
+            is_same_anidb_link(sub_request.anidb_link, r.anidb_link)
+            for r in sub_requests
+        ):
             errors.append(
                 "Anime with this AniDB link had been already requested."
             )

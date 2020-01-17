@@ -1,5 +1,6 @@
 import dataclasses
 import json
+import re
 import typing as T
 from datetime import datetime
 
@@ -36,3 +37,18 @@ def save_requests(requests: T.Iterable[Request]) -> None:
         items.append(item)
 
     REQUESTS_PATH.write_text(json.dumps(items, indent=4))
+
+
+def is_valid_anidb_link(link: str) -> bool:
+    return link.startswith("https://anidb.net/")
+
+
+def get_anidb_link_id(link: str) -> T.Optional[int]:
+    match = re.search("(\d+)", link)
+    return int(match.group(1)) if match else None
+
+
+def is_same_anidb_link(link1: str, link2: str) -> bool:
+    link1_id = get_anidb_link_id(link1)
+    link2_id = get_anidb_link_id(link2)
+    return link1_id == link2_id
