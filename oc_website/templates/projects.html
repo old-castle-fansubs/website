@@ -10,26 +10,22 @@
     </a>
   </li>
 {% endmacro %}
+{% macro project_list(projects, title) %}
+  <h1 class='fancy-title'><span>{{ title }}</span></h1>
+  {% if not projects|length %}
+    Nothing… yet!
+  {% endif %}
+  <ul class='anime'>
+    {% for project in projects %}
+      {{- project_list_item(project) }}
+    {% endfor %}
+  </ul>
+{% endmacro %}
 {% block title %}Projects{% endblock %}
 {% block id %}projects{% endblock %}
 {% block content %}
-<h1 class='fancy-title'><span>Ongoing projects</span></h1>
-
-<ul class='anime'>
-  {% for project in projects %}
-    {% if not project.is_finished %}
-      {{- project_list_item(project) }}
-    {% endif %}
-  {% endfor %}
-</ul>
-
-<h1 class='fancy-title'><span>Finished projects</span></h1>
-
-<ul class='anime'>
-  {% for project in projects %}
-    {% if project.is_finished %}
-      {{- project_list_item(project) }}
-    {% endif %}
-  {% endfor %}
-</ul>
+{% set ongoing_projects = projects|rejectattr('is_finished')|list %}
+{% set finished_projects = projects|selectattr('is_finished')|list %}
+{{ project_list(ongoing_projects, 'Ongoing projects') }}
+{{ project_list(finished_projects, 'Finished projects') }}
 {% endblock %}
