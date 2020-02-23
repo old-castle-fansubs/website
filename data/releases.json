@@ -5098,7 +5098,8 @@
             "https://anidex.info/torrent/283721",
             "https://nyaa.net/view/1025472",
             "https://nyaa.si/view/1195829"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-11-21 19:48:16",
@@ -5149,7 +5150,8 @@
             "https://anidex.info/torrent/285291",
             "https://nyaa.net/view/1025817",
             "https://nyaa.si/view/1198051"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-11-29 00:58:48",
@@ -5187,7 +5189,8 @@
             "https://anidex.info/torrent/287018",
             "https://nyaa.net/view/1026084",
             "https://nyaa.si/view/1200171"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-12-02 17:34:33",
@@ -5238,7 +5241,8 @@
             "https://anidex.info/torrent/288581",
             "https://nyaa.net/view/1026356",
             "https://nyaa.si/view/1202248"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-12-09 09:49:43",
@@ -5302,7 +5306,8 @@
             "https://anidex.info/torrent/290656",
             "https://nyaa.net/view/1026612",
             "https://nyaa.si/view/1204389"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-12-19 10:09:20",
@@ -5652,7 +5657,8 @@
             "https://anidex.info/torrent/292608",
             "https://nyaa.net/view/1026882",
             "https://nyaa.si/view/1206477"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2019-12-25 15:17:36",
@@ -5726,7 +5732,8 @@
             "https://anidex.info/torrent/294141",
             "https://nyaa.net/view/1027105",
             "https://nyaa.si/view/1208366"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2020-01-02 17:56:47",
@@ -5764,7 +5771,8 @@
             "https://anidex.info/torrent/295437",
             "https://nyaa.net/view/1027179",
             "https://nyaa.si/view/1209842"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2020-01-09 21:22:09",
@@ -5802,7 +5810,8 @@
             "https://anidex.info/torrent/297210",
             "https://nyaa.net/view/1027351",
             "https://nyaa.si/view/1211736"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2020-01-16 11:36:01",
@@ -6343,7 +6352,8 @@
             "https://anidex.info/torrent/299021",
             "https://nyaa.net/view/1027528",
             "https://nyaa.si/view/1213771"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2020-01-27 23:06:54",
@@ -6355,7 +6365,8 @@
             "https://anidex.info/torrent/301025",
             "https://nyaa.net/view/1027767",
             "https://nyaa.si/view/1215897"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2020-02-03 22:41:50",
@@ -6367,7 +6378,8 @@
             "https://anidex.info/torrent/303021",
             "https://nyaa.net/view/1027917",
             "https://nyaa.si/view/1217871"
-        ]
+        ],
+        "hidden": true
     },
     {
         "date": "2020-02-14 16:48:38",
@@ -6379,6 +6391,150 @@
             "https://anidex.info/torrent/306217",
             "https://nyaa.net/view/1028167",
             "https://nyaa.si/view/1220756"
+        ],
+        "hidden": true
+    },
+    {
+        "date": "2020-02-23 21:44:50",
+        "file": "[OldCastle] Paris no Isabelle - 01 [24082001].mkv",
+        "version": 2,
+        "episode": "01",
+        "title": "Age Fifteen: The Day I Became a Lady",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2020-02-23 21:44:50",
+        "file": "[OldCastle] Paris no Isabelle - 02 [E3692002].mkv",
+        "version": 2,
+        "episode": "02",
+        "title": "In a Valley Between Two Loves",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2020-02-23 21:44:50",
+        "file": "[OldCastle] Paris no Isabelle - 03 [F3F92003].mkv",
+        "version": 2,
+        "episode": "03",
+        "title": "On the Day of the Duel, the One I Love\u2026",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2019-12-09 09:47:05",
+        "file": "[OldCastle] Paris no Isabelle - 04 [51481004].mkv",
+        "version": 1,
+        "episode": "04",
+        "title": "The Road to Versailles",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2019-12-16 19:17:20",
+        "file": "[OldCastle] Paris no Isabelle - 05 [2FA01005].mkv",
+        "version": 1,
+        "episode": "05",
+        "title": "Escape in a Hot-air Balloon",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2020-02-23 21:44:50",
+        "file": "[OldCastle] Paris no Isabelle - 06 [62422006].mkv",
+        "version": 2,
+        "episode": "06",
+        "title": "News of Andr\u00e9a's Death in Battle",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2020-02-23 21:44:50",
+        "file": "[OldCastle] Paris no Isabelle - 07 [F0F62007].mkv",
+        "version": 2,
+        "episode": "07",
+        "title": "Now, the Birth of a Beautiful Swordslady",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2020-01-06 22:47:46",
+        "file": "[OldCastle] Paris no Isabelle - 08 [A9E31008].mkv",
+        "version": 1,
+        "episode": "08",
+        "title": "Appearance of the Mysterious Bat Gang",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2020-02-23 21:44:51",
+        "file": "[OldCastle] Paris no Isabelle - 09 [88952009].mkv",
+        "version": 2,
+        "episode": "09",
+        "title": "Love Burning in the Night Fog",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2020-02-23 21:44:51",
+        "file": "[OldCastle] Paris no Isabelle - 10 [5435200A].mkv",
+        "version": 2,
+        "episode": "10",
+        "title": "Love Blooming on the Battlefield",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2020-01-27 23:06:54",
+        "file": "[OldCastle] Paris no Isabelle - 11 [B918100B].mkv",
+        "version": 1,
+        "episode": "11",
+        "title": "I Hate the War That Killed Mother",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2020-02-03 22:41:50",
+        "file": "[OldCastle] Paris no Isabelle - 12 [E8F7100C].mkv",
+        "version": 1,
+        "episode": "12",
+        "title": "Midday Dance Party",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
+        ]
+    },
+    {
+        "date": "2020-02-23 21:44:51",
+        "file": "[OldCastle] Paris no Isabelle - 13 [0C6D200D].mkv",
+        "version": 2,
+        "episode": "13",
+        "title": "Departure for a New Life",
+        "links": [
+            "https://anidex.info/torrent/309076",
+            "https://nyaa.si/view/1223324"
         ]
     }
 ]
