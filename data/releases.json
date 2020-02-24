@@ -6536,5 +6536,41 @@
             "https://anidex.info/torrent/309081",
             "https://nyaa.si/view/1223354"
         ]
+    },
+    {
+        "date": "2020-02-24 21:40:31",
+        "file": "[OldCastle] Noroi no One Piece - 01 [BC2E1001].mkv",
+        "version": 1,
+        "episode": "01",
+        "title": "Yuuko",
+        "links": [
+            "https://anidex.info/torrent/309352",
+            "https://nyaa.net/view/1028539",
+            "https://nyaa.si/view/1223562"
+        ]
+    },
+    {
+        "date": "2020-02-24 21:40:31",
+        "file": "[OldCastle] Noroi no One Piece - 02 [1AA51002].mkv",
+        "version": 1,
+        "episode": "02",
+        "title": "Kaori",
+        "links": [
+            "https://anidex.info/torrent/309352",
+            "https://nyaa.net/view/1028539",
+            "https://nyaa.si/view/1223562"
+        ]
+    },
+    {
+        "date": "2020-02-24 21:40:31",
+        "file": "[OldCastle] Noroi no One Piece - 03 [30991003].mkv",
+        "version": 1,
+        "episode": "03",
+        "title": "Michiyo",
+        "links": [
+            "https://anidex.info/torrent/309352",
+            "https://nyaa.net/view/1028539",
+            "https://nyaa.si/view/1223562"
+        ]
     }
 ]
