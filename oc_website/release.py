@@ -1,4 +1,5 @@
 import argparse
+import contextlib
 import json
 import os
 import re
@@ -50,6 +51,13 @@ NYAA_PANTSU_API_KEY = os.environ.get("NYAA_PANTSU_API_KEY")
 NYAA_PANTSU_WEBSITE = "https://oldcastle.moe"
 NYAA_PANTSU_CATEGORY_ID = "3_5"
 NYAA_PANTSU_LANGUAGES = "en"
+
+
+@contextlib.contextmanager
+def log_step(text):
+    print(f"--- {text} ---", file=sys.stderr)
+    yield
+    print("", file=sys.stderr)
 
 
 def publish_anidex(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
@@ -176,15 +184,9 @@ def target_path_exists(target_path: Path) -> bool:
 def build_torrent_file(
     local_data_path: Path, local_torrent_path: Path
 ) -> None:
-    print("Building torrent file", file=sys.stderr)
     torrent = torf.Torrent(path=local_data_path, trackers=TRACKERS)
     if torrent.piece_size > MAX_TORRENT_PIECE_SIZE:
         torrent.piece_size = MAX_TORRENT_PIECE_SIZE
-    print(
-        "Piece size:",
-        format_size(torrent.piece_size, binary=True),
-        file=sys.stderr,
-    )
 
     with tqdm.tqdm(total=9e9) as bar:
 
@@ -331,48 +333,49 @@ def do_release(
     publish_funcs: T.List[T.Callable[[Path, bool], T.Optional[str]]],
     dry_run: bool,
 ) -> T.Iterable[T.Dict[str, T.Any]]:
-    print("Submitting data to storage space")
-    rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")
+    with log_step("Submitting data to storage space"):
+        rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")
 
-    print("Building torrent file")
-    local_torrent_path = LOCAL_TORRENT_DIR / get_torrent_name(path)
-    if not local_torrent_path.exists():
-        build_torrent_file(path, local_torrent_path)
+    with log_step("Building torrent file"):
+        local_torrent_path = LOCAL_TORRENT_DIR / get_torrent_name(path)
+        if not local_torrent_path.exists():
+            build_torrent_file(path, local_torrent_path)
 
-    print("Submitting torrent file to transmission")
-    submit_to_transmission(local_torrent_path)
+    with log_step("Submitting torrent file to transmission"):
+        submit_to_transmission(local_torrent_path)
 
-    print("Publishing torrent file on torrent trackers")
-    links: T.List[str] = []
-    for func in publish_funcs:
-        try:
-            link = func(local_torrent_path, dry_run=dry_run)
-            if link:
-                links.append(link)
-        except Exception as ex:
-            print(ex, file=sys.stderr)
-            continue
+    with log_step("Publishing torrent file on torrent trackers"):
+        links: T.List[str] = []
+        for func in publish_funcs:
+            try:
+                link = func(local_torrent_path, dry_run=dry_run)
+                if link:
+                    links.append(link)
+                    print(link)
+            except Exception as ex:
+                print(ex, file=sys.stderr)
+                continue
 
-    print("Creating release entries")
-    paths = [path] if path.is_file() else sorted(path.iterdir())
-    for path in paths:
-        print("Processing", path, file=sys.stderr)
+    with log_step("Creating release entries"):
+        paths = [path] if path.is_file() else sorted(path.iterdir())
+        for path in paths:
+            print("Processing", path, file=sys.stderr)
 
-        subs_text = extract_subtitles(path)
-        if subs_text:
-            subs = pysubs2.SSAFile.from_string(subs_text)
-            title = get_title_from_subs(subs)
-        else:
-            title = "unknown"
+            subs_text = extract_subtitles(path)
+            if subs_text:
+                subs = pysubs2.SSAFile.from_string(subs_text)
+                title = get_title_from_subs(subs)
+            else:
+                title = "unknown"
 
-        yield {
-            "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
-            "file": path.name,
-            "version": get_version_from_file_name(path.name),
-            "episode": get_episode_from_file_name(path.name),
-            "title": title or "-",
-            "links": list(sorted(links)),
-        }
+            yield {
+                "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
+                "file": path.name,
+                "version": get_version_from_file_name(path.name),
+                "episode": get_episode_from_file_name(path.name),
+                "title": title or "-",
+                "links": list(sorted(links)),
+            }
 
 
 def main() -> None:
