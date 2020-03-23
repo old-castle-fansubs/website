@@ -1,4 +1,5 @@
 import json
+import re
 import typing as T
 from dataclasses import dataclass
 from datetime import datetime
@@ -24,6 +25,14 @@ class Release:
     links: T.List[str]
     is_visible: bool
     files: T.List[ReleaseFile]
+
+    @property
+    def btih(self) -> T.Optional[str]:
+        for link in self.links:
+            match = re.search("magnet.*btih:([0-9a-f]+)", link, flags=re.I)
+            if match:
+                return match.group(1)
+        return None
 
     @property
     def is_hidden(self) -> bool:
