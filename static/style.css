@@ -114,10 +114,6 @@ a:hover {
   margin-bottom: 0;
 }
 
-#body li {
-  margin-bottom: 0.5em;
-}
-
 .fancy-title {
   text-align: center;
 }
@@ -132,8 +128,9 @@ a:hover {
   margin-top: -0.75em;
   opacity: 0.5;
 }
-
-
+.news li {
+  margin-bottom: 0.5em;
+}
 .news img {
   max-width: 100%;
 }
@@ -152,44 +149,6 @@ table {
 table th,
 table td {
   padding: 0.2em 0.5em;
-}
-table.fancy thead tr {
-  background: rgba(0,0,0,0.2);
-}
-table.fancy th,
-table.fancy td {
-  border: 1px solid var(--text-color);
-}
-
-table.releases {
-  font-size: 80%;
-  margin-bottom: 3em;
-}
-table.releases td {
-vertical-align: top;
-}
-table.releases .date,
-table.releases .link,
-table.releases .links {
-  text-align: center;
-}
-table.releases .date {
-  white-space: nowrap;
-}
-table.releases .file {
-  width: 100%;
-}
-table.releases td.link.batch {
-background: rgba(0,200,0,0.2);
-}
-table.releases td.link.batch:after {
-  content: '(batch)';
-}
-table.releases td.link.unavailable {
-background: rgba(150,150,150,0.2);
-}
-table.releases td.link.unavailable:after {
-  content: '—';
 }
 
 .split {
@@ -379,6 +338,48 @@ textarea {
 textarea:focus,
 input:focus {
   border-color: var(--hovered-link-text-color);
+}
+
+.release {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.release li {
+  margin: 0 0 2em 0;
+  padding: 0;
+}
+.release td:first-child {
+  width: 1%;
+}
+.release td {
+  vertical-align: top;
+}
+.release .files {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.release .files li {
+  margin: 0;
+  padding: 0;
+}
+.release .links {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.release .links li {
+  display: inline;
+}
+.release .links a span {
+  display: none;
+}
+.release .links a img {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-right: 0.5em;
 }
 
 #requests table th:nth-child(2),

@@ -10,6 +10,7 @@ class Project:
     title: str
     stem: str
     release_filter: str
+    status: str
     is_finished: bool
 
     @property
@@ -35,6 +36,7 @@ def get_projects() -> T.Iterable[Project]:
         yield Project(
             title=title,
             stem=path.stem,
+            status=status,
             is_finished=status == "finished",
             release_filter=release_filter,
         )

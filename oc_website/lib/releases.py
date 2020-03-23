@@ -11,36 +11,49 @@ RELEASES_PATH = DATA_DIR / "releases.json"
 
 
 @dataclass
-class Release:
-    date: datetime
+class ReleaseFile:
     file_name: str
     file_version: int
     episode_number: str
     episode_title: str
+
+
+@dataclass
+class Release:
+    date: datetime
     links: T.List[str]
     is_visible: bool
-
-    def get_link(self, text: str) -> T.Optional[str]:
-        for link in self.links:
-            if text in link:
-                return link
-        return None
+    files: T.List[ReleaseFile]
 
     @property
     def is_hidden(self) -> bool:
         return not self.is_visible
 
 
+def sort_links(link: str) -> int:
+    for i, infix in enumerate(("magnet", "nyaa.si", "nyaa.net", "anidex")):
+        if infix in link:
+            return i
+    return -1
+
+
 def get_releases() -> T.Iterable[Release]:
-    return [
-        Release(
-            date=dateutil.parser.parse(item["date"]),
-            file_name=item["file"],
-            file_version=item["version"],
-            episode_number=item["episode"],
-            episode_title=item["title"],
-            links=item["links"],
-            is_visible=not item.get("hidden", False),
+    releases: T.Dict[str, Release] = {}
+    for item in json.loads(RELEASES_PATH.read_text(encoding="utf-8")):
+        magnet = item["links"][-1]
+        if magnet not in releases:
+            releases[magnet] = Release(
+                date=dateutil.parser.parse(item["date"]),
+                links=sorted(item["links"], key=sort_links),
+                is_visible=not item.get("hidden", False),
+                files=[],
+            )
+        releases[magnet].files.append(
+            ReleaseFile(
+                file_name=item["file"],
+                file_version=item["version"],
+                episode_number=item["episode"],
+                episode_title=item["title"],
+            )
         )
-        for item in json.loads(RELEASES_PATH.read_text(encoding="utf-8"))
-    ]
+    return releases.values()
