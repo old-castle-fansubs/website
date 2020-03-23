@@ -183,7 +183,7 @@ def target_path_exists(target_path: Path) -> bool:
 
 def build_torrent_file(
     local_data_path: Path, local_torrent_path: Path
-) -> None:
+) -> torf.Torrent:
     torrent = torf.Torrent(path=local_data_path, trackers=TRACKERS)
     if torrent.piece_size > MAX_TORRENT_PIECE_SIZE:
         torrent.piece_size = MAX_TORRENT_PIECE_SIZE
@@ -203,6 +203,7 @@ def build_torrent_file(
         torrent.generate(callback)
 
     torrent.write(local_torrent_path, overwrite=True)
+    return torrent
 
 
 def submit_to_transmission(local_torrent_path: Path) -> None:
@@ -336,16 +337,21 @@ def do_release(
     with log_step("Submitting data to storage space"):
         rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")
 
+    links: T.List[str] = []
     with log_step("Building torrent file"):
         local_torrent_path = LOCAL_TORRENT_DIR / get_torrent_name(path)
         if not local_torrent_path.exists():
-            build_torrent_file(path, local_torrent_path)
+            torrent = build_torrent_file(path, local_torrent_path)
+        else:
+            torrent = torf.Torrent.read(local_torrent_path)
+        magnet_link = torrent.magnet()
+        links.append(magnet_link)
+        print(magnet_link)
 
     with log_step("Submitting torrent file to transmission"):
         submit_to_transmission(local_torrent_path)
 
     with log_step("Publishing torrent file on torrent trackers"):
-        links: T.List[str] = []
         for func in publish_funcs:
             try:
                 link = func(local_torrent_path, dry_run=dry_run)
