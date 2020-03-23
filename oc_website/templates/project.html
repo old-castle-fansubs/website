@@ -22,7 +22,68 @@
   <h2>Releases ({{ project.status }})</h2>
 
   {% block project_releases %}
-    {% import 'release-table.html' as release_table %}
-    {{ release_table.table(releases, project.release_filter, project.takedown_request) }}
+    {% set filtered_releases = releases|rejectattr('is_hidden')|projectfilter(project.release_filter) %}
+    <ul class='release'>
+      {% for release in filtered_releases %}
+        <li>
+          <table>
+
+            <tr>
+              <td>Date:</td>
+              <td>
+                <span class='date'>{{ release.date.strftime('%A, %d %b %Y %H:%M:%S') }}</span>
+              </td>
+            </tr>
+
+            <tr>
+              <td>Files:</td>
+              <td>
+                <ul class='files'>
+                  {% for file in release.files %}
+                    <li>
+                      {{ file.file_name }}
+                      {% if file.file_version > 1 %}
+                        (v{{ file.file_version }})
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </td>
+            </tr>
+
+            <tr>
+              <td>BTIH:</td>
+              <td>{{ release.btih|default('Unknown') }}</td>
+            </tr>
+
+            <tr>
+              <td>Links:</td>
+              <td>
+                {% if project.takedown_request %}
+                  Links removed due to takedown request sent by {{ project.takedown_request }}.
+                {% else %}
+                  <ul class='links'>
+                    {% for link in release.links %}
+                      <li>
+                        {%- for infix in ['magnet', 'nyaa.si', 'nyaa.net', 'anidex.info'] -%}
+                          {%- if infix in link -%}
+                            <a href="{{ link }}" title="{{ link }}">{#
+                              #}<img src='/img/{{ infix }}.png' title='{{ infix }}'/>{#
+                              #}<span>{{ infix }}</span>{#
+                            #}</a>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </td>
+            </tr>
+
+          </table>
+
+        </li>
+      {% endfor %}
+    </ul>
   {% endblock %}
 {% endblock %}
