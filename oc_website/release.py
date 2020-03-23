@@ -331,14 +331,18 @@ def do_release(
     publish_funcs: T.List[T.Callable[[Path, bool], T.Optional[str]]],
     dry_run: bool,
 ) -> T.Iterable[T.Dict[str, T.Any]]:
+    print("Submitting data to storage space")
     rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")
 
+    print("Building torrent file")
     local_torrent_path = LOCAL_TORRENT_DIR / get_torrent_name(path)
     if not local_torrent_path.exists():
         build_torrent_file(path, local_torrent_path)
 
+    print("Submitting torrent file to transmission")
     submit_to_transmission(local_torrent_path)
 
+    print("Publishing torrent file on torrent trackers")
     links: T.List[str] = []
     for func in publish_funcs:
         try:
@@ -349,6 +353,7 @@ def do_release(
             print(ex, file=sys.stderr)
             continue
 
+    print("Creating release entries")
     paths = [path] if path.is_file() else sorted(path.iterdir())
     for path in paths:
         print("Processing", path, file=sys.stderr)
