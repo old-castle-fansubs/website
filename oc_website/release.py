@@ -330,7 +330,7 @@ def do_release(
     path: Path,
     publish_funcs: T.List[T.Callable[[Path, bool], T.Optional[str]]],
     dry_run: bool,
-) -> T.List[str]:
+) -> T.Iterable[T.Dict[str, T.Any]]:
     rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")
 
     local_torrent_path = LOCAL_TORRENT_DIR / get_torrent_name(path)
@@ -349,22 +349,8 @@ def do_release(
             print(ex, file=sys.stderr)
             continue
 
-    return links
-
-
-def main() -> None:
-    args = parse_args()
-
-    all_releases = json.loads(RELEASES_PATH.read_text())
-
-    links = do_release(
-        path=args.path, publish_funcs=args.publish_funcs, dry_run=args.dry_run
-    )
-    print("Collected links:", links, file=sys.stderr)
-
-    for path in (
-        [args.path] if args.path.is_file() else sorted(args.path.iterdir())
-    ):
+    paths = [path] if path.is_file() else sorted(path.iterdir())
+    for path in paths:
         print("Processing", path, file=sys.stderr)
 
         subs_text = extract_subtitles(path)
@@ -374,7 +360,7 @@ def main() -> None:
         else:
             title = "unknown"
 
-        release = {
+        yield {
             "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
             "file": path.name,
             "version": get_version_from_file_name(path.name),
@@ -383,6 +369,17 @@ def main() -> None:
             "links": list(sorted(links)),
         }
 
+
+def main() -> None:
+    args = parse_args()
+
+    all_releases = json.loads(RELEASES_PATH.read_text())
+
+    new_releases = do_release(
+        path=args.path, publish_funcs=args.publish_funcs, dry_run=args.dry_run
+    )
+
+    for release in new_releases:
         if args.dry_run:
             print(json.dumps(release, indent=4))
 
@@ -390,11 +387,7 @@ def main() -> None:
         for i, item in enumerate(all_releases):
             tmp_chksum = get_checksum_from_file_name(item["file"])
             if tmp_chksum == file_chksum and not item.get("hidden"):
-                all_releases[i]["links"] = list(
-                    sorted(
-                        set(all_releases[i]["links"]) | set(release["links"])
-                    )
-                )
+                all_releases[i].update(release)
                 break
         else:
             all_releases.append(release)
