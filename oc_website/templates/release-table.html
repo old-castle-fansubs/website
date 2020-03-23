@@ -1,4 +1,4 @@
-{% macro table(releases, filter) %}
+{% macro table(releases, filter, takedown_request) %}
 <ul class='release'>
 {% for release in releases|rejectattr('is_hidden')|projectfilter(filter) %}
   <li>
@@ -35,20 +35,24 @@
       <tr>
         <td>Links:</td>
         <td>
-          <ul class='links'>
-            {% for link in release.links %}
-              <li>
-                {%- for infix in ['magnet', 'nyaa.si', 'nyaa.net', 'anidex.info'] -%}
-                  {%- if infix in link -%}
-                    <a href="{{ link }}" title="{{ link }}">{#
-                      #}<img src='/img/{{ infix }}.png' title='{{ infix }}'/>{#
-                      #}<span>{{ infix }}</span>{#
-                    #}</a>
-                  {%- endif -%}
-                {%- endfor -%}
-              </li>
-            {% endfor %}
-          </ul>
+          {% if takedown_request %}
+            Links removed due to takedown request sent by {{ takedown_request }}.
+          {% else %}
+            <ul class='links'>
+              {% for link in release.links %}
+                <li>
+                  {%- for infix in ['magnet', 'nyaa.si', 'nyaa.net', 'anidex.info'] -%}
+                    {%- if infix in link -%}
+                      <a href="{{ link }}" title="{{ link }}">{#
+                        #}<img src='/img/{{ infix }}.png' title='{{ infix }}'/>{#
+                        #}<span>{{ infix }}</span>{#
+                      #}</a>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
         </td>
       </tr>
 

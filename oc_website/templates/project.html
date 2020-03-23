@@ -23,6 +23,6 @@
 
   {% block project_releases %}
     {% import 'release-table.html' as release_table %}
-    {{ release_table.table(releases, project.release_filter) }}
+    {{ release_table.table(releases, project.release_filter, project.takedown_request) }}
   {% endblock %}
 {% endblock %}

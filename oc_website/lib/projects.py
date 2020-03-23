@@ -12,6 +12,7 @@ class Project:
     release_filter: str
     status: str
     is_finished: bool
+    takedown_request: T.Optional[str] = None
 
     @property
     def url(self) -> str:
@@ -29,6 +30,11 @@ def get_projects() -> T.Iterable[Project]:
         release_filter = "".join(
             template.blocks["project_release_filter"](context)
         )
+        takedown_request = (
+            "".join(template.blocks["project_takedown_request"](context))
+            if "project_takedown_request" in template.blocks
+            else ""
+        ) or None
 
         if status not in ("finished", "ongoing"):
             raise ValueError(f'Unknown status "{status}" in project "{path}"')
@@ -39,4 +45,5 @@ def get_projects() -> T.Iterable[Project]:
             status=status,
             is_finished=status == "finished",
             release_filter=release_filter,
+            takedown_request=takedown_request,
         )
