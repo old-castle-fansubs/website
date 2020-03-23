@@ -10,12 +10,12 @@ from datetime import datetime
 from pathlib import Path
 from subprocess import PIPE, run
 
+import ass_tag_parser
 import pysubs2
 import requests
 import torf
 import tqdm
 
-import ass_tag_parser
 from oc_website.lib.common import format_size
 from oc_website.lib.releases import RELEASES_PATH
 
@@ -203,7 +203,9 @@ def build_torrent_file(
     torrent.write(local_torrent_path, overwrite=True)
 
 
-def submit_to_transmission(target_torrent_path: Path) -> None:
+def submit_to_transmission(local_torrent_path: Path) -> None:
+    target_torrent_path = TARGET_TORRENT_DIR / local_torrent_path.name
+    rsync(local_torrent_path, f"{TARGET_HOST}:{target_torrent_path}")
     run(
         [
             "ssh",
@@ -221,14 +223,28 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("path", type=Path)
     parser.add_argument("-d", "--dry-run", action="store_true")
-    parser.add_argument("--anidex", dest="publish_anidex", action="store_true")
     parser.add_argument(
-        "--nyaa-si", dest="publish_nyaa_si", action="store_true"
+        "--anidex",
+        dest="publish_funcs",
+        action="append_const",
+        const=publish_anidex,
     )
     parser.add_argument(
-        "--nyaa-pantsu", dest="publish_nyaa_pantsu", action="store_true"
+        "--nyaa-si",
+        dest="publish_funcs",
+        action="append_const",
+        const=publish_nyaa_si,
     )
-    return parser.parse_args()
+    parser.add_argument(
+        "--nyaa-pantsu",
+        dest="publish_funcs",
+        action="append_const",
+        const=publish_nyaa_pantsu,
+    )
+    args = parser.parse_args()
+    if args.publish_funcs is None:
+        args.publish_funcs = []
+    return args
 
 
 def extract_subtitles(source_path: Path) -> T.Optional[str]:
@@ -310,35 +326,23 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
     return None
 
 
-def do_release(path: Path, args: argparse.Namespace) -> T.List[str]:
+def do_release(
+    path: Path,
+    publish_funcs: T.List[T.Callable[[Path, bool], T.Optional[str]]],
+    dry_run: bool,
+) -> T.List[str]:
     rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")
 
     local_torrent_path = LOCAL_TORRENT_DIR / get_torrent_name(path)
-    target_torrent_path = TARGET_TORRENT_DIR / get_torrent_name(path)
-
     if not local_torrent_path.exists():
-        if target_path_exists(target_torrent_path):
-            rsync(f"{TARGET_HOST}:{target_torrent_path}", local_torrent_path)
-        else:
-            build_torrent_file(path, local_torrent_path)
+        build_torrent_file(path, local_torrent_path)
 
-    if not target_path_exists(target_torrent_path):
-        rsync(local_torrent_path, f"{TARGET_HOST}:{target_torrent_path}")
-
-    submit_to_transmission(target_torrent_path)
+    submit_to_transmission(local_torrent_path)
 
     links: T.List[str] = []
-    funcs: T.List[T.Callable[[Path, bool], T.Optional[str]]] = []
-    if args.publish_anidex:
-        funcs.append(publish_anidex)
-    if args.publish_nyaa_si:
-        funcs.append(publish_nyaa_si)
-    if args.publish_nyaa_pantsu:
-        funcs.append(publish_nyaa_pantsu)
-
-    for func in funcs:
+    for func in publish_funcs:
         try:
-            link = func(local_torrent_path, args.dry_run)
+            link = func(local_torrent_path, dry_run=dry_run)
             if link:
                 links.append(link)
         except Exception as ex:
@@ -351,9 +355,11 @@ def do_release(path: Path, args: argparse.Namespace) -> T.List[str]:
 def main() -> None:
     args = parse_args()
 
-    releases = json.loads(RELEASES_PATH.read_text())
+    all_releases = json.loads(RELEASES_PATH.read_text())
 
-    links = do_release(args.path, args)
+    links = do_release(
+        path=args.path, publish_funcs=args.publish_funcs, dry_run=args.dry_run
+    )
     print("Collected links:", links, file=sys.stderr)
 
     for path in (
@@ -381,18 +387,20 @@ def main() -> None:
             print(json.dumps(release, indent=4))
 
         file_chksum = get_checksum_from_file_name(release["file"])
-        for i, item in enumerate(releases):
+        for i, item in enumerate(all_releases):
             tmp_chksum = get_checksum_from_file_name(item["file"])
             if tmp_chksum == file_chksum and not item.get("hidden"):
-                releases[i]["links"] = list(
-                    sorted(set(releases[i]["links"]) | set(release["links"]))
+                all_releases[i]["links"] = list(
+                    sorted(
+                        set(all_releases[i]["links"]) | set(release["links"])
+                    )
                 )
                 break
         else:
-            releases.append(release)
+            all_releases.append(release)
 
     if not args.dry_run:
-        RELEASES_PATH.write_text(json.dumps(releases, indent=4) + "\n")
+        RELEASES_PATH.write_text(json.dumps(all_releases, indent=4) + "\n")
 
 
 if __name__ == "__main__":
