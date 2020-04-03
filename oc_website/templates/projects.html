@@ -28,4 +28,5 @@
 {% set finished_projects = projects|selectattr('is_finished')|list %}
 {{ project_list(ongoing_projects, 'Ongoing projects') }}
 {{ project_list(finished_projects, 'Finished projects') }}
+<p>For IRC packlist, please head <a href='https://oldcastle.moe/packlist.txt'>here</a>.</p>
 {% endblock %}
