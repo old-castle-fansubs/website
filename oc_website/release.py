@@ -26,7 +26,7 @@ TRACKERS = [
     "udp://tracker.uw0.xyz:6969",
 ]
 
-TARGET_HOST = "oldcastle.moe"
+TARGET_HOST = "oc"
 TARGET_DATA_DIR = Path("srv/torrent/data")
 TARGET_TORRENT_DIR = Path("srv/torrent/torrent")
 LOCAL_TORRENT_DIR = Path(tempfile.gettempdir())
