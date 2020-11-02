@@ -12,6 +12,7 @@ from pathlib import Path
 from subprocess import PIPE, run
 
 import ass_tag_parser
+import iso639
 import pysubs2
 import requests
 import torf
@@ -250,13 +251,54 @@ def parse_args() -> argparse.Namespace:
     return args
 
 
-def extract_subtitles(source_path: Path) -> T.Optional[str]:
-    out = run(["mkvmerge", "-i", source_path], stdout=PIPE).stdout.decode()
+def get_iso_639_2_lang_code(lang: str) -> str:
+    lang = lang.lower().replace("_", "-")
+    if lang in {"en", "eng", "en-us"}:
+        return "eng"
+    if lang in {"pl", "pol", "pl-pl"}:
+        return "pol"
+    if lang in {"ro", "ro-ro"}:
+        return "rum"
+    if lang in {"nl", "nl-nl"}:
+        return "dut"
+    raise ValueError(f"unknown language {lang}")
 
-    match = re.search(r"Track ID (\d+): subtitles \(SubStationAlpha\)", out)
-    if not match:
+
+def get_subtitle_languages(source_path: Path) -> T.List[str]:
+    out = json.loads(
+        run(
+            ["mkvmerge", "-i", source_path, "-F", "json"], stdout=PIPE
+        ).stdout.decode()
+    )
+    return [
+        iso639.languages.get(
+            bibliographic=track["properties"]["language"]
+        ).alpha2
+        for track in out["tracks"]
+        if track["type"] == "subtitles"
+    ]
+
+
+def extract_subtitles(source_path: Path, language: str) -> T.Optional[str]:
+    out = json.loads(
+        run(
+            ["mkvmerge", "-i", source_path, "-F", "json"], stdout=PIPE
+        ).stdout.decode()
+    )
+
+    for track in out["tracks"]:
+        if (
+            track["type"] == "subtitles"
+            and iso639.languages.get(
+                bibliographic=track["properties"]["language"]
+            ).alpha2
+            == language
+        ):
+            break
+    else:
         return None
-    track_id = int(match.group(1))
+
+    track_id = track["id"]
 
     result = run(
         [
@@ -329,6 +371,26 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
     return None
 
 
+def create_release_entry(path: Path, links: T.List[str]) -> T.Dict[str, T.Any]:
+    languages = get_subtitle_languages(path)
+    subs_text = extract_subtitles(path, languages[0])
+    if subs_text:
+        subs = pysubs2.SSAFile.from_string(subs_text)
+        title = get_title_from_subs(subs)
+    else:
+        title = "unknown"
+
+    return {
+        "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
+        "file": path.name,
+        "version": get_version_from_file_name(path.name),
+        "episode": get_episode_from_file_name(path.name),
+        "languages": languages,
+        "title": title or "-",
+        "links": list(sorted(links)),
+    }
+
+
 def do_release(
     path: Path,
     publish_funcs: T.List[T.Callable[[Path, bool], T.Optional[str]]],
@@ -366,22 +428,7 @@ def do_release(
         paths = [path] if path.is_file() else sorted(path.iterdir())
         for path in paths:
             print("Processing", path, file=sys.stderr)
-
-            subs_text = extract_subtitles(path)
-            if subs_text:
-                subs = pysubs2.SSAFile.from_string(subs_text)
-                title = get_title_from_subs(subs)
-            else:
-                title = "unknown"
-
-            yield {
-                "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
-                "file": path.name,
-                "version": get_version_from_file_name(path.name),
-                "episode": get_episode_from_file_name(path.name),
-                "title": title or "-",
-                "links": list(sorted(links)),
-            }
+            yield create_release_entry(path, links)
 
 
 def main() -> None:

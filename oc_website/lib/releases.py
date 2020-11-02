@@ -17,6 +17,7 @@ class ReleaseFile:
     file_version: int
     episode_number: str
     episode_title: str
+    languages: T.List[str]
 
 
 @dataclass
@@ -63,6 +64,7 @@ def get_releases() -> T.Iterable[Release]:
                 file_version=item["version"],
                 episode_number=item["episode"],
                 episode_title=item["title"],
+                languages=item["languages"],
             )
         )
     return releases.values()
