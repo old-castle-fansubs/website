@@ -275,9 +275,8 @@ img.flag {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-origin: border-box;
   line-height: 0;
-}
-#projects #body .cover>div {
   display: inline-block;
   width: 12em;
   height: 8em;
