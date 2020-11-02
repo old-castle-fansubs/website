@@ -348,7 +348,7 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
     titles: T.List[T.Tuple[str, str]] = []
 
     for sub in subs:
-        if sub.name == "[title]":
+        if sub.name == "[title]" and "series" not in sub.style:
             clean_title = re.sub(
                 r"[–—]?\s*episode\s+#?\d+\s*[–—:]?\s*",
                 "",
