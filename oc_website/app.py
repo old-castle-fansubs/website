@@ -28,9 +28,11 @@ app = Flask(__name__)
 setup_jinja_env(app.jinja_env)
 
 FEATURED_IMAGES = list(get_featured_images())
-PROJECTS = list(sorted(get_projects(), key=lambda project: project.title))
-NEWS = sorted(get_news(), key=lambda news: news.stem, reverse=True)
 RELEASES = list(get_releases())
+PROJECTS = list(
+    sorted(get_projects(RELEASES), key=lambda project: project.title)
+)
+NEWS = sorted(get_news(), key=lambda news: news.stem, reverse=True)
 
 GUEST_BOOK_CACHE = ""
 GUEST_BOOK_TID = 10
@@ -85,9 +87,7 @@ def app_project(project_name: str) -> str:
     for project in PROJECTS:
         if project_name == project.stem:
             return render_template(
-                "projects/" + project.stem + ".html",
-                project=project,
-                releases=RELEASES,
+                "projects/" + project.stem + ".html", project=project
             )
     return render_template("projects.html", projects=PROJECTS)
 

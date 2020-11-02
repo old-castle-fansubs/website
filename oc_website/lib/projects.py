@@ -1,26 +1,28 @@
+import re
 import typing as T
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from oc_website.lib.common import TEMPLATES_DIR
 from oc_website.lib.jinja_env import get_jinja_env
+from oc_website.lib.releases import Release
 
 
 @dataclass
 class Project:
     title: str
     stem: str
-    release_filter: str
     status: str
     is_finished: bool
     anidb_ids: T.Optional[T.List[int]] = None
     takedown_request: T.Optional[str] = None
+    releases: T.List[Release] = field(default_factory=list)
 
     @property
     def url(self) -> str:
         return "project-" + self.stem + ".html"
 
 
-def get_projects() -> T.Iterable[Project]:
+def get_projects(releases: T.List[Release]) -> T.Iterable[Project]:
     jinja_env = get_jinja_env()
 
     for path in (TEMPLATES_DIR / "projects").iterdir():
@@ -51,12 +53,32 @@ def get_projects() -> T.Iterable[Project]:
         if status not in ("finished", "ongoing"):
             raise ValueError(f'Unknown status "{status}" in project "{path}"')
 
+        project_releases = list(
+            sorted(
+                (
+                    release
+                    for release in releases
+                    if not release.is_hidden
+                    and any(
+                        re.search(
+                            release_filter,
+                            release_file.file_name,
+                            flags=re.I,
+                        )
+                        for release_file in release.files
+                    )
+                ),
+                key=lambda release: release.date,
+                reverse=status != "finished",
+            )
+        )
+
         yield Project(
             title=title,
             stem=path.stem,
             status=status,
             is_finished=status == "finished",
-            release_filter=release_filter,
             anidb_ids=anidb_ids,
             takedown_request=takedown_request,
+            releases=project_releases,
         )

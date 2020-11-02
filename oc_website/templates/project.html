@@ -36,10 +36,8 @@
   <h2>Releases ({{ project.status }})</h2>
 
   {% block project_releases %}
-    {% set filtered_releases = releases|rejectattr('is_hidden')|projectfilter(project.release_filter) %}
-    {% set filtered_releases = filtered_releases|sort(attribute='date', reverse=not project.is_finished) %}
     <ul class='release'>
-      {% for release in filtered_releases %}
+      {% for release in project.releases %}
         <li>
           <table>
 
