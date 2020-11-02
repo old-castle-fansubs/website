@@ -1,0 +1,33 @@
+{% extends "news_item.html" %}
+{% block news_date %}2020-11-03{% endblock %}
+{% block news_title %}Small tweaks{% endblock %}
+{% block news_author %}rr-{% endblock %}
+
+{% block news_content %}
+
+<p>
+  Just a small news that we've made some small tweaks to the projects page to
+  enhance the clarity on our releases:
+</p>
+
+<ul>
+  <li>
+    We've added links to AniDB, which is to help distinguishing the series,
+    especially in the case when two series came out under the same title in
+    different years;
+  </li>
+  <li>
+    We've also added flag icons to indicate which languages given release uses.
+  </li>
+</ul>
+
+<p>
+  The way this information is presented might change in the future. We do not
+  plan to add the year of publication of a given series to our release
+  filenames; such practice doesn't seem to be common, and it would also
+  introduce inconsistency to the naming of our previous releases. We probably
+  will present this on the website at some point :)
+</p>
+
+{% endblock %}
+
