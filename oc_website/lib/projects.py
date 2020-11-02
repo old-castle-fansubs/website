@@ -12,6 +12,7 @@ class Project:
     release_filter: str
     status: str
     is_finished: bool
+    anidb_ids: T.Optional[T.List[int]] = None
     takedown_request: T.Optional[str] = None
 
     @property
@@ -25,16 +26,27 @@ def get_projects() -> T.Iterable[Project]:
     for path in (TEMPLATES_DIR / "projects").iterdir():
         template = jinja_env.get_template(str(path.relative_to(TEMPLATES_DIR)))
         context = template.new_context()
-        title = "".join(template.blocks["project_title"](context))
-        status = "".join(template.blocks["project_status"](context))
-        release_filter = "".join(
-            template.blocks["project_release_filter"](context)
+        blocks = {
+            block: "".join(func(context))
+            for block, func in template.blocks.items()
+        }
+
+        title = blocks["project_title"]
+        status = blocks["project_status"]
+        release_filter = blocks["project_release_filter"]
+        anidb_ids = (
+            [
+                int(part.strip())
+                for part in blocks["project_anidb_id"].split(",")
+            ]
+            if blocks.get("project_anidb_id")
+            else None
         )
         takedown_request = (
-            "".join(template.blocks["project_takedown_request"](context))
-            if "project_takedown_request" in template.blocks
-            else ""
-        ) or None
+            blocks["project_takedown_request"]
+            if "project_takedown_request" in blocks
+            else None
+        )
 
         if status not in ("finished", "ongoing"):
             raise ValueError(f'Unknown status "{status}" in project "{path}"')
@@ -45,5 +57,6 @@ def get_projects() -> T.Iterable[Project]:
             status=status,
             is_finished=status == "finished",
             release_filter=release_filter,
+            anidb_ids=anidb_ids,
             takedown_request=takedown_request,
         )
