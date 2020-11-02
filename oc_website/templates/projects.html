@@ -1,8 +1,15 @@
 {% extends "base.html" %}
+{% import "_macros.jinja" as macros %}
 {% macro project_list_item(project) %}
-  <li>
+  <li class='project'>
     <a href='{{ project.url }}'>
-      <div class='cover' style='background-image: url("img/projects/{{ project.stem }}-small.jpg")'></div><!--
+      <div class='cover' style='background-image: url("img/projects/{{ project.stem }}-small.jpg")'><!--
+        --><ul class='languages'>
+          {%- for language in project.languages -%}
+            <li class='language'>{{ macros.flag(language) }}</li>
+          {%- endfor -%}
+        </ul><!--
+      --></div><!--
       --><br/><!--
       -->{{ project.title|safe }}
     </a>
@@ -13,7 +20,7 @@
   {% if not projects|length %}
     Nothing… yet!
   {% endif %}
-  <ul class='anime'>
+  <ul class='projects'>
     {% for project in projects %}
       {{- project_list_item(project) }}
     {% endfor %}

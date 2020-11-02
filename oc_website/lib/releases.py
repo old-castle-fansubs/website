@@ -1,6 +1,7 @@
 import json
 import re
 import typing as T
+from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import datetime
 
@@ -26,6 +27,12 @@ class Release:
     links: T.List[str]
     is_visible: bool
     files: T.List[ReleaseFile]
+
+    @property
+    def languages(self) -> T.Iterable[str]:
+        return list(
+            OrderedDict.fromkeys(sum((f.languages for f in self.files), []))
+        )
 
     @property
     def btih(self) -> T.Optional[str]:

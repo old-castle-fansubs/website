@@ -257,12 +257,12 @@ img.flag {
 #projects #body a {
   display: inline-block;
 }
-#projects #body ul {
+#projects #body ul.projects {
   list-style-type: none;
   margin: 1em 0 2em 0;
   padding: 0;
 }
-#projects #body li {
+#projects #body li.project {
   margin: 0 1em 1em 0;
   padding: 0;
   display: inline-block;
@@ -277,13 +277,25 @@ img.flag {
   background-repeat: no-repeat;
   background-origin: border-box;
   line-height: 0;
-  display: inline-block;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
   width: 12em;
   height: 8em;
   border-top: 5px solid rgba(255, 255, 255, 0.5);
   border-left: 5px solid rgba(255, 255, 255, 0.5);
   border-bottom: 5px solid rgba(0, 0, 0, 0.5);
   border-right: 5px solid rgba(0, 0, 0, 0.5);
+}
+#projects ul.languages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#projects li.language {
+  margin: 0 0 5px 5px;
+  padding: 0;
+  display: inline-block;
 }
 
 #project #project-wrapper {
@@ -302,6 +314,16 @@ img.flag {
 }
 #project #project-synopsis p:first-of-type {
   margin-top: 0;
+}
+#project ul.languages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#project li.language {
+  margin: 0 0.5em 0 0;
+  padding: 0;
+  display: inline-block;
 }
 
 #thread.loading:before {

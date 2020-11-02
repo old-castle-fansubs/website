@@ -1,5 +1,6 @@
 import re
 import typing as T
+from collections import OrderedDict
 from dataclasses import dataclass, field
 
 from oc_website.lib.common import TEMPLATES_DIR
@@ -16,6 +17,7 @@ class Project:
     anidb_ids: T.Optional[T.List[int]] = None
     takedown_request: T.Optional[str] = None
     releases: T.List[Release] = field(default_factory=list)
+    languages: T.List[str] = field(default_factory=list)
 
     @property
     def url(self) -> str:
@@ -73,6 +75,12 @@ def get_projects(releases: T.List[Release]) -> T.Iterable[Project]:
             )
         )
 
+        languages = sum(
+            (release.languages for release in project_releases),
+            [],
+        )
+        languages = list(OrderedDict.fromkeys(languages))
+
         yield Project(
             title=title,
             stem=path.stem,
@@ -81,4 +89,5 @@ def get_projects(releases: T.List[Release]) -> T.Iterable[Project]:
             anidb_ids=anidb_ids,
             takedown_request=takedown_request,
             releases=project_releases,
+            languages=languages,
         )

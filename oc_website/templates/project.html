@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import "_macros.jinja" as macros %}
 {% block title %}{{ project.title|striptags }}{% endblock %}
 {% block id %}project{% endblock %}
 
@@ -90,6 +91,17 @@
                     {% endfor %}
                   </ul>
                 {% endif %}
+              </td>
+            </tr>
+
+            <tr>
+              <td>Languages:</td>
+              <td>
+                <ul class='languages'>
+                  {%- for language in project.languages -%}
+                    <li class='language'>{{ macros.flag(language) }}</li>
+                  {%- endfor -%}
+                </ul>
               </td>
             </tr>
 
