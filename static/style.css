@@ -271,12 +271,12 @@ img.flag {
   vertical-align: top;
 }
 #projects #body .cover {
-  display: inline-block;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-origin: border-box;
   line-height: 0;
+  margin-bottom: 0.25em;
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
