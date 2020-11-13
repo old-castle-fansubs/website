@@ -21,7 +21,7 @@
 
       <p id='project-external-links'>
         {% for anidb_id in project.anidb_ids %}
-          <a href="{{ anidb_id }}">
+          <a href="https://anidb.net/anime/{{ anidb_id }}">
             {%- if project.anidb_ids|length > 1 -%}
               AniDB {{ loop.index }}
             {%- else -%}
