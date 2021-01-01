@@ -1,3 +1,4 @@
+import re
 import typing as T
 from datetime import datetime
 
@@ -238,6 +239,10 @@ def app_comment_add() -> T.Any:
             errors.append("Comment author cannot be empty.")
         if not comment.tid:
             errors.append("Comment thread ID cannot be empty.")
+        if not re.search("[a-zA-Z']{3,}", comment.text):
+            errors.append(
+                "Add a few more letters to make your comment more interesting."
+            )
 
         if not errors and not is_preview:
             comments.insert(0, comment)
