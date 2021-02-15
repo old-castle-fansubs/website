@@ -38,6 +38,7 @@ ANIDEX_API_KEY = os.environ.get("ANIDEX_API_KEY")
 ANIDEX_GROUP_ID = os.environ.get("ANIDEX_GROUP_ID")
 ANIDEX_CATEGORY_ID = 1
 ANIDEX_LANGUAGE_ID = 1
+ANIDEX_MAX_RETRIES = 3
 
 NYAA_SI_API_URL = "https://nyaa.si/api/upload"
 NYAA_SI_USER = os.environ.get("NYAA_SI_USER")
@@ -78,7 +79,14 @@ def publish_anidex(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
             print(files)
             return None
 
-        response = requests.post(ANIDEX_API_URL, data=data, files=files)
+        for i in range(ANIDEX_MAX_RETRIES):
+            try:
+                response = requests.post(ANIDEX_API_URL, data=data, files=files)
+                response.raise_for_status()
+            except Exception:
+                continue
+            else:
+                break
 
     response.raise_for_status()
     if not response.text.startswith("https://"):
