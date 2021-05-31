@@ -81,7 +81,9 @@ def publish_anidex(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
 
         for i in range(ANIDEX_MAX_RETRIES):
             try:
-                response = requests.post(ANIDEX_API_URL, data=data, files=files)
+                response = requests.post(
+                    ANIDEX_API_URL, data=data, files=files
+                )
                 response.raise_for_status()
             except Exception:
                 continue

@@ -243,6 +243,12 @@ def app_comment_add() -> T.Any:
             errors.append(
                 "Add a few more letters to make your comment more interesting."
             )
+        if (
+            comments
+            and comments[0].text == comment.text
+            and comments[0].author == comment.author
+        ):
+            errors.append("A comment with this exact content already exists.")
 
         if not errors and not is_preview:
             comments.insert(0, comment)
