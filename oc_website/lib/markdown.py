@@ -1,7 +1,8 @@
+import functools
 import typing as T
 
 import bleach
-import misaka
+import markdown
 
 SAFE_ELEMENTS = [
     "a",
@@ -62,21 +63,10 @@ def sanitize(text: str) -> str:
     return linker.linkify(clean_html)
 
 
-class Unofficial(misaka.HtmlRenderer):
-    def blockcode(self, text: str, lang: T.Optional[str]) -> str:
-        lang = ' class="{0}"'.format(lang) if lang else ""
-        return "<pre><code{1}>{0}</code></pre>\n".format(text, lang)
-
-
+@functools.cache
 def render_markdown(text: str) -> str:
-    renderer = Unofficial()
-    md = misaka.Markdown(
-        renderer, extensions=("strikethrough", "autolink", "fenced-code")
-    )
-
-    ret = md(text).rstrip("\n")
-    if not (ret.startswith("<p>") or ret.endswith("</p>")):
+    ret = markdown.markdown(text).rstrip("\n")
+    if not ret.startswith("<p>") and not ret.endswith("</p>"):
         ret = "<p>" + ret + "</p>"
     ret = sanitize(ret)
-
     return T.cast(str, ret)

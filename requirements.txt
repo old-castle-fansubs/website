@@ -2,6 +2,6 @@ py-dateutil
 pysubs2
 jinja2
 Pillow
-misaka
+markdown
 bleach
 flask
