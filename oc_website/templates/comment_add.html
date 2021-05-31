@@ -62,4 +62,16 @@
   {% include "comment.html" %}
 {% endif %}
 
+<script type='text/javascript'>
+// shim to prevent double form submission
+window.addEventListener('DOMContentLoaded', () => {
+  document.querySelector('form').addEventListener('submit', e => {
+    console.log('u');
+    const button = e.submitter;
+    button.setAttribute('readonly', 'readonly');
+    button.textContent = 'Loading…';
+  });
+});
+</script>
+
 {% endblock %}

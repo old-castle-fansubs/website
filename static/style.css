@@ -10,6 +10,8 @@
   --input-background-color: white;
   --input-border-color: rgba(0, 0, 0, 0.3);
   --button-background-color: silver;
+  --button-background-color-disabled: dimgrey;
+  --button-text-color-disabled: silver;
   --blockquote-border-color: rgba(128, 128, 128, 0.4);
   --blockquote-background-color: rgba(128, 128, 128, 0.1);
 }
@@ -348,6 +350,10 @@ input {
 button {
   background: var(--button-background-color);
   border: 2px solid var(--input-border-color);
+}
+button[readonly] {
+  background-color: var(--button-background-color-disabled);
+  color: var(--button-text-color-disabled);
 }
 
 textarea {
