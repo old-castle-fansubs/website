@@ -1,7 +1,6 @@
 import argparse
 import contextlib
 import json
-from oc_website.lib import jsonl
 import os
 import re
 import shlex
@@ -19,6 +18,7 @@ import requests
 import torf
 import tqdm
 
+from oc_website.lib import jsonl
 from oc_website.lib.common import format_size
 from oc_website.lib.releases import RELEASES_PATH
 
@@ -334,6 +334,10 @@ def extract_text(ass_string: str) -> str:
     return ret.replace("\\N", "\n")
 
 
+def get_series_title_from_file_name(file_name: str) -> str:
+    return re.match(r"\[[^\[\]]+\] (.+?)(- \d+)? \[", file_name).group(1)
+
+
 def get_checksum_from_file_name(file_name: str) -> str:
     result = re.search(r"\[([0-9a-f]{8})\]", file_name, re.I)
     assert result
@@ -464,6 +468,14 @@ def main() -> None:
         else:
             all_releases.append(release)
 
+    all_releases.sort(
+        key=lambda release: (
+            get_series_title_from_file_name(release["file"]),
+            not release.get("hidden", False),
+            release["episode"] or "",
+            release["version"],
+        )
+    )
     if not args.dry_run:
         RELEASES_PATH.write_text(jsonl.dumps(all_releases))
 
