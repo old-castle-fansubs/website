@@ -1,7 +1,7 @@
-py-dateutil
-pysubs2
-jinja2
 Pillow
-markdown
 bleach
 flask
+jinja2
+markdown
+py-dateutil
+pysubs2

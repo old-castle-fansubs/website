@@ -1,0 +1,6 @@
+ass_tag_parser
+iso-639
+pysubs2
+requests
+torf
+tqdm
