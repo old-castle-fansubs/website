@@ -6,6 +6,21 @@
 {% block content %}
   <h1 class='fancy-title'>
     <span>{{ project.title|safe }}</span>
+
+    <span id='project-external-links'>
+      (
+        {%- if project.anidb_ids|length > 1 -%}
+          AniDB:
+          {% for anidb_id in project.anidb_ids -%}
+            <a href="https://anidb.net/anime/{{ anidb_id }}">
+              {{- loop.index -}}
+            </a>
+          {% endfor -%}
+        {%- else -%}
+          <a href="https://anidb.net/anime/{{ project.anidb_ids[0] }}">AniDB</a>
+        {%- endif -%}
+      )
+    </span>
   </h1>
 
   <div id='project-wrapper'>
@@ -15,23 +30,18 @@
       </a>
     </aside>
 
-    <section id='project-synopsis'>
-      {% block project_synopsis %}{% endblock %}
-      {% block project_notes %}{% endblock %}
+    <article id='project-details'>
+      <section id='project-synopsis'>
+        {% block project_synopsis %}{% endblock %}
+      </section>
 
-      <p id='project-external-links'>
-        {% for anidb_id in project.anidb_ids %}
-          <a href="https://anidb.net/anime/{{ anidb_id }}">
-            {%- if project.anidb_ids|length > 1 -%}
-              AniDB {{ loop.index }}
-            {%- else -%}
-              AniDB
-            {%- endif -%}
-          </a>
-        {% endfor %}
-      </p>
-    </section>
-
+      <section id='project-notes'>
+        {% if self.project_notes() %}
+          <p><em>Project notes:</em></p>
+          {% block project_notes %}{% endblock %}
+        {% endif %}
+      </section>
+    </article>
   </div>
 
   <h2>Releases ({{ project.status }})</h2>

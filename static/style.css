@@ -311,8 +311,12 @@ img.flag {
 #project #project-aside img {
   max-width: 100%;
 }
-#project #project-synopsis {
+#project #project-details {
   flex: 2;
+}
+#project #project-notes {
+  font-size: 11pt;
+  line-height: 13pt;
 }
 #project #project-synopsis p:first-of-type {
   margin-top: 0;
