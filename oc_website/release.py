@@ -208,11 +208,11 @@ def build_torrent_file(
             pieces_done: int,
             pieces_total: int,
         ) -> None:
-            bar.set_description(filepath)
+            bar.set_description(str(filepath))
             bar.update(pieces_done - bar.n)
             bar.total = pieces_total
 
-        torrent.generate(callback)
+        torrent.generate(callback=callback)
 
     torrent.write(local_torrent_path, overwrite=True)
     return torrent
@@ -421,7 +421,7 @@ def do_release(
             torrent = build_torrent_file(path, local_torrent_path)
         else:
             torrent = torf.Torrent.read(local_torrent_path)
-        magnet_link = torrent.magnet()
+        magnet_link = str(torrent.magnet())
         links.append(magnet_link)
         print(magnet_link)
 
