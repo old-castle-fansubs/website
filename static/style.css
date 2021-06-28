@@ -243,6 +243,9 @@ img.flag {
 #home #featured-image {
   display: inline-block;
 }
+#home #featured-image img {
+  display: block;
+}
 #home #top-nav {
   display: none;
 }
