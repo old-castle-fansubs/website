@@ -5,26 +5,26 @@
   <meta charset='utf-8'/>
   <meta name='description' content='Old Castle – fan-made subtitles for old and abandoned anime series.'/>
   <title>Old Castle Fansubs - {% block title %}{{ title }}{% endblock %}</title>
-  <link rel='preload' href='style.css?{{ deployment_id }}' as='style'>
-  <link rel='preload' href='img/blue.jpg' as='image' type='image/jpeg'>
-  <link rel='preload' href='img/stone.jpg' as='image' type='image/jpeg'>
-  <link rel='stylesheet' href='style.css?{{ deployment_id }}'>
+  <link rel='preload' href='{{ url_for('static', filename='style.css') }}?{{ deployment_id }}' as='style'>
+  <link rel='preload' href='{{ url_for('static', filename='img/blue.jpg') }}' as='image' type='image/jpeg'>
+  <link rel='preload' href='{{ url_for('static', filename='img/stone.jpg') }}' as='image' type='image/jpeg'>
+  <link rel='stylesheet' href='{{ url_for('static', filename='style.css') }}?{{ deployment_id }}'>
   {% endblock %}
 </head>
 <body id='{% block id %}{% endblock %}'>
   <main>
     <header id='top-header'>
       <div id='top-header-logo'>
-        <h1><a href='/'>Old Castle<br/>
+        <h1><a href='{{ url_for('home') }}'>Old Castle<br/>
         <small>fansub group</small></a></h1>
       </div>
       <nav id='top-nav'>
         <ul>
-          <li><a href='/'>Home</a></li>
-          <li><a href='/news.html'>News</a></li>
-          <li><a href='/projects.html'>Releases</a></li>
-          <li><a href='/about.html'>About</a></li>
-          <li><a href='/guest_book.html'>Guest book</a></li>
+          <li><a href='{{ url_for('home') }}'>Home</a></li>
+          <li><a href='{{ url_for('news') }}'>News</a></li>
+          <li><a href='{{ url_for('projects') }}'>Releases</a></li>
+          <li><a href='{{ url_for('about') }}'>About</a></li>
+          <li><a href='{{ url_for('guest_book') }}'>Guest book</a></li>
         </ul>
       </nav>
     </header>

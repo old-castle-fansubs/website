@@ -8,5 +8,5 @@
 {% endmacro %}
 
 {% macro flag(country_code) %}
-  <img class='flag' src='img/flags/icon_{{ country_code }}.svg' alt='{{ country_code }}'/>
+  <img class='flag' src='{{ url_for('static', filename='img/flags/icon_' + country_code + '.svg') }}' alt='{{ country_code }}'/>
 {% endmacro %}

@@ -41,7 +41,10 @@ GUEST_BOOK_TID = 10
 
 def init() -> None:
     for featured_image in FEATURED_IMAGES:
-        generate_thumbnail(featured_image.path, featured_image.thumbnail_path)
+        generate_thumbnail(
+            featured_image.absolute_path,
+            featured_image.absolute_thumbnail_path,
+        )
 
     class RegexConverter(werkzeug.routing.BaseConverter):
         def __init__(self, url_map: T.Any, *items: T.Any) -> None:
@@ -54,37 +57,30 @@ def init() -> None:
 init()
 
 
-@app.route(
-    '/<regex(".*\\.(cs|j)s|data/.*|img(-thumb)?/.*|favicon\\.ico|robots\\.txt"):path>'
-)
-def app_static(path: str) -> T.Any:
-    return send_from_directory(STATIC_DIR, path)
-
-
 @app.after_request
 def cors(response: Response) -> Response:
     response.headers["Access-Control-Allow-Origin"] = "*"
     return response
 
 
-@app.route("/")
 @app.route("/index.html")
-def app_home() -> str:
+@app.route("/")
+def home() -> str:
     return render_template("home.html", featured_images=FEATURED_IMAGES)
 
 
 @app.route("/news.html")
-def app_news() -> str:
+def news() -> str:
     return render_template("news_list.html", news_entries=NEWS)
 
 
 @app.route("/projects.html")
-def app_projects() -> str:
+def projects() -> str:
     return render_template("projects.html", projects=PROJECTS)
 
 
 @app.route("/project-<string:project_name>.html")
-def app_project(project_name: str) -> str:
+def project(project_name: str) -> str:
     for project in PROJECTS:
         if project_name == project.stem:
             return render_template(
@@ -94,17 +90,17 @@ def app_project(project_name: str) -> str:
 
 
 @app.route("/about.html")
-def app_about() -> str:
+def about() -> str:
     return render_template("about.html")
 
 
 @app.route("/featured.html")
-def app_featured_images() -> str:
+def featured_images() -> str:
     return render_template("featured.html", featured_images=FEATURED_IMAGES)
 
 
 @app.route("/requests.html")
-def app_requests() -> str:
+def requests() -> str:
     return render_template(
         "request_list.html",
         requests=sorted(
@@ -115,7 +111,7 @@ def app_requests() -> str:
 
 
 @app.route("/request_add.html", methods=["GET", "POST"])
-def app_request_add() -> T.Any:
+def request_add() -> T.Any:
     title = request.form.get("title", "").strip()
     anidb_link = request.form.get("anidb_link", "").strip()
     comment = request.form.get("comment", "").strip()
@@ -165,7 +161,7 @@ def app_request_add() -> T.Any:
 
 
 @app.route("/guest_book.html")
-def app_guest_book() -> str:
+def guest_book() -> str:
     global GUEST_BOOK_CACHE
     if not GUEST_BOOK_CACHE or app.debug:
         GUEST_BOOK_CACHE = render_template(
@@ -181,7 +177,7 @@ def app_guest_book() -> str:
 
 
 @app.route("/comment_add.html", methods=["GET", "POST"])
-def app_comment_add() -> T.Any:
+def comment_add() -> T.Any:
     pid: int
     try:
         pid = int(request.args.get("pid", ""))

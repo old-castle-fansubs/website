@@ -46,17 +46,17 @@
 
 <div class='split'>
   <figure>
-    <a href='img/news/0002_v1.jpg'>
+    <a href='{{ url_for('static', filename='img/news/0002_v1.jpg') }}'>
       Version 1
       <br/>
-      <img src='img/news/0002_v1.jpg' alt='Version 1'/>
+      <img src='{{ url_for('static', filename='img/news/0002_v1.jpg') }}' alt='Version 1'/>
     </a>
   </figure>
   <figure>
-      <a href='img/news/0002_v2.jpg'>
+      <a href='{{ url_for('static', filename='img/news/0002_v2.jpg') }}'>
         Version 2
         <br/>
-        <img src='img/news/0002_v2.jpg' alt='Version 2'/>
+        <img src='{{ url_for('static', filename='img/news/0002_v2.jpg') }}' alt='Version 2'/>
       </a>
   </figure>
 </div>

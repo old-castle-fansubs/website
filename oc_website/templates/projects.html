@@ -3,7 +3,7 @@
 {% macro project_list_item(project) %}
   <li class='project'>
     <a href='{{ project.url }}'>
-      <div class='cover' style='background-image: url("img/projects/{{ project.stem }}-small.jpg")'><!--
+      <div class='cover' style='background-image: url("{{ url_for('static', filename='img/projects/' + project.stem + '-small.jpg') }}")'><!--
         --><ul class='languages'>
           {%- for language in project.languages -%}
             <li class='language'>{{ macros.flag(language) }}</li>

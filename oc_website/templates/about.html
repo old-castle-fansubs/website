@@ -70,20 +70,20 @@ favor quality over speed.</p>
 <ul id='friends'>
   <li>
     <a href='https://southwindsubs.wordpress.com/'>
-      <img src='img/banners/south-wind-subs.png' alt='South Wind Subs'/>
+      <img src='{{ url_for('static', filename='img/banners/south-wind-subs.png') }}' alt='South Wind Subs'/>
     </a>
   </li>
 
   <li>
     <a href='https://johnnyenglishsubs.wordpress.com/'>
-      <img src='img/banners/johnny.png' alt='Johnny English Subs'/>
+      <img src='{{ url_for('static', filename='img/banners/johnny.png') }}' alt='Johnny English Subs'/>
     </a>
   </li>
 </ul>
 
 <h2>Contact</h2>
 
-<img src='img/banners/old-castle.png' alt='Old Castle'/>
+<img src='{{ url_for('static', filename='img/banners/old-castle.png') }}' alt='Old Castle'/>
 
 <p>
   E-mail - contact@oldcastle.moe<br/>
@@ -96,6 +96,6 @@ favor quality over speed.</p>
 where <code>XXXX</code> is magic content hash, <code>Y</code> is release
 version and <code>ZZZ</code> is the episode number.</p>
 
-<p><a href='featured.html'>Here</a> you can see previous featured images,
-and <a href='requests.html'>here</a> you can place an anime request.</p>
+<p><a href='{{ url_for('featured_images') }}'>Here</a> you can see previous featured images,
+and <a href='{{ url_for('requests') }}'>here</a> you can place an anime request.</p>
 {% endblock %}

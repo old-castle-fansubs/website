@@ -5,6 +5,7 @@ from datetime import datetime
 from pathlib import Path
 
 import dateutil.parser
+from flask import url_for
 
 from oc_website.lib import jsonl
 from oc_website.lib.common import DATA_DIR, STATIC_DIR
@@ -18,21 +19,29 @@ class FeaturedImage:
     name: str
 
     @property
+    def relative_path(self) -> Path:
+        return Path("img/featured/") / self.name
+
+    @property
+    def absolute_path(self) -> Path:
+        return STATIC_DIR / self.relative_path
+
+    @property
     def url(self) -> str:
-        return "img/featured/" + self.name
+        return url_for("static", filename=self.relative_path)
+
+    @property
+    def relative_thumbnail_path(self) -> Path:
+        stem, suffix = os.path.splitext(self.name)
+        return Path("img-thumb/featured/") / (stem.rstrip(".") + ".jpg")
+
+    @property
+    def absolute_thumbnail_path(self) -> Path:
+        return STATIC_DIR / self.relative_thumbnail_path
 
     @property
     def thumbnail_url(self) -> str:
-        stem, suffix = os.path.splitext(self.name)
-        return "img-thumb/featured/" + stem.rstrip(".") + ".jpg"
-
-    @property
-    def path(self) -> Path:
-        return STATIC_DIR / self.url
-
-    @property
-    def thumbnail_path(self) -> Path:
-        return STATIC_DIR / self.thumbnail_url
+        return url_for("static", filename=self.relative_thumbnail_path)
 
 
 def get_featured_images() -> T.Iterable[FeaturedImage]:

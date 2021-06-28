@@ -18,7 +18,7 @@ prioritize the series according to their value and ease to sub once we get to
 review this list.</p>
 
 <p>This list is sorted alphabetically. If you don't see your title on this
-list, you can <a href="request_add.html">request one here</a>.</p>
+list, you can <a href='{{ url_for('request_add') }}'>request one here</a>.</p>
 
 {% if requests %}
   <table>
@@ -41,7 +41,7 @@ list, you can <a href="request_add.html">request one here</a>.</p>
           {% endif %}
 
           {% if request.anidb_link %}
-            <td><a href="{{ request.anidb_link }}">here</a></td>
+            <td><a href='{{ request.anidb_link }}'>here</a></td>
           {% else %}
             <td>?</td>
           {% endif %}

@@ -25,8 +25,8 @@
 
   <div id='project-wrapper'>
     <aside id='project-aside'>
-      <a href='img/projects/{{ project.stem }}-big.jpg'>
-        <img src='img/projects/{{ project.stem }}-big.jpg' alt='{{ project.title|striptags }}'/>
+      <a href='{{ url_for('static', filename='img/projects/' + project.stem + '-big.jpg') }}'>
+        <img src='{{ url_for('static', filename='img/projects/' + project.stem + '-big.jpg') }}' alt='{{ project.title|striptags }}'/>
       </a>
     </aside>
 
@@ -92,7 +92,7 @@
                         {%- for infix in ['magnet', 'nyaa.si', 'nyaa.net', 'anidex.info'] -%}
                           {%- if infix in link -%}
                             <a href="{{ link }}" title="{{ link }}">{#
-                              #}<img src='/img/{{ infix }}.png' title='{{ infix }}'/>{#
+                              #}<img src='{{ url_for('static', filename='/img/' + infix + '.png') }}' title='{{ infix }}'/>{#
                               #}<span>{{ infix }}</span>{#
                             #}</a>
                           {%- endif -%}

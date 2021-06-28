@@ -19,7 +19,7 @@
 body {
   overflow-y: scroll;
   background-color: var(--background-color);
-  background-image:  url('../img/blue.jpg');
+  background-image:  url('img/blue.jpg');
   background-attachment: fixed;
   background-position: top center;
   background-size: cover;
@@ -86,7 +86,7 @@ a:hover {
   border-left: 3px solid rgba(190, 190, 190, 0.8);
   border-bottom: 3px solid rgba(0, 0, 0, 0.5);
   border-right: 3px solid rgba(0, 0, 0, 0.5);
-  background: dimgrey url('../img/stone.jpg');
+  background: dimgrey url('img/stone.jpg');
   font-family: 'Pirata One', cursive;
   font-size: 20pt;
   line-height: 16pt;
