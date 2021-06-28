@@ -1,4 +1,3 @@
-import json
 import os
 import typing as T
 from dataclasses import dataclass
@@ -7,9 +6,10 @@ from pathlib import Path
 
 import dateutil.parser
 
+from oc_website.lib import jsonl
 from oc_website.lib.common import DATA_DIR, STATIC_DIR
 
-FEATURED_IMAGES_PATH = DATA_DIR / "featured.json"
+FEATURED_IMAGES_PATH = DATA_DIR / "featured.jsonl"
 
 
 @dataclass
@@ -36,9 +36,8 @@ class FeaturedImage:
 
 
 def get_featured_images() -> T.Iterable[FeaturedImage]:
-    return (
-        FeaturedImage(dateutil.parser.parse(item["date"]), item["name"])
-        for item in json.loads(
-            FEATURED_IMAGES_PATH.read_text(encoding="utf-8")
+    for item in jsonl.loads(FEATURED_IMAGES_PATH.read_text(encoding="utf-8")):
+        yield FeaturedImage(
+            dateutil.parser.parse(item["date"]),
+            item["name"],
         )
-    )

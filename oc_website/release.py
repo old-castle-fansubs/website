@@ -1,6 +1,7 @@
 import argparse
 import contextlib
 import json
+from oc_website.lib import jsonl
 import os
 import re
 import shlex
@@ -444,7 +445,7 @@ def do_release(
 def main() -> None:
     args = parse_args()
 
-    all_releases = json.loads(RELEASES_PATH.read_text())
+    all_releases = jsonl.loads(RELEASES_PATH.read_text(encoding="utf-8"))
 
     new_releases = do_release(
         path=args.path, publish_funcs=args.publish_funcs, dry_run=args.dry_run
@@ -464,7 +465,7 @@ def main() -> None:
             all_releases.append(release)
 
     if not args.dry_run:
-        RELEASES_PATH.write_text(json.dumps(all_releases, indent=4) + "\n")
+        RELEASES_PATH.write_text(jsonl.dumps(all_releases))
 
 
 if __name__ == "__main__":

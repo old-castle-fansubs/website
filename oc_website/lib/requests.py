@@ -1,14 +1,14 @@
 import dataclasses
-import json
 import re
 import typing as T
 from datetime import datetime
 
 import dateutil.parser
 
+from oc_website.lib import jsonl
 from oc_website.lib.common import DATA_DIR
 
-REQUESTS_PATH = DATA_DIR / "requests.json"
+REQUESTS_PATH = DATA_DIR / "requests.jsonl"
 
 
 @dataclasses.dataclass
@@ -23,7 +23,7 @@ class Request:
 def get_requests() -> T.Iterable[Request]:
     if not REQUESTS_PATH.exists():
         return
-    for item in json.loads(REQUESTS_PATH.read_text()):
+    for item in jsonl.loads(REQUESTS_PATH.read_text(encoding="utf-8")):
         date = item.pop("date", None)
         date = dateutil.parser.parse(date) if date is not None else None
         yield Request(date=date, **item)
@@ -36,7 +36,7 @@ def save_requests(requests: T.Iterable[Request]) -> None:
         item["date"] = str(item["date"]) if item["date"] is not None else None
         items.append(item)
 
-    REQUESTS_PATH.write_text(json.dumps(items, indent=4))
+    REQUESTS_PATH.write_text(jsonl.dumps(items))
 
 
 def is_valid_anidb_link(link: str) -> bool:

@@ -1,15 +1,15 @@
 import hashlib
-import json
 import typing as T
 from dataclasses import dataclass
 from datetime import datetime
 
 import dateutil.parser
 
+from oc_website.lib import jsonl
 from oc_website.lib.common import DATA_DIR
 from oc_website.lib.markdown import render_markdown
 
-COMMENTS_PATH = DATA_DIR / "comments.json"
+COMMENTS_PATH = DATA_DIR / "comments.jsonl"
 
 
 @dataclass
@@ -38,8 +38,9 @@ class Comment:
 def get_comments() -> T.Iterable[Comment]:
     if not COMMENTS_PATH.exists():
         return
+
     for entry in sorted(
-        json.loads(COMMENTS_PATH.read_text()),
+        jsonl.loads(COMMENTS_PATH.read_text(encoding="utf-8")),
         key=lambda entry: entry["created"],
         reverse=True,
     ):
@@ -63,7 +64,7 @@ def get_comments() -> T.Iterable[Comment]:
 
 def save_comments(comments: T.Iterable[Comment]) -> None:
     COMMENTS_PATH.write_text(
-        json.dumps(
+        jsonl.dumps(
             [
                 {
                     "id": comment.id,
@@ -78,7 +79,6 @@ def save_comments(comments: T.Iterable[Comment]) -> None:
                     "likes": comment.likes,
                 }
                 for comment in comments
-            ],
-            indent=4,
+            ]
         )
     )

@@ -1,4 +1,3 @@
-import json
 import re
 import typing as T
 from collections import OrderedDict
@@ -7,9 +6,10 @@ from datetime import datetime
 
 import dateutil.parser
 
+from oc_website.lib import jsonl
 from oc_website.lib.common import DATA_DIR
 
-RELEASES_PATH = DATA_DIR / "releases.json"
+RELEASES_PATH = DATA_DIR / "releases.jsonl"
 
 
 @dataclass
@@ -56,7 +56,7 @@ def sort_links(link: str) -> int:
 
 def get_releases() -> T.Iterable[Release]:
     releases: T.Dict[str, Release] = {}
-    for item in json.loads(RELEASES_PATH.read_text(encoding="utf-8")):
+    for item in jsonl.loads(RELEASES_PATH.read_text(encoding="utf-8")):
         magnet = item["links"][-1]
         if magnet not in releases:
             releases[magnet] = Release(

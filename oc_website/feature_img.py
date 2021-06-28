@@ -4,6 +4,7 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 
+from oc_website.lib import jsonl
 from oc_website.lib.common import STATIC_DIR
 from oc_website.lib.featured_images import FEATURED_IMAGES_PATH
 
@@ -18,7 +19,7 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
-    featured = json.loads(FEATURED_IMAGES_PATH.read_text())
+    featured = jsonl.loads(FEATURED_IMAGES_PATH.read_text(encoding="utf-8"))
     today = f"{datetime.today():%Y-%m-%d %H:%M:%S}"
 
     source_path = args.path
@@ -39,7 +40,7 @@ def main() -> None:
 
     shutil.copy(source_path, target_path)
 
-    FEATURED_IMAGES_PATH.write_text(json.dumps(featured, indent=4) + "\n")
+    FEATURED_IMAGES_PATH.write_text(jsonl.dumps(featured))
 
 
 if __name__ == "__main__":
