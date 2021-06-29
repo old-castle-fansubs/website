@@ -4,6 +4,7 @@
   {% block head %}
   <meta charset='utf-8'/>
   <meta name='description' content='Old Castle – fan-made subtitles for old and abandoned anime series.'/>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
   <title>Old Castle Fansubs - {% block title %}{{ title }}{% endblock %}</title>
   <link rel='preload' href='{{ url_for('static', filename='style.css') }}?{{ deployment_id }}' as='style'>
   <link rel='preload' href='{{ url_for('static', filename='img/blue.jpg') }}' as='image' type='image/jpeg'>
