@@ -453,3 +453,7 @@ input:focus {
   margin: 0;
   padding: 0;
 }
+
+#not-found img {
+  max-width: 100%;
+}

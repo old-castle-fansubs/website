@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Not found{% endblock %}
+{% block id %}not-found{% endblock %}
+{% block content %}
+
+  <h1 class='fancy-title'>Not found</h1>
+
+  <p>The page you were looking was removed, or maybe it never existed in the first place.</p>
+
+  <img id='not_found' src='{{ url_for('static', filename='img/404.jpg') }}' alt='Not found!'/>
+
+{% endblock %}
