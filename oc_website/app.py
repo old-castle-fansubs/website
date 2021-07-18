@@ -1,6 +1,7 @@
 import re
 import typing as T
 from datetime import datetime
+from functools import cache
 
 import werkzeug.routing
 from flask import (
@@ -28,19 +29,11 @@ from oc_website.lib.thumbnails import generate_thumbnail
 app = Flask(__name__)
 setup_jinja_env(app.jinja_env)
 
-FEATURED_IMAGES = list(get_featured_images())
-RELEASES = list(get_releases())
-PROJECTS = list(
-    sorted(get_projects(RELEASES), key=lambda project: project.title)
-)
-NEWS = sorted(get_news(), key=lambda news: news.stem, reverse=True)
-
-GUEST_BOOK_CACHE = ""
 GUEST_BOOK_TID = 10
 
 
 def init() -> None:
-    for featured_image in FEATURED_IMAGES:
+    for featured_image in get_featured_images():
         generate_thumbnail(
             featured_image.absolute_path,
             featured_image.absolute_thumbnail_path,
@@ -52,6 +45,7 @@ def init() -> None:
             self.regex = items[0]
 
     app.url_map.converters["regex"] = RegexConverter
+    app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 
 init()
@@ -63,43 +57,70 @@ def cors(response: Response) -> Response:
     return response
 
 
+def custom_cache(func):
+    if not app.debug:
+        return cache(func)
+    return func
+
+
 @app.route("/index.html")
 @app.route("/")
+@custom_cache
 def home() -> str:
-    return render_template("home.html", featured_images=FEATURED_IMAGES)
+    print('home')
+    return render_template("home.html", featured_images=get_featured_images())
 
 
 @app.route("/news.html")
+@custom_cache
 def news() -> str:
-    return render_template("news_list.html", news_entries=NEWS)
+    return render_template(
+        "news_list.html",
+        news_entries=sorted(
+            get_news(), key=lambda news: news.stem, reverse=True
+        ),
+    )
 
 
 @app.route("/projects.html")
+@custom_cache
 def projects() -> str:
-    return render_template("projects.html", projects=PROJECTS)
+    return render_template(
+        "projects.html",
+        projects=sorted(
+            get_projects(get_releases()),
+            key=lambda project: project.title,
+        ),
+    )
 
 
 @app.route("/project-<string:project_name>.html")
+@custom_cache
 def project(project_name: str) -> str:
-    for project in PROJECTS:
+    for project in get_projects(get_releases()):
         if project_name == project.stem:
             return render_template(
                 "projects/" + project.stem + ".html", project=project
             )
-    return render_template("projects.html", projects=PROJECTS)
+    return projects()
 
 
 @app.route("/about.html")
+@custom_cache
 def about() -> str:
     return render_template("about.html")
 
 
 @app.route("/featured.html")
+@custom_cache
 def featured_images() -> str:
-    return render_template("featured.html", featured_images=FEATURED_IMAGES)
+    return render_template(
+        "featured.html", featured_images=get_featured_images()
+    )
 
 
 @app.route("/requests.html")
+@custom_cache
 def requests() -> str:
     return render_template(
         "request_list.html",
@@ -153,6 +174,7 @@ def request_add() -> T.Any:
         if not errors:
             sub_requests.append(sub_request)
             save_sub_requests(sub_requests)
+            requests.cache_clear()
             return redirect("requests.html", code=302)
 
     return render_template(
@@ -161,19 +183,17 @@ def request_add() -> T.Any:
 
 
 @app.route("/guest_book.html")
+@custom_cache
 def guest_book() -> str:
-    global GUEST_BOOK_CACHE
-    if not GUEST_BOOK_CACHE or app.debug:
-        GUEST_BOOK_CACHE = render_template(
-            "guest_book.html",
-            tid=GUEST_BOOK_TID,
-            comments=[
-                comment
-                for comment in get_comments()
-                if comment.tid == GUEST_BOOK_TID
-            ],
-        )
-    return GUEST_BOOK_CACHE
+    return render_template(
+        "guest_book.html",
+        tid=GUEST_BOOK_TID,
+        comments=[
+            comment
+            for comment in get_comments()
+            if comment.tid == GUEST_BOOK_TID
+        ],
+    )
 
 
 @app.route("/comment_add.html", methods=["GET", "POST"])
@@ -249,8 +269,7 @@ def comment_add() -> T.Any:
         if not errors and not is_preview:
             comments.insert(0, comment)
             save_comments(comments)
-            global GUEST_BOOK_CACHE
-            GUEST_BOOK_CACHE = ""
+            guest_book.cache_clear()
             return redirect("guest_book.html", code=302)
 
     return render_template(

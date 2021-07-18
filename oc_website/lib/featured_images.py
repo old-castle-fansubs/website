@@ -44,9 +44,13 @@ class FeaturedImage:
         return url_for("static", filename=self.relative_thumbnail_path)
 
 
-def get_featured_images() -> T.Iterable[FeaturedImage]:
-    for item in jsonl.loads(FEATURED_IMAGES_PATH.read_text(encoding="utf-8")):
-        yield FeaturedImage(
+def get_featured_images() -> list[FeaturedImage]:
+    return [
+        FeaturedImage(
             dateutil.parser.parse(item["date"]),
             item["name"],
         )
+        for item in jsonl.loads(
+            FEATURED_IMAGES_PATH.read_text(encoding="utf-8")
+        )
+    ]
