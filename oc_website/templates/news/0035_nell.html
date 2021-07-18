@@ -1,0 +1,20 @@
+{% extends "news_item.html" %}
+{% block news_date %}2021-07-18{% endblock %}
+{% block news_title %}Wandering Girl Nell{% endblock %}
+{% block news_author %}rr-{% endblock %}
+
+{% block news_content %}
+
+<figure>
+  <a href='{{ url_for('static', filename='img/news/0035_nell.jpg') }}'>
+    <img src='{{ url_for('static', filename='img/news/0035_nell.jpg') }}'/>
+  </a>
+</figure>
+
+<p>In parallel to our work on Yui, we started helping out our friend group,
+South Wind Subs, with finishing Wandering Girl Nell in terms of translation
+checks and editorial advice. The releases are handled entirely by South Wind,
+so for details, we encourage you to visit <a
+href='https://southwindsubs.wordpress.com/'>their site</a> :)</p>
+
+{% endblock %}
