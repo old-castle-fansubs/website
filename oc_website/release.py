@@ -467,10 +467,13 @@ def main() -> None:
             print(json.dumps(release, indent=4))
 
         file_chksum = get_checksum_from_file_name(release["file"])
-        for i, item in enumerate(all_releases):
-            tmp_chksum = get_checksum_from_file_name(item["file"])
-            if tmp_chksum == file_chksum and not item.get("hidden"):
-                all_releases[i].update(release)
+        for old_release in all_releases:
+            tmp_chksum = get_checksum_from_file_name(old_release["file"])
+            if tmp_chksum == file_chksum and not old_release.get("hidden"):
+                release["links"] = list(
+                    sorted(set(old_release["links"]) | set(release["links"]))
+                )
+                old_release.update(release)
                 break
         else:
             all_releases.append(release)
