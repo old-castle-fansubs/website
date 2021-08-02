@@ -256,6 +256,13 @@ def parse_args() -> argparse.Namespace:
         action="append_const",
         const=publish_nyaa_pantsu,
     )
+    parser.add_argument(
+        "-a",
+        "--all",
+        dest="publish_funcs",
+        action="store_const",
+        const=[publish_nyaa_pantsu, publish_anidex, publish_nyaa_si],
+    )
     args = parser.parse_args()
     if args.publish_funcs is None:
         args.publish_funcs = []
