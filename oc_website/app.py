@@ -67,7 +67,6 @@ def custom_cache(func):
 @app.route("/")
 @custom_cache
 def home() -> str:
-    print('home')
     return render_template("home.html", featured_images=get_featured_images())
 
 
