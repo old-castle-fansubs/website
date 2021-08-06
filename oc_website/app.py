@@ -1,5 +1,5 @@
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 from functools import cache
 from typing import Any, Callable, Optional
 
@@ -131,7 +131,7 @@ def request_add() -> Response:
 
     sub_request = SubRequest(
         title=title,
-        date=datetime.now(),
+        date=datetime.now(timezone.utc).astimezone(),
         anidb_link=anidb_link,
         comment=comment,
         remote_addr=remote_addr,
@@ -224,7 +224,7 @@ def comment_add() -> Response:
         thread_id=thread_id,
         comment_id=comment_id,
         parent_comment_id=parent_comment_id or None,
-        created=datetime.now(),
+        created=datetime.now(timezone.utc).astimezone(),
         remote_addr=remote_addr,
         text=text,
         author=author,
