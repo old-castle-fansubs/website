@@ -56,6 +56,7 @@ def cors(response: Response) -> Response:
 def custom_cache(func: Callable[..., Any]) -> Callable[..., Any]:
     if not app.debug:
         return cache(func)
+    setattr(func, "cache_clear", lambda: None)
     return func
 
 
