@@ -1,7 +1,7 @@
 import hashlib
-import typing as T
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Iterable, Optional
 
 import dateutil.parser
 
@@ -16,13 +16,13 @@ COMMENTS_PATH = DATA_DIR / "comments.jsonl"
 class Comment:
     id: int
     tid: int
-    pid: T.Optional[int]
+    pid: Optional[int]
     created: datetime
     remote_addr: str
     text: str
     author: str
-    email: T.Optional[str]
-    website: T.Optional[str]
+    email: Optional[str]
+    website: Optional[str]
     likes: int
 
     @property
@@ -35,7 +35,7 @@ class Comment:
         return f"https://www.gravatar.com/avatar/{chksum}?d=retro"
 
 
-def get_comments() -> T.Iterable[Comment]:
+def get_comments() -> Iterable[Comment]:
     if not COMMENTS_PATH.exists():
         return
 
@@ -62,7 +62,7 @@ def get_comments() -> T.Iterable[Comment]:
         )
 
 
-def save_comments(comments: T.Iterable[Comment]) -> None:
+def save_comments(comments: Iterable[Comment]) -> None:
     COMMENTS_PATH.write_text(
         jsonl.dumps(
             [

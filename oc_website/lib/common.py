@@ -1,5 +1,5 @@
-import typing as T
 from pathlib import Path
+from typing import Iterable, Optional, TypeVar
 
 PROJ_DIR = Path(__file__).parent.parent
 TEMPLATES_DIR = PROJ_DIR / "templates"
@@ -7,10 +7,10 @@ STATIC_DIR = PROJ_DIR / "static"
 ROOT_DIR = PROJ_DIR.parent
 DATA_DIR = ROOT_DIR / "data"
 
-TItem = T.TypeVar("TItem")
+TItem = TypeVar("TItem")
 
 
-def first(source: T.Iterable[TItem]) -> T.Optional[TItem]:
+def first(source: Iterable[TItem]) -> Optional[TItem]:
     try:
         return next(source)
     except StopIteration:

@@ -1,7 +1,7 @@
 import re
-import typing as T
 from datetime import datetime
 from functools import cache
+from typing import Any, Optional
 
 import werkzeug.routing
 from flask import (
@@ -40,7 +40,7 @@ def init() -> None:
         )
 
     class RegexConverter(werkzeug.routing.BaseConverter):
-        def __init__(self, url_map: T.Any, *items: T.Any) -> None:
+        def __init__(self, url_map: Any, *items: Any) -> None:
             super(RegexConverter, self).__init__(url_map)
             self.regex = items[0]
 
@@ -131,7 +131,7 @@ def requests() -> str:
 
 
 @app.route("/request_add.html", methods=["GET", "POST"])
-def request_add() -> T.Any:
+def request_add() -> Any:
     title = request.form.get("title", "").strip()
     anidb_link = request.form.get("anidb_link", "").strip()
     comment = request.form.get("comment", "").strip()
@@ -150,7 +150,7 @@ def request_add() -> T.Any:
         remote_addr=remote_addr,
     )
 
-    errors: T.List[str] = []
+    errors: list[str] = []
 
     if request.method == "POST":
         if request.form.get("phone") or request.form.get("message"):
@@ -196,7 +196,7 @@ def guest_book() -> str:
 
 
 @app.route("/comment_add.html", methods=["GET", "POST"])
-def comment_add() -> T.Any:
+def comment_add() -> Any:
     pid: int
     try:
         pid = int(request.args.get("pid", ""))
@@ -215,7 +215,7 @@ def comment_add() -> T.Any:
     email = request.form.get("email", "").strip()
 
     comments = list(get_comments())
-    parent_comment: T.Optional[Comment] = first(
+    parent_comment: Optional[Comment] = first(
         c for c in comments if c.id == pid
     )
     if parent_comment:
@@ -243,7 +243,7 @@ def comment_add() -> T.Any:
         likes=0,
     )
 
-    errors: T.List[str] = []
+    errors: list[str] = []
 
     if request.method == "POST":
         if request.form.get("phone") or request.form.get("message"):

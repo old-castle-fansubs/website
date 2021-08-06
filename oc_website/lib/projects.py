@@ -1,7 +1,7 @@
 import re
-import typing as T
 from collections import OrderedDict
 from dataclasses import dataclass, field
+from typing import Iterable, Optional
 
 from oc_website.lib.common import TEMPLATES_DIR
 from oc_website.lib.jinja_env import get_jinja_env
@@ -14,17 +14,17 @@ class Project:
     stem: str
     status: str
     is_finished: bool
-    anidb_ids: T.Optional[T.List[int]] = None
-    takedown_request: T.Optional[str] = None
-    releases: T.List[Release] = field(default_factory=list)
-    languages: T.List[str] = field(default_factory=list)
+    anidb_ids: Optional[list[int]] = None
+    takedown_request: Optional[str] = None
+    releases: list[Release] = field(default_factory=list)
+    languages: list[str] = field(default_factory=list)
 
     @property
     def url(self) -> str:
         return "project-" + self.stem + ".html"
 
 
-def get_projects(releases: T.List[Release]) -> T.Iterable[Project]:
+def get_projects(releases: list[Release]) -> Iterable[Project]:
     jinja_env = get_jinja_env()
 
     for path in (TEMPLATES_DIR / "projects").iterdir():

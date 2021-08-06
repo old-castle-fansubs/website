@@ -1,7 +1,7 @@
 import dataclasses
 import re
-import typing as T
 from datetime import datetime
+from typing import Any, Iterable, Optional
 
 import dateutil.parser
 
@@ -14,13 +14,13 @@ REQUESTS_PATH = DATA_DIR / "requests.jsonl"
 @dataclasses.dataclass
 class Request:
     title: str
-    date: T.Optional[datetime] = None
-    anidb_link: T.Optional[str] = None
-    comment: T.Optional[str] = None
-    remote_addr: T.Optional[str] = None
+    date: Optional[datetime] = None
+    anidb_link: Optional[str] = None
+    comment: Optional[str] = None
+    remote_addr: Optional[str] = None
 
 
-def get_requests() -> T.Iterable[Request]:
+def get_requests() -> Iterable[Request]:
     if not REQUESTS_PATH.exists():
         return
     for item in jsonl.loads(REQUESTS_PATH.read_text(encoding="utf-8")):
@@ -29,8 +29,8 @@ def get_requests() -> T.Iterable[Request]:
         yield Request(date=date, **item)
 
 
-def save_requests(requests: T.Iterable[Request]) -> None:
-    items: T.List[T.Any] = []
+def save_requests(requests: Iterable[Request]) -> None:
+    items: list[Any] = []
     for request in requests:
         item = dataclasses.asdict(request)
         item["date"] = str(item["date"]) if item["date"] is not None else None
@@ -43,7 +43,7 @@ def is_valid_anidb_link(link: str) -> bool:
     return link.startswith("https://anidb.net/")
 
 
-def get_anidb_link_id(link: str) -> T.Optional[int]:
+def get_anidb_link_id(link: str) -> Optional[int]:
     match = re.search("(\d+)", link)
     return int(match.group(1)) if match else None
 

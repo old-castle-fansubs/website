@@ -1,6 +1,6 @@
-import typing as T
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Iterable
 
 import dateutil.parser
 
@@ -16,7 +16,7 @@ class News:
     stem: str
 
 
-def get_news() -> T.Iterable[News]:
+def get_news() -> Iterable[News]:
     jinja_env = get_jinja_env()
 
     for path in (TEMPLATES_DIR / "news").iterdir():

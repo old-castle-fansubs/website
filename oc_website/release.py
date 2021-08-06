@@ -6,10 +6,10 @@ import re
 import shlex
 import sys
 import tempfile
-import typing as T
 from datetime import datetime
 from pathlib import Path
 from subprocess import PIPE, run
+from typing import Any, Callable, Iterable, Optional, Union, cast
 
 import ass_tag_parser
 import iso639
@@ -63,7 +63,7 @@ def log_step(text):
     print("", file=sys.stderr)
 
 
-def publish_anidex(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
+def publish_anidex(torrent_path: Path, dry_run: bool) -> Optional[str]:
     with torrent_path.open("rb") as handle:
         data = {
             "api_key": ANIDEX_API_KEY,
@@ -97,7 +97,7 @@ def publish_anidex(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
     return response.text
 
 
-def publish_nyaa_si(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
+def publish_nyaa_si(torrent_path: Path, dry_run: bool) -> Optional[str]:
     with torrent_path.open("rb") as handle:
         data = {
             "torrent_data": json.dumps(
@@ -132,10 +132,10 @@ def publish_nyaa_si(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
     result = response.json()
     if result.get("errors"):
         raise ValueError(result["errors"])
-    return T.cast(str, result["url"])
+    return cast(str, result["url"])
 
 
-def publish_nyaa_pantsu(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
+def publish_nyaa_pantsu(torrent_path: Path, dry_run: bool) -> Optional[str]:
     with torrent_path.open("rb") as handle:
         data = {
             "username": NYAA_PANTSU_USER,
@@ -170,7 +170,7 @@ def publish_nyaa_pantsu(torrent_path: Path, dry_run: bool) -> T.Optional[str]:
     return f"https://nyaa.net/view/{torrent_id}"
 
 
-def rsync(source: T.Union[Path, str], target: T.Union[Path, str]) -> None:
+def rsync(source: Union[Path, str], target: Union[Path, str]) -> None:
     run(
         ["rsync", "-ahsv", "--progress", source, target],
         stdout=sys.stderr.fileno(),
@@ -203,7 +203,7 @@ def build_torrent_file(
     with tqdm.tqdm(total=9e9) as bar:
 
         def callback(
-            _torrent: T.Any,
+            _torrent: Any,
             filepath: Path,
             pieces_done: int,
             pieces_total: int,
@@ -282,7 +282,7 @@ def get_iso_639_2_lang_code(lang: str) -> str:
     raise ValueError(f"unknown language {lang}")
 
 
-def get_subtitle_languages(source_path: Path) -> T.List[str]:
+def get_subtitle_languages(source_path: Path) -> list[str]:
     out = json.loads(
         run(
             ["mkvmerge", "-i", source_path, "-F", "json"], stdout=PIPE
@@ -297,7 +297,7 @@ def get_subtitle_languages(source_path: Path) -> T.List[str]:
     ]
 
 
-def extract_subtitles(source_path: Path, language: str) -> T.Optional[str]:
+def extract_subtitles(source_path: Path, language: str) -> Optional[str]:
     out = json.loads(
         run(
             ["mkvmerge", "-i", source_path, "-F", "json"], stdout=PIPE
@@ -330,7 +330,7 @@ def extract_subtitles(source_path: Path, language: str) -> T.Optional[str]:
         stdout=PIPE,
     )
 
-    return T.cast(str, result.stdout.decode())
+    return cast(str, result.stdout.decode())
 
 
 def extract_text(ass_string: str) -> str:
@@ -359,15 +359,15 @@ def get_version_from_file_name(file_name: str) -> int:
     return int(result.group(1))
 
 
-def get_episode_from_file_name(file_name: str) -> T.Optional[str]:
+def get_episode_from_file_name(file_name: str) -> Optional[str]:
     result = re.search(r"([0-9]+) \[[0-9a-f]{8}\]", file_name, re.I)
     if not result:
         return None
     return result.group(1)
 
 
-def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
-    titles: T.List[T.Tuple[str, str]] = []
+def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> Optional[str]:
+    titles: list[tuple[str, str]] = []
 
     for sub in subs:
         if sub.name == "[title]" and "series" not in sub.style:
@@ -382,7 +382,7 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
             clean_title = clean_title.replace("\n", " ")
             titles.append((extract_text(sub.text), clean_title))
 
-    def sort(item: T.Tuple[str, str]) -> T.Any:
+    def sort(item: tuple[str, str]) -> Any:
         sub_text, clean_title = item
         return not re.search(r"\d|episode", sub_text, re.I)
 
@@ -393,7 +393,7 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> T.Optional[str]:
     return None
 
 
-def create_release_entry(path: Path, links: T.List[str]) -> T.Dict[str, T.Any]:
+def create_release_entry(path: Path, links: list[str]) -> dict[str, Any]:
     languages = get_subtitle_languages(path)
     subs_text = extract_subtitles(path, languages[0])
     if subs_text:
@@ -415,13 +415,13 @@ def create_release_entry(path: Path, links: T.List[str]) -> T.Dict[str, T.Any]:
 
 def do_release(
     path: Path,
-    publish_funcs: T.List[T.Callable[[Path, bool], T.Optional[str]]],
+    publish_funcs: list[Callable[[Path, bool], Optional[str]]],
     dry_run: bool,
-) -> T.Iterable[T.Dict[str, T.Any]]:
+) -> Iterable[dict[str, Any]]:
     with log_step("Submitting data to storage space"):
         rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")
 
-    links: T.List[str] = []
+    links: list[str] = []
     with log_step("Building torrent file"):
         local_torrent_path = LOCAL_TORRENT_DIR / get_torrent_name(path)
         if not local_torrent_path.exists():

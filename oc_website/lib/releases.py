@@ -1,8 +1,8 @@
 import re
-import typing as T
 from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import datetime
+from typing import Iterable, Optional
 
 import dateutil.parser
 
@@ -18,24 +18,24 @@ class ReleaseFile:
     file_version: int
     episode_number: str
     episode_title: str
-    languages: T.List[str]
+    languages: list[str]
 
 
 @dataclass
 class Release:
     date: datetime
-    links: T.List[str]
+    links: list[str]
     is_visible: bool
-    files: T.List[ReleaseFile]
+    files: list[ReleaseFile]
 
     @property
-    def languages(self) -> T.Iterable[str]:
+    def languages(self) -> Iterable[str]:
         return list(
             OrderedDict.fromkeys(sum((f.languages for f in self.files), []))
         )
 
     @property
-    def btih(self) -> T.Optional[str]:
+    def btih(self) -> Optional[str]:
         for link in self.links:
             match = re.search("magnet.*btih:([0-9a-f]+)", link, flags=re.I)
             if match:
@@ -54,8 +54,8 @@ def sort_links(link: str) -> int:
     return -1
 
 
-def get_releases() -> T.Iterable[Release]:
-    releases: T.Dict[str, Release] = {}
+def get_releases() -> Iterable[Release]:
+    releases: dict[str, Release] = {}
     for item in jsonl.loads(RELEASES_PATH.read_text(encoding="utf-8")):
         magnet = item["links"][-1]
         if magnet not in releases:

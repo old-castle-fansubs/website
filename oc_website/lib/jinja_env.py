@@ -1,6 +1,5 @@
 import datetime
 import re
-import typing as T
 
 import jinja2
 
