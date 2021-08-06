@@ -27,5 +27,6 @@ def generate_thumbnail(
                 "-s",
                 f"{width}x{height}",
                 str(target),
-            ]
+            ],
+            check=True,
         )

@@ -14,9 +14,9 @@ COMMENTS_PATH = DATA_DIR / "comments.jsonl"
 
 @dataclass
 class Comment:
-    id: int
-    tid: int
-    pid: Optional[int]
+    comment_id: int
+    parent_comment_id: Optional[int]
+    thread_id: int
     created: datetime
     remote_addr: Optional[str]
     text: str
@@ -41,9 +41,9 @@ def get_comments() -> list[Comment]:
 
     comments = [
         Comment(
-            id=entry["id"],
-            tid=entry["tid"],
-            pid=entry["pid"],
+            comment_id=entry["id"],
+            parent_comment_id=entry["pid"],
+            thread_id=entry["tid"],
             created=dateutil.parser.parse(entry["created"]),
             remote_addr=entry["remote_addr"],
             text=entry["text"],
@@ -63,9 +63,9 @@ def save_comments(comments: Iterable[Comment]) -> None:
         jsonl.dumps(
             [
                 {
-                    "id": comment.id,
-                    "tid": comment.tid,
-                    "pid": comment.pid,
+                    "id": comment.comment_id,
+                    "pid": comment.parent_comment_id,
+                    "tid": comment.thread_id,
                     "created": str(comment.created),
                     "remote_addr": comment.remote_addr,
                     "text": comment.text,

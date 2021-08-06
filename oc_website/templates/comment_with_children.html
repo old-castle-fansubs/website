@@ -1,5 +1,5 @@
 {% extends "comment.html" %}
 {% import "_macros.jinja" as macros %}
 {% block follow_up %}
-{{- show_comments(comments, pid=comment.id) }}
+{{- show_comments(comments, parent_comment_id=comment.comment_id) }}
 {% endblock %}

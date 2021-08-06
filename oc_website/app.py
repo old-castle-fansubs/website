@@ -4,17 +4,10 @@ from functools import cache
 from typing import Any, Callable, Optional
 
 import werkzeug.routing
-from flask import (
-    Flask,
-    Response,
-    redirect,
-    render_template,
-    request,
-    send_from_directory,
-)
+from flask import Flask, Response, redirect, render_template, request
 
 from oc_website.lib.comments import Comment, get_comments, save_comments
-from oc_website.lib.common import STATIC_DIR, first
+from oc_website.lib.common import first
 from oc_website.lib.featured_images import get_featured_images
 from oc_website.lib.jinja_env import setup_jinja_env
 from oc_website.lib.news import get_news
@@ -32,7 +25,7 @@ from oc_website.lib.thumbnails import generate_thumbnail
 app = Flask(__name__)
 setup_jinja_env(app.jinja_env)
 
-GUEST_BOOK_TID = 10
+GUEST_BOOK_THREAD_ID = 10
 
 
 def init() -> None:
@@ -44,7 +37,7 @@ def init() -> None:
 
     class RegexConverter(werkzeug.routing.BaseConverter):
         def __init__(self, url_map: Any, *items: Any) -> None:
-            super(RegexConverter, self).__init__(url_map)
+            super().__init__(url_map)
             self.regex = items[0]
 
     app.url_map.converters["regex"] = RegexConverter
@@ -76,26 +69,26 @@ def home() -> Response:
 @app.route("/news.html")
 @custom_cache
 def news() -> Response:
-    news = list(get_news())
-    news.sort(key=lambda news: news.stem, reverse=True)
-    return render_template("news_list.html", news_entries=news)
+    news_items = list(get_news())
+    news_items.sort(key=lambda news_item: news_item.stem, reverse=True)
+    return render_template("news_list.html", news_entries=news_items)
 
 
 @app.route("/projects.html")
 @custom_cache
 def projects() -> Response:
-    projects = list(get_projects(get_releases()))
-    projects.sort(key=lambda project: project.title)
-    return render_template("projects.html", projects=projects)
+    project_items = list(get_projects(get_releases()))
+    project_items.sort(key=lambda project_item: project_item.title)
+    return render_template("projects.html", projects=project_items)
 
 
 @app.route("/project-<string:project_name>.html")
 @custom_cache
 def project(project_name: str) -> Response:
-    for project in get_projects(get_releases()):
-        if project_name == project.stem:
+    for project_item in get_projects(get_releases()):
+        if project_name == project_item.stem:
             return render_template(
-                "projects/" + project.stem + ".html", project=project
+                "projects/" + project_item.stem + ".html", project=project_item
             )
     return projects()
 
@@ -117,9 +110,9 @@ def featured_images() -> Response:
 @app.route("/requests.html")
 @custom_cache
 def requests() -> Response:
-    requests = list(get_requests())
-    requests.sort(key=lambda sub_request: sub_request.title.lower())
-    return render_template("request_list.html", requests=requests)
+    request_items = list(get_requests())
+    request_items.sort(key=lambda sub_request: sub_request.title.lower())
+    return render_template("request_list.html", requests=request_items)
 
 
 @app.route("/request_add.html", methods=["GET", "POST"])
@@ -179,27 +172,27 @@ def request_add() -> Response:
 def guest_book() -> Response:
     return render_template(
         "guest_book.html",
-        tid=GUEST_BOOK_TID,
+        thread_id=GUEST_BOOK_THREAD_ID,
         comments=[
             comment
             for comment in get_comments()
-            if comment.tid == GUEST_BOOK_TID
+            if comment.thread_id == GUEST_BOOK_THREAD_ID
         ],
     )
 
 
 @app.route("/comment_add.html", methods=["GET", "POST"])
 def comment_add() -> Response:
-    pid: int
+    parent_comment_id: int
     try:
-        pid = int(request.args.get("pid", ""))
+        parent_comment_id = int(request.args.get("pid", ""))
     except (TypeError, ValueError):
-        pid = 0
+        parent_comment_id = 0
 
     try:
-        tid = int(request.args.get("tid", ""))
+        thread_id = int(request.args.get("tid", ""))
     except (TypeError, ValueError):
-        tid = 0
+        thread_id = 0
 
     is_preview = request.form.get("submit") == "preview"
     text = request.form.get("text", "").strip()
@@ -209,12 +202,12 @@ def comment_add() -> Response:
 
     comments = get_comments()
     parent_comment: Optional[Comment] = first(
-        c for c in comments if c.id == pid
+        c for c in comments if c.comment_id == parent_comment_id
     )
     if parent_comment:
-        tid = parent_comment.tid
+        thread_id = parent_comment.thread_id
 
-    form_url = f"comment_add.html?tid={tid}&pid={pid}"
+    form_url = f"comment_add.html?tid={thread_id}&pid={parent_comment_id}"
 
     remote_addr: Optional[str]
     if request.headers.getlist("X-Forwarded-For"):
@@ -222,12 +215,14 @@ def comment_add() -> Response:
     else:
         remote_addr = request.remote_addr
 
-    id = max(comment.id for comment in comments) + 1 if comments else 0
+    comment_id = (
+        max(comment.comment_id for comment in comments) + 1 if comments else 0
+    )
 
     comment = Comment(
-        tid=tid,
-        id=id,
-        pid=pid or None,
+        thread_id=thread_id,
+        comment_id=comment_id,
+        parent_comment_id=parent_comment_id or None,
         created=datetime.now(),
         remote_addr=remote_addr,
         text=text,
@@ -246,7 +241,7 @@ def comment_add() -> Response:
             errors.append("Comment content cannot be empty.")
         if not comment.author:
             errors.append("Comment author cannot be empty.")
-        if not comment.tid:
+        if not comment.thread_id:
             errors.append("Comment thread ID cannot be empty.")
         if not re.search("[a-zA-Z']{3,}", comment.text):
             errors.append(
@@ -276,5 +271,5 @@ def comment_add() -> Response:
 
 
 @app.errorhandler(404)
-def page_not_found(e: Any) -> Response:
+def page_not_found(_e: Exception) -> Response:
     return render_template("404.html"), 404

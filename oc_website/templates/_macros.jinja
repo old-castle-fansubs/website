@@ -1,6 +1,6 @@
-{% macro show_comments(comments, pid=None) %}
+{% macro show_comments(comments, parent_comment_id=None) %}
   {% for comment in comments %}
-    {% if comment.pid != pid %}
+    {% if comment.parent_comment_id != parent_comment_id %}
       {% continue %}
     {% endif %}
     {% include "comment_with_children.html" %}

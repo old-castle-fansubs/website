@@ -1,10 +1,8 @@
 import datetime
-import re
 
 import jinja2
 
 from oc_website.lib.common import TEMPLATES_DIR
-from oc_website.lib.releases import Release
 
 
 def setup_jinja_env(jinja_env: jinja2.Environment) -> None:

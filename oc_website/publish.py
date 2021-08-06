@@ -7,7 +7,8 @@ def main() -> None:
             "ssh",
             "oc",
             "cd srv/website; git pull; systemctl restart --user website",
-        ]
+        ],
+        check=True,
     )
 
 

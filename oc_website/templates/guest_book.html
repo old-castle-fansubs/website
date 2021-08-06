@@ -9,7 +9,7 @@
   <p>
     <strong>{{ comments|length }} comments</strong>
     <span class='spacer'>&bull;</span>
-    <a href='{{ url_for('comment_add', tid=tid) }}'>Add new comment</a>
+    <a href='{{ url_for('comment_add', tid=thread_id) }}'>Add new comment</a>
     <span class='spacer'>&bull;</span>
     <a href='{{ url_for('requests') }}'>Request an anime</a>
   </p>

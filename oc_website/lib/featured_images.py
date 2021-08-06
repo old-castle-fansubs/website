@@ -31,7 +31,7 @@ class FeaturedImage:
 
     @property
     def relative_thumbnail_path(self) -> Path:
-        stem, suffix = os.path.splitext(self.name)
+        stem, _suffix = os.path.splitext(self.name)
         return Path("img-thumb/featured/") / (stem.rstrip(".") + ".jpg")
 
     @property

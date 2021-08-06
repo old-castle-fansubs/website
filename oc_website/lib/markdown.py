@@ -40,7 +40,8 @@ def sanitize(text: str) -> str:
     )
 
     def set_links(
-        attrs: MutableMapping[Any, Text], new: bool = False
+        attrs: MutableMapping[Any, Text],
+        new: bool = False,  # pylint: disable=unused-argument
     ) -> MutableMapping[Any, Text]:
         href_key = (None, "href")
 

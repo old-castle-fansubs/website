@@ -8,7 +8,7 @@ import tempfile
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
-from subprocess import PIPE, run
+from subprocess import run
 from typing import Any, Iterable, Iterator, Optional, Protocol, Union, cast
 
 import ass_tag_parser
@@ -85,7 +85,7 @@ def publish_anidex(torrent_path: Path, dry_run: bool) -> Optional[str]:
             print(files)
             return None
 
-        for i in range(ANIDEX_MAX_RETRIES):
+        for _i in range(ANIDEX_MAX_RETRIES):
             try:
                 response = requests.post(
                     ANIDEX_API_URL, data=data, files=files
@@ -192,7 +192,8 @@ def get_torrent_name(local_data_path: Path) -> str:
 def target_path_exists(target_path: Path) -> bool:
     return (
         run(
-            ["ssh", TARGET_HOST, "test -e " + shlex.quote(str(target_path))]
+            ["ssh", TARGET_HOST, "test -e " + shlex.quote(str(target_path))],
+            check=False,
         ).returncode
         == 0
     )
@@ -202,10 +203,9 @@ def build_torrent_file(
     local_data_path: Path, local_torrent_path: Path
 ) -> torf.Torrent:
     torrent = torf.Torrent(path=local_data_path, trackers=TRACKERS)
-    if torrent.piece_size > MAX_TORRENT_PIECE_SIZE:
-        torrent.piece_size = MAX_TORRENT_PIECE_SIZE
+    torrent.piece_size = min(torrent.piece_size, MAX_TORRENT_PIECE_SIZE)
 
-    with tqdm.tqdm(total=9e9) as bar:
+    with tqdm.tqdm(total=9e9) as progress_bar:
 
         def callback(
             _torrent: Any,
@@ -213,9 +213,9 @@ def build_torrent_file(
             pieces_done: int,
             pieces_total: int,
         ) -> None:
-            bar.set_description(str(filepath))
-            bar.update(pieces_done - bar.n)
-            bar.total = pieces_total
+            progress_bar.set_description(str(filepath))
+            progress_bar.update(pieces_done - progress_bar.n)
+            progress_bar.total = pieces_total
 
         torrent.generate(callback=callback)
 
@@ -290,8 +290,11 @@ def get_iso_639_2_lang_code(lang: str) -> str:
 def get_subtitle_languages(source_path: Path) -> list[str]:
     out = json.loads(
         run(
-            ["mkvmerge", "-i", source_path, "-F", "json"], stdout=PIPE
-        ).stdout.decode()
+            ["mkvmerge", "-i", source_path, "-F", "json"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout
     )
     return [
         iso639.languages.get(
@@ -305,10 +308,14 @@ def get_subtitle_languages(source_path: Path) -> list[str]:
 def extract_subtitles(source_path: Path, language: str) -> Optional[str]:
     out = json.loads(
         run(
-            ["mkvmerge", "-i", source_path, "-F", "json"], stdout=PIPE
-        ).stdout.decode()
+            ["mkvmerge", "-i", source_path, "-F", "json"],
+            capture_output=True,
+            text=True,
+            check=True,
+        ).stdout
     )
 
+    track = None
     for track in out["tracks"]:
         if (
             track["type"] == "subtitles"
@@ -318,7 +325,8 @@ def extract_subtitles(source_path: Path, language: str) -> Optional[str]:
             == language
         ):
             break
-    else:
+
+    if not track:
         return None
 
     track_id = track["id"]
@@ -332,10 +340,12 @@ def extract_subtitles(source_path: Path, language: str) -> Optional[str]:
             source_path,
             f"{track_id}:/dev/stdout",
         ],
-        stdout=PIPE,
+        capture_output=True,
+        text=True,
+        check=True,
     )
 
-    return result.stdout.decode()
+    return result.stdout
 
 
 def extract_text(ass_string: str) -> str:
@@ -390,7 +400,7 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> Optional[str]:
             titles.append((extract_text(sub.text), clean_title))
 
     def sort(item: tuple[str, str]) -> Any:
-        sub_text, clean_title = item
+        sub_text, _clean_title = item
         return not re.search(r"\d|episode", sub_text, re.I)
 
     titles.sort(key=sort)
@@ -452,10 +462,10 @@ def do_release(
                 continue
 
     with log_step("Creating release entries"):
-        paths = [path] if path.is_file() else sorted(path.iterdir())
-        for path in paths:
-            print("Processing", path, file=sys.stderr)
-            yield create_release_entry(path, links)
+        sub_paths = [path] if path.is_file() else sorted(path.iterdir())
+        for sub_path in sub_paths:
+            print("Processing", sub_path, file=sys.stderr)
+            yield create_release_entry(sub_path, links)
 
 
 def main() -> None:
