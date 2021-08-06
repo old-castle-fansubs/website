@@ -18,7 +18,7 @@ class Comment:
     tid: int
     pid: Optional[int]
     created: datetime
-    remote_addr: str
+    remote_addr: Optional[str]
     text: str
     author: str
     email: Optional[str]
@@ -35,24 +35,16 @@ class Comment:
         return f"https://www.gravatar.com/avatar/{chksum}?d=retro"
 
 
-def get_comments() -> Iterable[Comment]:
+def get_comments() -> list[Comment]:
     if not COMMENTS_PATH.exists():
-        return
+        return []
 
-    for entry in sorted(
-        jsonl.loads(COMMENTS_PATH.read_text(encoding="utf-8")),
-        key=lambda entry: entry["created"],
-        reverse=True,
-    ):
-        yield Comment(
+    comments = [
+        Comment(
             id=entry["id"],
             tid=entry["tid"],
             pid=entry["pid"],
-            created=(
-                dateutil.parser.parse(entry["created"])
-                if entry["created"]
-                else None
-            ),
+            created=dateutil.parser.parse(entry["created"]),
             remote_addr=entry["remote_addr"],
             text=entry["text"],
             author=entry["author"],
@@ -60,6 +52,10 @@ def get_comments() -> Iterable[Comment]:
             website=entry["website"],
             likes=entry["likes"],
         )
+        for entry in jsonl.loads(COMMENTS_PATH.read_text(encoding="utf-8"))
+    ]
+    comments.sort(key=lambda comment: comment.created, reverse=True)
+    return comments
 
 
 def save_comments(comments: Iterable[Comment]) -> None:

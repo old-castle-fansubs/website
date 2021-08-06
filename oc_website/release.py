@@ -1,15 +1,15 @@
 import argparse
-import contextlib
 import json
 import os
 import re
 import shlex
 import sys
 import tempfile
+from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
 from subprocess import PIPE, run
-from typing import Any, Callable, Iterable, Optional, Union, cast
+from typing import Any, Iterable, Iterator, Optional, Protocol, Union, cast
 
 import ass_tag_parser
 import iso639
@@ -19,8 +19,13 @@ import torf
 import tqdm
 
 from oc_website.lib import jsonl
-from oc_website.lib.common import format_size
 from oc_website.lib.releases import RELEASES_PATH
+
+
+class PublishFunc(Protocol):
+    def __call__(self, path: Path, dry_run: bool) -> Optional[str]:
+        ...
+
 
 TRACKERS = [
     "http://anidex.moe:6969/announce",
@@ -56,8 +61,8 @@ NYAA_PANTSU_CATEGORY_ID = "3_5"
 NYAA_PANTSU_LANGUAGES = "en"
 
 
-@contextlib.contextmanager
-def log_step(text):
+@contextmanager
+def log_step(text: str) -> Iterator[None]:
     print(f"--- {text} ---", file=sys.stderr)
     yield
     print("", file=sys.stderr)
@@ -330,7 +335,7 @@ def extract_subtitles(source_path: Path, language: str) -> Optional[str]:
         stdout=PIPE,
     )
 
-    return cast(str, result.stdout.decode())
+    return result.stdout.decode()
 
 
 def extract_text(ass_string: str) -> str:
@@ -342,7 +347,9 @@ def extract_text(ass_string: str) -> str:
 
 
 def get_series_title_from_file_name(file_name: str) -> str:
-    return re.match(r"\[[^\[\]]+\] (.+?)(- \d+)? \[", file_name).group(1)
+    result = re.match(r"\[[^\[\]]+\] (.+?)(- \d+)? \[", file_name)
+    assert result
+    return result.group(1)
 
 
 def get_checksum_from_file_name(file_name: str) -> str:
@@ -414,9 +421,7 @@ def create_release_entry(path: Path, links: list[str]) -> dict[str, Any]:
 
 
 def do_release(
-    path: Path,
-    publish_funcs: list[Callable[[Path, bool], Optional[str]]],
-    dry_run: bool,
+    path: Path, publish_funcs: list[PublishFunc], dry_run: bool
 ) -> Iterable[dict[str, Any]]:
     with log_step("Submitting data to storage space"):
         rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")

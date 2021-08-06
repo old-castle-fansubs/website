@@ -14,19 +14,26 @@ REQUESTS_PATH = DATA_DIR / "requests.jsonl"
 @dataclasses.dataclass
 class Request:
     title: str
-    date: Optional[datetime] = None
-    anidb_link: Optional[str] = None
+    date: Optional[datetime]
+    anidb_link: str
     comment: Optional[str] = None
     remote_addr: Optional[str] = None
 
 
-def get_requests() -> Iterable[Request]:
+def get_requests() -> list[Request]:
     if not REQUESTS_PATH.exists():
-        return
-    for item in jsonl.loads(REQUESTS_PATH.read_text(encoding="utf-8")):
-        date = item.pop("date", None)
-        date = dateutil.parser.parse(date) if date is not None else None
-        yield Request(date=date, **item)
+        return []
+
+    return [
+        Request(
+            date=dateutil.parser.parse(item["date"]) if item["date"] else None,
+            title=item["title"],
+            anidb_link=item["anidb_link"],
+            comment=item.get("comment") or None,
+            remote_addr=item.get("remote_addr") or None,
+        )
+        for item in jsonl.loads(REQUESTS_PATH.read_text(encoding="utf-8"))
+    ]
 
 
 def save_requests(requests: Iterable[Request]) -> None:

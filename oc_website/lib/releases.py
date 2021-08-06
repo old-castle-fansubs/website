@@ -2,7 +2,7 @@ import re
 from collections import OrderedDict
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Iterable, Optional
+from typing import Optional
 
 import dateutil.parser
 
@@ -29,7 +29,7 @@ class Release:
     files: list[ReleaseFile]
 
     @property
-    def languages(self) -> Iterable[str]:
+    def languages(self) -> list[str]:
         return list(
             OrderedDict.fromkeys(sum((f.languages for f in self.files), []))
         )
@@ -54,7 +54,7 @@ def sort_links(link: str) -> int:
     return -1
 
 
-def get_releases() -> Iterable[Release]:
+def get_releases() -> list[Release]:
     releases: dict[str, Release] = {}
     for item in jsonl.loads(RELEASES_PATH.read_text(encoding="utf-8")):
         magnet = item["links"][-1]
@@ -74,4 +74,4 @@ def get_releases() -> Iterable[Release]:
                 languages=item["languages"],
             )
         )
-    return releases.values()
+    return list(releases.values())

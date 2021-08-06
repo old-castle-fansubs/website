@@ -1,5 +1,5 @@
 import functools
-from typing import Optional, cast
+from typing import Any, MutableMapping, Text
 
 import bleach
 import markdown
@@ -40,8 +40,8 @@ def sanitize(text: str) -> str:
     )
 
     def set_links(
-        attrs: dict[tuple[Optional[str], str], str], new: bool = False
-    ) -> dict[tuple[Optional[str], str], str]:
+        attrs: MutableMapping[Any, Text], new: bool = False
+    ) -> MutableMapping[Any, Text]:
         href_key = (None, "href")
 
         if href_key not in attrs:
@@ -68,5 +68,4 @@ def render_markdown(text: str) -> str:
     ret = markdown.markdown(text).rstrip("\n")
     if not ret.startswith("<p>") and not ret.endswith("</p>"):
         ret = "<p>" + ret + "</p>"
-    ret = sanitize(ret)
-    return cast(str, ret)
+    return sanitize(ret)

@@ -1,7 +1,7 @@
 import re
 from datetime import datetime
 from functools import cache
-from typing import Any, Optional
+from typing import Any, Callable, Optional
 
 import werkzeug.routing
 from flask import (
@@ -21,8 +21,11 @@ from oc_website.lib.news import get_news
 from oc_website.lib.projects import get_projects
 from oc_website.lib.releases import get_releases
 from oc_website.lib.requests import Request as SubRequest
-from oc_website.lib.requests import get_requests as get_sub_requests
-from oc_website.lib.requests import is_same_anidb_link, is_valid_anidb_link
+from oc_website.lib.requests import (
+    get_requests,
+    is_same_anidb_link,
+    is_valid_anidb_link,
+)
 from oc_website.lib.requests import save_requests as save_sub_requests
 from oc_website.lib.thumbnails import generate_thumbnail
 
@@ -57,7 +60,7 @@ def cors(response: Response) -> Response:
     return response
 
 
-def custom_cache(func):
+def custom_cache(func: Callable[..., Any]) -> Callable[..., Any]:
     if not app.debug:
         return cache(func)
     return func
@@ -66,36 +69,29 @@ def custom_cache(func):
 @app.route("/index.html")
 @app.route("/")
 @custom_cache
-def home() -> str:
+def home() -> Response:
     return render_template("home.html", featured_images=get_featured_images())
 
 
 @app.route("/news.html")
 @custom_cache
-def news() -> str:
-    return render_template(
-        "news_list.html",
-        news_entries=sorted(
-            get_news(), key=lambda news: news.stem, reverse=True
-        ),
-    )
+def news() -> Response:
+    news = list(get_news())
+    news.sort(key=lambda news: news.stem, reverse=True)
+    return render_template("news_list.html", news_entries=news)
 
 
 @app.route("/projects.html")
 @custom_cache
-def projects() -> str:
-    return render_template(
-        "projects.html",
-        projects=sorted(
-            get_projects(get_releases()),
-            key=lambda project: project.title,
-        ),
-    )
+def projects() -> Response:
+    projects = list(get_projects(get_releases()))
+    projects.sort(key=lambda project: project.title)
+    return render_template("projects.html", projects=projects)
 
 
 @app.route("/project-<string:project_name>.html")
 @custom_cache
-def project(project_name: str) -> str:
+def project(project_name: str) -> Response:
     for project in get_projects(get_releases()):
         if project_name == project.stem:
             return render_template(
@@ -106,13 +102,13 @@ def project(project_name: str) -> str:
 
 @app.route("/about.html")
 @custom_cache
-def about() -> str:
+def about() -> Response:
     return render_template("about.html")
 
 
 @app.route("/featured.html")
 @custom_cache
-def featured_images() -> str:
+def featured_images() -> Response:
     return render_template(
         "featured.html", featured_images=get_featured_images()
     )
@@ -120,23 +116,20 @@ def featured_images() -> str:
 
 @app.route("/requests.html")
 @custom_cache
-def requests() -> str:
-    return render_template(
-        "request_list.html",
-        requests=sorted(
-            get_sub_requests(),
-            key=lambda sub_request: sub_request.title.lower(),
-        ),
-    )
+def requests() -> Response:
+    requests = list(get_requests())
+    requests.sort(key=lambda sub_request: sub_request.title.lower())
+    return render_template("request_list.html", requests=requests)
 
 
 @app.route("/request_add.html", methods=["GET", "POST"])
-def request_add() -> Any:
+def request_add() -> Response:
     title = request.form.get("title", "").strip()
     anidb_link = request.form.get("anidb_link", "").strip()
     comment = request.form.get("comment", "").strip()
 
-    sub_requests = list(get_sub_requests())
+    sub_requests = get_requests()
+    remote_addr: Optional[str]
     if request.headers.getlist("X-Forwarded-For"):
         remote_addr = request.headers.getlist("X-Forwarded-For")[0]
     else:
@@ -183,7 +176,7 @@ def request_add() -> Any:
 
 @app.route("/guest_book.html")
 @custom_cache
-def guest_book() -> str:
+def guest_book() -> Response:
     return render_template(
         "guest_book.html",
         tid=GUEST_BOOK_TID,
@@ -196,7 +189,7 @@ def guest_book() -> str:
 
 
 @app.route("/comment_add.html", methods=["GET", "POST"])
-def comment_add() -> Any:
+def comment_add() -> Response:
     pid: int
     try:
         pid = int(request.args.get("pid", ""))
@@ -214,7 +207,7 @@ def comment_add() -> Any:
     website = request.form.get("website", "").strip()
     email = request.form.get("email", "").strip()
 
-    comments = list(get_comments())
+    comments = get_comments()
     parent_comment: Optional[Comment] = first(
         c for c in comments if c.id == pid
     )
@@ -223,6 +216,7 @@ def comment_add() -> Any:
 
     form_url = f"comment_add.html?tid={tid}&pid={pid}"
 
+    remote_addr: Optional[str]
     if request.headers.getlist("X-Forwarded-For"):
         remote_addr = request.headers.getlist("X-Forwarded-For")[0]
     else:
@@ -282,5 +276,5 @@ def comment_add() -> Any:
 
 
 @app.errorhandler(404)
-def page_not_found(e):
+def page_not_found(e: Any) -> Response:
     return render_template("404.html"), 404

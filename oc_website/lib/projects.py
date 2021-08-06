@@ -63,9 +63,7 @@ def get_projects(releases: list[Release]) -> Iterable[Project]:
                     if not release.is_hidden
                     and any(
                         re.search(
-                            release_filter,
-                            release_file.file_name,
-                            flags=re.I,
+                            release_filter, release_file.file_name, flags=re.I
                         )
                         for release_file in release.files
                     )
@@ -75,9 +73,8 @@ def get_projects(releases: list[Release]) -> Iterable[Project]:
             )
         )
 
-        languages = sum(
-            (release.languages for release in project_releases),
-            [],
+        languages: list[str] = sum(
+            (release.languages for release in project_releases), []
         )
         languages = list(OrderedDict.fromkeys(languages))
 
