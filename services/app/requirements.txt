@@ -3,6 +3,10 @@ uWSGI==2.0.19.1                 # The uWSGI Server
 celery==5.1.2                   # Task queue
 django-redis==4.12.1            # Backend for the task queue
 
+# temporary requirements
+jinja2
+python-dateutil
+
 # development requirements
 pytest                          # tests
 pytest-cov                      # tests coverage
