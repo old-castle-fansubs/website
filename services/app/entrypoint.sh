@@ -1,0 +1,66 @@
+#!/bin/bash
+set -e
+
+show_help() {
+    echo """
+Usage: docker run <imagename> COMMAND
+
+Commands
+
+dev      : Start a normal Django development server
+bash     : Start a bash shell
+manage   : Start manage.py
+migrate  : Run migrations
+python   : Run a Python command
+shell    : Start a Django Python shell
+uwsgi    : Run uwsgi server
+test     : Run tests
+help     : Show this message
+"""
+}
+
+write_static_files() {
+    python3 manage.py collectstatic --noinput
+}
+
+run_migrations() {
+    python3 manage.py migrate
+}
+
+case "$1" in
+    dev)
+        write_static_files
+        run_migrations
+        python3 manage.py runserver 0.0.0.0:8000
+    ;;
+    bash)
+        /bin/bash "${@:2}"
+    ;;
+    manage)
+        python3 manage.py "${@:2}"
+    ;;
+    migrate)
+        run_migrations
+    ;;
+    python)
+        python3 "${@:2}"
+    ;;
+    shell)
+        python3 manage.py shell_plus
+    ;;
+    celery)
+        celery -A oc_website worker -l INFO
+    ;;
+    test)
+        pytest --cov=oc_website --cov-report=term-missing
+    ;;
+    uwsgi)
+        echo "Running App (uWSGI)..."
+        write_static_files
+        run_migrations
+        uwsgi --ini /conf/uwsgi.ini
+    ;;
+    *)
+        show_help
+    ;;
+esac

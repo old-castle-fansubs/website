@@ -1,0 +1,9 @@
+Django==3.2.6                   # A high-level Python Web framework that encourages rapid development and clean, pragmatic design.
+uWSGI==2.0.19.1                 # The uWSGI Server
+celery==5.1.2                   # Task queue
+django-redis==4.12.1            # Backend for the task queue
+
+# development requirements
+pytest                          # tests
+pytest-cov                      # tests coverage
+pytest-django                   # pytest + Django integration
