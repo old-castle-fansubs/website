@@ -410,7 +410,9 @@ def get_title_from_subs(subs: pysubs2.ssafile.SSAFile) -> Optional[str]:
     return None
 
 
-def create_release_entry(path: Path, links: list[str]) -> dict[str, Any]:
+def create_release_entry(
+    now: datetime, path: Path, links: list[str]
+) -> dict[str, Any]:
     languages = get_subtitle_languages(path)
     subs_text = extract_subtitles(path, languages[0])
     if subs_text:
@@ -420,7 +422,7 @@ def create_release_entry(path: Path, links: list[str]) -> dict[str, Any]:
         title = "unknown"
 
     return {
-        "date": f"{datetime.today():%Y-%m-%d %H:%M:%S}",
+        "date": f"{now:%Y-%m-%d %H:%M:%S}",
         "file": path.name,
         "version": get_version_from_file_name(path.name),
         "episode": get_episode_from_file_name(path.name),
@@ -433,6 +435,7 @@ def create_release_entry(path: Path, links: list[str]) -> dict[str, Any]:
 def do_release(
     path: Path, publish_funcs: list[PublishFunc], dry_run: bool
 ) -> Iterable[dict[str, Any]]:
+    now = datetime.today()
     with log_step("Submitting data to storage space"):
         rsync(path, f"{TARGET_HOST}:{TARGET_DATA_DIR}")
 
@@ -465,7 +468,7 @@ def do_release(
         sub_paths = [path] if path.is_file() else sorted(path.iterdir())
         for sub_path in sub_paths:
             print("Processing", sub_path, file=sys.stderr)
-            yield create_release_entry(sub_path, links)
+            yield create_release_entry(now, sub_path, links)
 
 
 def main() -> None:
