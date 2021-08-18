@@ -34,6 +34,17 @@ class Project(models.Model):
     )
     takedown_request = models.CharField(blank=True, null=True, max_length=100)
     is_visible = models.BooleanField(default=True)
+    big_image = models.FileField(upload_to="projects/big/")
+    small_image = models.FileField(upload_to="projects/small/")
+
+    @property
+    def languages(self) -> list[str]:
+        return list(
+            Language.objects.filter(projectreleasefile__release__project=self)
+            .distinct()
+            .values_list("name", flat=True)
+            .order_by("pk")
+        )
 
     def __str__(self) -> str:
         return self.title

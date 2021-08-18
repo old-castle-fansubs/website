@@ -1,0 +1,22 @@
+<h1 class='fancy-title'><span>{{ title }}</span></h1>
+{% if not projects|length %}
+  Nothing… yet!
+{% endif %}
+<ul class='projects'>
+  {% for project in projects %}
+    {% if project.is_visible %}
+      <li class='project'>
+        <a href='{% url 'project' project.slug %}'>
+          <div class='cover' style='background-image: url("{{ project.small_image.url }}")'><!--
+            --><ul class='languages'
+              >{% for language in project.languages %}<!--
+                --><li class='language'>{% include 'snippets/flag.html' with country_code=language %}</li><!--
+              -->{% endfor %}
+            </ul><!--
+          --></div><!--
+          -->{{ project.title }}
+        </a>
+      </li>
+    {% endif %}
+  {% endfor %}
+</ul>

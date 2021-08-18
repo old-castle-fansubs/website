@@ -10,7 +10,7 @@ urlpatterns = [
     path("", views.view_home, name="home"),
     path("news", views.view_home, name="news"),
     path("about", views.view_home, name="about"),
-    path("projects", views.view_home, name="projects"),
+    path("projects", views.view_projects, name="projects"),
     path("guest_book", views.view_home, name="guest_book"),
 ]
 urlpatterns += staticfiles_urlpatterns()

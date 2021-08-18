@@ -1,0 +1,4 @@
+{% load static %}
+{% with 'img/flags/icon_'|add:country_code|add:'.svg' as flag_url %}
+  <img class='flag' src='{% static flag_url %}' alt='{{ country_code }}'/>
+{% endwith %}

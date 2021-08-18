@@ -109,6 +109,34 @@ class Command(BaseCommand):
                 ),
             )
 
+            if not project.small_image:
+                image_path = (
+                    root_dir
+                    / "oc_website"
+                    / "static"
+                    / "img"
+                    / "projects"
+                    / f"{project.slug}-small.jpg"
+                )
+                with image_path.open("rb") as handle:
+                    project.small_image.save(
+                        image_path.name, File(handle), save=True
+                    )
+
+            if not project.big_image:
+                image_path = (
+                    root_dir
+                    / "oc_website"
+                    / "static"
+                    / "img"
+                    / "projects"
+                    / f"{project.slug}-big.jpg"
+                )
+                with image_path.open("rb") as handle:
+                    project.big_image.save(
+                        image_path.name, File(handle), save=True
+                    )
+
             for anidb_id in anidb_ids:
                 ProjectExternalLink.objects.get_or_create(
                     project=project,

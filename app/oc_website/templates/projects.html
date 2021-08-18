@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Projects{% endblock %}
+{% block id %}projects{% endblock %}
+{% block content %}
+{% include 'snippets/projects.html' with projects=ongoing_projects title='Ongoing projects' %}
+{% include 'snippets/projects.html' with projects=finished_projects title='Finished projects' %}
+<p>For IRC packlist, please head <a href='https://oldcastle.moe/packlist.txt'>here</a>.</p>
+{% endblock %}

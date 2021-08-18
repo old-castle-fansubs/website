@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="405">
+  <defs>
+    <path id="star" fill="#FFFFFF" transform="scale(0.035)" d="M0,1000L587.785,-809.017L-951.057,309.017H951.057L-587.785,-809.017Z"/>
+  </defs>
+  <path fill="#DA291C" d="M600 400H0V0h600"/>
+  <rect fill="#FFFFFF" x="0" y="45" width="600" height="45"/>
+  <rect fill="#FFFFFF" x="0" y="135" width="600" height="45"/>
+  <rect fill="#FFFFFF" x="0" y="225" width="600" height="45"/>
+  <rect fill="#FFFFFF" x="0" y="315" width="600" height="45"/>
+  <path fill="#0055A4" d="M320 225H0V0h320z"/>
+  <g>
+  <use xlink:href="#star" x="65" y="56.25"/>
+  <use xlink:href="#star" x="160" y="56.25"/>
+  <use xlink:href="#star" x="255" y="56.25"/>
+
+  <use xlink:href="#star" x="112.5" y="112.5"/>
+  <use xlink:href="#star" x="207.5" y="112.5"/>
+
+  <use xlink:href="#star" x="65" y="168.75"/>
+  <use xlink:href="#star" x="160" y="168.75"/>
+  <use xlink:href="#star" x="255" y="168.75"/>
+  </g>
+</svg>
