@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}About{% endblock %}
+{% block id %}about{% endblock %}
+{% block content %}
+<h1 class='fancy-title'><span>About</span></h1>
+
+<p>Old Castle is a group of individuals who dedicate their free time to making
+anime subtitles (also known as "fansubs"). Our group was founded in 2017 for
+the purpose of translating "Attack no. 1", a 104-episode-long series that
+turned out to be only the first title of many. We translate from
+Japanese to English, and more recently also to Polish, shows that don't have
+English subtitles yet in an effort to allow Western audience to discover new
+hidden gems. We sometimes also do remaster projects. We focus mostly on older
+animation that has little chance of being picked up by other groups, and try to
+favor quality over speed.</p>
+
+<h2>Active members</h2>
+
+<table>
+  <tr>
+    <td class='flag'>{% include 'snippets/flag.html' with country_code='pl' %}</td>
+    <td class='name'>rr-</td>
+    <td class='desc'>Founder, translator, publisher</td>
+  </tr>
+  <tr>
+    <td class='flag'>{% include 'snippets/flag.html' with country_code='us' %}</td>
+    <td class='name'>BlackRose108</td>
+    <td class='desc'>Editor{# for Attack No. 1, Monster Hunter Stories: Ride On, Lassie and Paris no Isabelle #}</td>
+  </tr>
+</table>
+
+<h2>Contributors <small>(in alphabetical order)</small></h2>
+
+<table>
+  <tr>
+    <td class='flag'>{% include 'snippets/flag.html' with country_code='us' %}</td>
+    <td class='name'>DranzerX13</td>
+    <td class='desc'>RAW provider for Monster Hunter Stories: Ride On</td>
+  </tr>
+  <tr>
+    <td class='flag'>{% include 'snippets/flag.html' with country_code='ca' %}</td>
+    <td class='name'>Greg</td>
+    <td class='desc'>Editor for Glass Mask</td>
+  </tr>
+  <tr>
+    <td class='flag'>{% include 'snippets/flag.html' with country_code='fr' %}</td>
+    <td class='name'>Johnny</td>
+    <td class='desc'>RAW provider for Attack No. 1 movies and Saint Tail</td>
+  </tr>
+  <tr>
+    <td class='flag'>{% include 'snippets/flag.html' with country_code='pl' %}</td>
+    <td class='name'>kropiciel</td>
+    <td class='desc'>Translation assistance</td>
+  </tr>
+  <tr>
+    <td class='flag'>{% include 'snippets/flag.html' with country_code='pirate' %}</td>
+    <td class='name'>R-Raws</td>
+    <td class='desc'>RAW provider for many of our projects</td>
+  </tr>
+  <tr>
+    <td class='flag'>{% include 'snippets/flag.html' with country_code='pirate' %}</td>
+    <td class='name'>Tougewolf_</td>
+    <td class='desc'>Initial translation for Noroi no One Piece</td>
+  </tr>
+</table>
+
+<h2>Our friends</h2>
+
+<ul id='friends'>
+  <li>
+    <a href='https://southwindsubs.wordpress.com/'>
+      <img src='{% static 'img/banners/south-wind-subs.png' %}' alt='South Wind Subs'/>
+    </a>
+  </li>
+
+  <li>
+    <a href='https://johnnyenglishsubs.wordpress.com/'>
+      <img src='{% static 'img/banners/johnny.png' %}' alt='Johnny English Subs'/>
+    </a>
+  </li>
+</ul>
+
+<h2>Contact</h2>
+
+<img src='{% static 'img/banners/old-castle.png' %}' alt='Old Castle'/>
+
+<p>
+  E-mail - contact@oldcastle.moe<br/>
+  IRC channel - #old-castle on Rizon<br/>
+  IRC packlist - <a href='https://oldcastle.moe/packlist.txt'>here</a>
+</p>
+
+
+<p>Our releases should hash to checksums in form of <code>XXXXYZZZ</code>,
+where <code>XXXX</code> is magic content hash, <code>Y</code> is release
+version and <code>ZZZ</code> is the episode number.</p>
+
+<p><a href='{% url 'featured_images' %}'>Here</a> you can see previous featured images,
+and <a href='{% url 'requests' %}'>here</a> you can place an anime request.</p>
+{% endblock %}

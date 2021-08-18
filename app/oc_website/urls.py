@@ -9,9 +9,11 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.view_home, name="home"),
     path("news", views.view_home, name="news"),
-    path("about", views.view_home, name="about"),
+    path("about", views.view_about, name="about"),
     path("projects", views.view_projects, name="projects"),
     path("guest_book", views.view_home, name="guest_book"),
+    path("requests", views.view_home, name="requests"),
+    path("featured_images", views.view_home, name="featured_images"),
 ]
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -34,5 +34,9 @@ def view_projects(request: HttpRequest) -> HttpResponse:
     )
 
 
+def view_about(request: HttpRequest) -> HttpResponse:
+    return render(request, "about.html")
+
+
 def view_404(request: HttpRequest, _exception: Exception) -> HttpResponse:
     return render(request, "404.html")
