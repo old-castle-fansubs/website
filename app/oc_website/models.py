@@ -3,6 +3,7 @@ from collections import OrderedDict
 from typing import Optional
 
 from django.db import models
+from oc_website.fields import MagnetURLField
 from oc_website.taxonomies import ProjectStatus
 
 
@@ -93,7 +94,7 @@ class ProjectReleaseLink(models.Model):
     release = models.ForeignKey(
         ProjectRelease, related_name="links", on_delete=models.CASCADE
     )
-    url = models.URLField()
+    url = MagnetURLField(max_length=1024)
 
     def __str__(self) -> str:
         return f"{self.url} ({self.release})"
