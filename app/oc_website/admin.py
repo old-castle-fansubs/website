@@ -59,7 +59,6 @@ class ProjectReleaseAdmin(admin.ModelAdmin):
         "episode_number",
     ]
     list_filter = ["project"]
-    ordering = ["-release_date"]
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)

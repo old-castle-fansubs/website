@@ -1,4 +1,4 @@
-from django.http import HttpRequest, HttpResponse
+from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 from oc_website.models import FeaturedImage, Project
@@ -30,6 +30,22 @@ def view_projects(request: HttpRequest) -> HttpResponse:
             finished_projects=projects.filter(
                 status=ProjectStatus.FINISHED.name
             ),
+        ),
+    )
+
+
+def view_project(request: HttpRequest, slug: str) -> HttpResponse:
+    try:
+        project = Project.objects.get(slug=slug)
+    except Project.DoesNotExist as exc:
+        raise Http404("Project does not exist") from exc
+
+    return render(
+        request,
+        "project.html",
+        context=dict(
+            project=project,
+            known_providers=["magnet", "nyaa.si", "nyaa.net", "anidex.info"],
         ),
     )
 

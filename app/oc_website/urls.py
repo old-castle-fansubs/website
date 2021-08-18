@@ -11,6 +11,7 @@ urlpatterns = [
     path("news", views.view_home, name="news"),
     path("about", views.view_about, name="about"),
     path("projects", views.view_projects, name="projects"),
+    path("projects/<str:slug>", views.view_project, name="project"),
     path("guest_book", views.view_home, name="guest_book"),
     path("requests", views.view_home, name="requests"),
     path("featured_images", views.view_home, name="featured_images"),

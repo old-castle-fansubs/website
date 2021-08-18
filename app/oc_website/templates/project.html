@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ project.title|striptags }}{% endblock %}
+{% block id %}project{% endblock %}
+
+{% block content %}
+  <h1 class='fancy-title'>
+    <span>{{ project.title|safe }}</span>
+  </h1>
+
+  <div id='project-wrapper'>
+    <aside id='project-aside'>
+      <a href='{{ project.big_image.url }}'>
+        <img src='{{ project.big_image.url }}' alt='{{ project.title|striptags }}'/>
+      </a>
+    </aside>
+
+    <article id='project-details'>
+      <section id='project-synopsis'>
+        {{ project.synopsis|safe }}
+      </section>
+
+      {% if project.notes %}
+        <section id='project-notes'>
+          <p><em>Project notes:</em></p>
+          {{ project.notes|safe }}
+        </section>
+      {% endif %}
+
+      {% if project.links.count %}
+        <section id='project-external-links'>
+          <p><em>External links:</em></p>
+          <ul>
+            {% for link in project.links.all %}
+              <li><a href='{{ link.url }}'>{{ link.url }}</a></li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endif %}
+    </article>
+  </div>
+
+  <h2>Releases ({{ project.status_repr }})</h2>
+
+  {% block project_releases %}
+    <ul class='release'>
+      {% for release in project.releases.all %}
+        {% if release.is_visible %}
+          <li>
+            <table>
+
+              <tr>
+                <td>Date:</td>
+                <td>
+                  <span class='date'>{{ release.release_date }}</span>
+                </td>
+              </tr>
+
+              <tr>
+                <td>Files:</td>
+                <td>
+                  <ul class='files'>
+                    {% for file in release.files.all %}
+                      <li>
+                        {{ file.file_name }}
+                        {% if file.file_version > 1 %}
+                          (v{{ file.file_version }})
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </td>
+              </tr>
+
+              <tr>
+                <td>BTIH:</td>
+                <td>
+                  {% if release.btih %}
+                    {{ release.btih }}
+                  {% else %}
+                    Unknown
+                  {% endif %}
+                </td>
+              </tr>
+
+              <tr>
+                <td>Links:</td>
+                <td>
+                  {% if project.takedown_request %}
+                    Links removed due to takedown request sent by {{ project.takedown_request }}.
+                  {% else %}
+                    <ul class='links'>
+                      {% for infix in known_providers %}
+                        {% for link in release.links.all %}
+                          {% if infix in link.url %}
+                            {% with 'img/'|add:infix|add:'.png' as icon_url %}
+                              <li>
+                                <a href="{{ link.url }}" title="{{ link.url }}"><!--
+                                  --><img src='{% static icon_url %}' title='{{ infix }}'/><!--
+                                  --><span>{{ infix }}</span><!--
+                                --></a>
+                              </li>
+                            {% endwith %}
+                          {% endif %}
+                        {% endfor %}
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </td>
+              </tr>
+
+              <tr>
+                <td>Languages:</td>
+                <td>
+                  <ul class='languages'>
+                    {% for language in project.languages %}
+                      <li class='language'>{% include 'snippets/flag.html' with country_code=language %}</li>
+                    {% endfor %}
+                  </ul>
+                </td>
+              </tr>
+
+            </table>
+
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  {% endblock %}
+{% endblock %}

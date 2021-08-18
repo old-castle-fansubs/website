@@ -33,10 +33,18 @@ class Project(models.Model):
     status = models.CharField(
         max_length=30, choices=ProjectStatus.get_choices()
     )
+    synopsis = models.TextField()
+    notes = models.TextField(null=True, blank=True)
     takedown_request = models.CharField(blank=True, null=True, max_length=100)
     is_visible = models.BooleanField(default=True)
     big_image = models.FileField(upload_to="projects/big/")
     small_image = models.FileField(upload_to="projects/small/")
+
+    def status_repr(self) -> str:
+        return {
+            ProjectStatus.ACTIVE.name: "ongoing",
+            ProjectStatus.FINISHED.name: "finished",
+        }[self.status]
 
     @property
     def languages(self) -> list[str]:
@@ -69,6 +77,7 @@ class ProjectRelease(models.Model):
     is_visible = models.BooleanField(default=True)
 
     class Meta:
+        ordering = ["-release_date"]
         unique_together = ("project_id", "release_date")
 
     @property
@@ -109,3 +118,6 @@ class ProjectReleaseFile(models.Model):
     episode_number = models.IntegerField(null=True, blank=True)
     episode_title = models.CharField(null=True, blank=True, max_length=200)
     languages = models.ManyToManyField(Language)
+
+    class Meta:
+        ordering = ["file_name"]

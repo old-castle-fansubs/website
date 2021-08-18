@@ -335,6 +335,18 @@ img.flag {
 #project #project-notes {
   font-size: 0.9rem;
 }
+#project #project-external-links {
+  font-size: 0.9rem;
+}
+#project #project-external-links ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+#project #project-external-links li {
+  padding: 0;
+  margin: 0;
+}
 #project #project-synopsis p:first-of-type {
   margin-top: 0;
 }

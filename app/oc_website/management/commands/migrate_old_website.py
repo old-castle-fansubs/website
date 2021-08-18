@@ -80,32 +80,21 @@ class Command(BaseCommand):
                 for block, func in template.blocks.items()
             }
 
-            title = re.sub("<[^>]*>", "", blocks["project_title"])
-            status = blocks["project_status"]
-            release_filter = blocks["project_release_filter"]
-            anidb_ids = (
-                [
-                    int(part.strip())
-                    for part in blocks["project_anidb_id"].split(",")
-                ]
-                if blocks.get("project_anidb_id")
-                else []
-            )
-            takedown_request = (
-                blocks["project_takedown_request"]
-                if "project_takedown_request" in blocks
-                else None
-            )
-
             project, _is_created = Project.objects.update_or_create(
-                title=title,
+                title=re.sub("<[^>]*>", "", blocks["project_title"]),
                 defaults=dict(
                     slug=project_file.stem,
                     status={
                         "ongoing": ProjectStatus.ACTIVE.name,
                         "finished": ProjectStatus.FINISHED.name,
-                    }[status],
-                    takedown_request=takedown_request,
+                    }[blocks["project_status"]],
+                    synopsis=blocks["project_synopsis"],
+                    notes=blocks["project_notes"],
+                    takedown_request=(
+                        blocks["project_takedown_request"]
+                        if "project_takedown_request" in blocks
+                        else None
+                    ),
                 ),
             )
 
@@ -137,13 +126,14 @@ class Command(BaseCommand):
                         image_path.name, File(handle), save=True
                     )
 
-            for anidb_id in anidb_ids:
+            for part in blocks.get("project_anidb_id", "").split(","):
+                anidb_id = int(part.strip())
                 ProjectExternalLink.objects.get_or_create(
                     project=project,
                     url=f"https://anidb.net/anime/{anidb_id}",
                 )
 
-            ret[project.pk] = release_filter
+            ret[project.pk] = blocks["project_release_filter"]
 
         return ret
 
