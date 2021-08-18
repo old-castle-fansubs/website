@@ -6,6 +6,19 @@ from django.db import models
 from oc_website.taxonomies import ProjectStatus
 
 
+class FeaturedImage(models.Model):
+    feature_date = models.DateTimeField()
+    image = models.FileField(upload_to="featured_images/")
+
+    @property
+    def is_image(self) -> bool:
+        return self.image.path.endswith((".png", ".jpg", ".jpeg"))
+
+    @property
+    def is_video(self) -> bool:
+        return self.image.path.endswith((".webm",))
+
+
 class Language(models.Model):
     name = models.CharField(max_length=10)
 

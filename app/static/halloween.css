@@ -1,0 +1,57 @@
+:root {
+  --background-color: black;
+  --text-color: #FFC080;
+  --link-text-color: orange;
+  --visited-link-text-color: violet;
+  --hovered-link-text-color: red;
+  --input-background-color: black;
+  --input-border-color: rgba(255, 255, 255, 0.3);
+  --button-background-color: silver;
+  --blockquote-background-color: rgb(31, 26, 22);
+  --blockquote-border-color: rgb(72, 57, 45);
+}
+
+body, main {
+  margin-top: 0;
+  padding-top: 0;
+}
+body {
+  background-image: none;
+}
+#top-header h1 a {
+  color: #FFFFD8;
+}
+
+#body h1:before,
+#body h1:after {
+  display: inline-block;
+  background: url('img/pumpkin.png');
+  background-size: 20px 20px;
+  content: '';
+  width: 20px;
+  height: 20px;
+  margin: 0 10px;
+}
+#top-header {
+  background-image: url('img/halloween-bk.png');
+  background-size: auto 300px;
+  background-position: -100px 30px;
+  background-repeat: no-repeat;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 0;
+}
+#top-header-logo {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-end;
+}
+#top-header h1 {
+  font-size: 70px;
+  line-height: 70px;
+  margin-top: 40px;
+  margin-right: 50px;
+}

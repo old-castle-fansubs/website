@@ -1,2 +1,4 @@
-app/static
+app/static/admin/
+app/uploads/
 app/db.sqlite3
+docker-compose.override.yml

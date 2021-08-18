@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db.models.aggregates import Count, Max
 from oc_website.models import (
+    FeaturedImage,
     Language,
     Project,
     ProjectExternalLink,
@@ -12,6 +13,11 @@ from oc_website.models import (
 
 @admin.register(Language)
 class LanguageAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(FeaturedImage)
+class FeaturedImageAdmin(admin.ModelAdmin):
     pass
 
 

@@ -15,7 +15,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=oc_website.settings
       - SECRET_KEY=change_me  # change this in docker-compose.override.yml
-      - DEBUG
+      - DEBUG=0
 
   redis:
     image: redis:6
@@ -32,7 +32,7 @@ services:
       - ./services/app/entrypoint.sh:/usr/local/bin/entrypoint.sh
     environment:
       - SECRET_KEY=change_me  # change this in docker-compose.override.yml
-      - DEBUG
+      - DEBUG=0
 
 volumes:
   pgdata:

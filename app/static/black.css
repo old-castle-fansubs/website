@@ -1,0 +1,14 @@
+:root {
+  --background-color: black;
+  --text-color: #EEE;
+  --link-text-color: dodgerblue;
+  --visited-link-text-color: orchid;
+  --hovered-link-text-color: green;
+  --input-background-color: black;
+  --input-border-color: rgba(255, 255, 255, 0.3);
+  --button-background-color: silver;
+}
+
+body {
+  background-image: none;
+}

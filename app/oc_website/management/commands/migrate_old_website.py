@@ -4,9 +4,11 @@ from itertools import groupby
 from pathlib import Path
 
 import dateutil.parser
+from django.core.files import File
 from django.core.management.base import BaseCommand
 from oc_website.management.commands._common import get_jinja_env
 from oc_website.models import (
+    FeaturedImage,
     Language,
     Project,
     ProjectExternalLink,
@@ -32,12 +34,39 @@ class Command(BaseCommand):
         root_dir = options["root_dir"]
         if options["clean"]:
             Project.objects.all().delete()
+            FeaturedImage.objects.all().delete()
+        self.migrate_featured_images(root_dir)
         project_id_to_release_filter = self.migrate_projects(root_dir)
         self.migrate_project_releases(root_dir, project_id_to_release_filter)
 
+    def migrate_featured_images(self, root_dir: Path) -> None:
+        self.stdout.write("Migrating featured images")
+        featured_images_path = root_dir / "data" / "featured.jsonl"
+        featured_images_dir = (
+            root_dir / "oc_website" / "static" / "img" / "featured"
+        )
+        old_featured_images = [
+            json.loads(line)
+            for line in featured_images_path.read_text().splitlines()
+        ]
+        for old_featured_image in old_featured_images:
+            feature_date = dateutil.parser.parse(old_featured_image["date"])
+            image_path = featured_images_dir / old_featured_image["name"]
+            featured_image = FeaturedImage.objects.filter(
+                feature_date=feature_date
+            ).first()
+            if featured_image:
+                continue
+            featured_image = FeaturedImage(feature_date=feature_date)
+            with image_path.open("rb") as handle:
+                featured_image.image.save(
+                    image_path.name, File(handle), save=True
+                )
+            featured_image.save()
+
     def migrate_projects(self, root_dir: Path) -> dict[int, str]:
         # pylint: disable=too-many-locals
-
+        self.stdout.write("Migrating projects")
         projects_dir = root_dir / "oc_website" / "templates" / "projects"
 
         jinja_env = get_jinja_env()
@@ -94,6 +123,7 @@ class Command(BaseCommand):
         self, root_dir: Path, project_id_to_release_filter: dict[int, str]
     ) -> None:
         # pylint: disable=too-many-locals,too-many-branches
+        self.stdout.write("Migrating project releases")
         releases_path = root_dir / "data" / "releases.jsonl"
         old_releases = [
             json.loads(line) for line in releases_path.read_text().splitlines()

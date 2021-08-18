@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /comment_add.html
+Disallow: /request_add.html
