@@ -15,4 +15,8 @@ jobs = 0
 [tool.pylint.message_control]
 disable = [
     "import-error",  # for pre-commit, which cannot install external modules
+    "missing-docstring",
+    "too-few-public-methods",
+    "no-self-use",
 ]
+module-rgx="(([a-z_][a-z0-9_]*)|([A-Z][a-zA-Z0-9]+)|([0-9]{4}_[a-z_][a-z0-9_]*))$"

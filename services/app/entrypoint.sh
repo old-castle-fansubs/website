@@ -24,7 +24,7 @@ write_static_files() {
 }
 
 run_migrations() {
-    python3 manage.py migrate
+    python3 manage.py migrate $@
 }
 
 case "$1" in
@@ -40,7 +40,7 @@ case "$1" in
         python3 manage.py "${@:2}"
     ;;
     migrate)
-        run_migrations
+        run_migrations "${@:2}"
     ;;
     python)
         python3 "${@:2}"

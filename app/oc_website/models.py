@@ -1,0 +1,86 @@
+import re
+from collections import OrderedDict
+from typing import Optional
+
+from django.db import models
+from oc_website.taxonomies import ProjectStatus
+
+
+class Language(models.Model):
+    name = models.CharField(max_length=10)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Project(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.CharField(max_length=30)
+    status = models.CharField(
+        max_length=30, choices=ProjectStatus.get_choices()
+    )
+    takedown_request = models.CharField(blank=True, null=True, max_length=100)
+    is_visible = models.BooleanField(default=True)
+
+    def __str__(self) -> str:
+        return self.title
+
+
+class ProjectExternalLink(models.Model):
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name="links"
+    )
+    url = models.URLField()
+
+    def __str__(self) -> str:
+        return f"{self.url} ({self.project})"
+
+
+class ProjectRelease(models.Model):
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name="releases"
+    )
+    release_date = models.DateTimeField()
+    is_visible = models.BooleanField(default=True)
+
+    class Meta:
+        unique_together = ("project_id", "release_date")
+
+    @property
+    def languages(self) -> list[str]:
+        return list(
+            OrderedDict.fromkeys(sum((f.languages for f in self.files), []))
+        )
+
+    @property
+    def btih(self) -> Optional[str]:
+        link = self.links.filter(url__contains="magnet").first()
+        if link:
+            match = re.search("magnet.*btih:([0-9a-f]+)", link.url, flags=re.I)
+            if match:
+                return match.group(1)
+        return None
+
+    def __str__(self) -> str:
+        return f"{self.project} ({self.release_date})"
+
+
+class ProjectReleaseLink(models.Model):
+    release = models.ForeignKey(
+        ProjectRelease, related_name="links", on_delete=models.CASCADE
+    )
+    url = models.URLField()
+
+    def __str__(self) -> str:
+        return f"{self.url} ({self.release})"
+
+
+class ProjectReleaseFile(models.Model):
+    release = models.ForeignKey(
+        ProjectRelease, on_delete=models.CASCADE, related_name="files"
+    )
+    file_name = models.CharField(max_length=256)
+    file_version = models.IntegerField()
+    episode_number = models.IntegerField(null=True, blank=True)
+    episode_title = models.CharField(null=True, blank=True, max_length=200)
+    languages = models.ManyToManyField(Language)
