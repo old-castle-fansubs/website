@@ -116,3 +116,24 @@ class ProjectReleaseFile(models.Model):
 
     class Meta:
         ordering = ["file_name"]
+
+
+class News(models.Model):
+    publication_date = models.DateTimeField()
+    title = models.CharField(max_length=100)
+    author = models.CharField(max_length=100)
+    slug = models.CharField(max_length=30)
+    content = models.TextField()
+    is_visible = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["-publication_date"]
+        verbose_name_plural = "news"
+
+    def __str__(self) -> str:
+        return f"{self.title} ({self.publication_date})"
+
+
+class NewsAttachment(models.Model):
+    news = models.ForeignKey(News, on_delete=models.CASCADE)
+    file = models.FileField(upload_to="news/")

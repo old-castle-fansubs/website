@@ -8,13 +8,13 @@ DEBUG = os.environ.get("DEBUG", "False").lower() in {"1", "true"}
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
+    "oc_website",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "oc_website",
 ]
 
 MIDDLEWARE = [

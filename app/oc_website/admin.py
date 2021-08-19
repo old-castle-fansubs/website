@@ -1,8 +1,11 @@
+from django import forms
 from django.contrib import admin
 from django.db.models.aggregates import Count, Max
 from oc_website.models import (
     FeaturedImage,
     Language,
+    News,
+    NewsAttachment,
     Project,
     ProjectExternalLink,
     ProjectRelease,
@@ -77,3 +80,28 @@ class ProjectReleaseAdmin(admin.ModelAdmin):
 
     def episode_number(self, obj):
         return obj.highest_episode_number if obj.file_count == 1 else None
+
+
+class NewsAttachmentInline(admin.StackedInline):
+    model = NewsAttachment
+
+
+class NewsAdminForm(forms.ModelForm):
+    class Meta:
+        model = News
+        exclude: list[str] = []
+        widgets = {
+            "content": forms.Textarea(
+                attrs={
+                    "class": "monospace",
+                    "rows": 30,
+                    "cols": 100,
+                }
+            )
+        }
+
+
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    inlines = [NewsAttachmentInline]
+    form = NewsAdminForm

@@ -8,7 +8,7 @@ from oc_website import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.view_home, name="home"),
-    path("news", views.view_home, name="news"),
+    path("news", views.view_news, name="news"),
     path("about", views.view_about, name="about"),
     path("projects", views.view_projects, name="projects"),
     path("projects/<str:slug>", views.view_project, name="project"),

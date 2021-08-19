@@ -10,6 +10,8 @@ from oc_website.management.commands._common import get_jinja_env
 from oc_website.models import (
     FeaturedImage,
     Language,
+    News,
+    NewsAttachment,
     Project,
     ProjectExternalLink,
     ProjectRelease,
@@ -20,29 +22,87 @@ from oc_website.taxonomies import ProjectStatus
 
 
 class Command(BaseCommand):
-    help = "Migrate projects from a given directory."
+    help = "Migrate old website from a given directory."
 
     def add_arguments(self, parser):
         parser.add_argument(
             "root_dir", type=Path, help="root dir of the old website"
         )
+        parser.add_argument("--news", action="store_true", help="migrate news")
         parser.add_argument(
-            "-c", "--clean", action="store_true", help="wipe existing records"
+            "--featured-images",
+            action="store_true",
+            help="migrate featured images",
+        )
+        parser.add_argument(
+            "--projects",
+            action="store_true",
+            help="migrate projects and releases",
         )
 
     def handle(self, *_args, **options):
         root_dir = options["root_dir"]
-        clean = options["clean"]
-        self.migrate_featured_images(root_dir, clean=clean)
-        project_id_to_release_filter = self.migrate_projects(
-            root_dir, clean=clean
-        )
-        self.migrate_project_releases(root_dir, project_id_to_release_filter)
+        if options["news"]:
+            self.migrate_news(root_dir)
+        if options["featured_images"]:
+            self.migrate_featured_images(root_dir)
+        if options["projects"]:
+            project_id_to_release_filter = self.migrate_projects(root_dir)
+            self.migrate_project_releases(
+                root_dir, project_id_to_release_filter
+            )
 
-    def migrate_featured_images(self, root_dir: Path, clean: bool) -> None:
-        if clean:
-            FeaturedImage.objects.all().delete()
+    def migrate_news(self, root_dir: Path) -> None:
+        self.stdout.write("Migrating news")
+        news_dir = root_dir / "oc_website" / "templates" / "news"
+
+        jinja_env = get_jinja_env()
+        for news_file in news_dir.glob("*.html"):
+            template = jinja_env.from_string(news_file.read_text())
+            attachments = []
+            news = News.objects.filter(slug=news_file.stem).first()
+            if not news:
+                news = News()
+
+            def url_for(path: str, **kwargs: str) -> str:
+                # pylint: disable=cell-var-from-loop
+                full_path = f"{path}/{'/'.join(kwargs.values())}"
+                if path == "static":
+                    attachment = NewsAttachment(news=news)
+                    local_path = root_dir / "oc_website" / full_path
+                    with local_path.open("rb") as handle:
+                        attachment.file.save(
+                            local_path.name, File(handle), save=False
+                        )
+                    attachments.append(attachment)
+                    return attachment.file.url
+                return full_path
+
+            context = template.new_context({"url_for": url_for})
+            blocks = {
+                block: "".join(func(context))
+                for block, func in template.blocks.items()
+            }
+
+            news.publication_date = dateutil.parser.parse(blocks["news_date"])
+            news.title = blocks["news_title"]
+            news.author = blocks["news_author"]
+            news.slug = news_file.stem
+            news.content = re.sub(
+                r"([a-z,\.])\n\s*(?!=<)",
+                r"\1 ",
+                blocks["news_content"].strip(),
+                flags=re.M,
+            )
+            news.save()
+
+            for attachment in attachments:
+                attachment.save()
+
+    def migrate_featured_images(self, root_dir: Path) -> None:
         self.stdout.write("Migrating featured images")
+        FeaturedImage.objects.all().delete()
+
         featured_images_path = root_dir / "data" / "featured.jsonl"
         featured_images_dir = (
             root_dir / "oc_website" / "static" / "img" / "featured"
@@ -66,12 +126,11 @@ class Command(BaseCommand):
                 )
             featured_image.save()
 
-    def migrate_projects(self, root_dir: Path, clean: bool) -> dict[int, str]:
+    def migrate_projects(self, root_dir: Path) -> dict[int, str]:
         # pylint: disable=too-many-locals
-        if clean:
-            Project.objects.all().delete()
-
         self.stdout.write("Migrating projects")
+        Project.objects.all().delete()
+
         projects_dir = root_dir / "oc_website" / "templates" / "projects"
 
         jinja_env = get_jinja_env()

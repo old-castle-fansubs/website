@@ -1,7 +1,7 @@
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
-from oc_website.models import FeaturedImage, Project
+from oc_website.models import FeaturedImage, News, Project
 from oc_website.taxonomies import ProjectStatus
 
 
@@ -50,6 +50,18 @@ def view_project(request: HttpRequest, slug: str) -> HttpResponse:
 
 def view_about(request: HttpRequest) -> HttpResponse:
     return render(request, "about.html")
+
+
+def view_news(request: HttpRequest) -> HttpResponse:
+    return render(
+        request,
+        "news.html",
+        context=dict(
+            news_entries=News.objects.filter(
+                publication_date__lte=timezone.now(), is_visible=True
+            )
+        ),
+    )
 
 
 def view_featured_images(request: HttpRequest) -> HttpResponse:
