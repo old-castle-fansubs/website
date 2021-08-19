@@ -1,10 +1,12 @@
+import hashlib
 import re
 from collections import OrderedDict
 from typing import Optional
 
 from django.db import models
 from oc_website.fields import MagnetURLField
-from oc_website.taxonomies import ProjectStatus
+from oc_website.markdown import render_markdown
+from oc_website.taxonomies import CommentContext, ProjectStatus
 
 
 class FeaturedImage(models.Model):
@@ -37,8 +39,8 @@ class Project(models.Model):
 
     def status_repr(self) -> str:
         return {
-            ProjectStatus.ACTIVE.name: "ongoing",
-            ProjectStatus.FINISHED.name: "finished",
+            ProjectStatus.ACTIVE.value: "ongoing",
+            ProjectStatus.FINISHED.value: "finished",
         }[self.status]
 
     @property
@@ -151,3 +153,37 @@ class AnimeRequest(models.Model):
 
     def __str__(self) -> str:
         return self.title
+
+
+class Comment(models.Model):
+    context = models.CharField(
+        max_length=30, choices=CommentContext.get_choices()
+    )
+    parent_comment = models.ForeignKey(
+        "Comment",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="child_comments",
+    )
+    comment_date = models.DateTimeField(null=True, blank=True)
+    remote_addr = models.CharField(max_length=64, null=True, blank=True)
+    text = models.TextField()
+    author = models.CharField(max_length=32, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    website = models.URLField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["context", "-comment_date"]
+
+    def __str__(self) -> str:
+        return f"comment on {self.context} by {self.author}"
+
+    @property
+    def html(self) -> str:
+        return render_markdown(self.text)
+
+    @property
+    def author_avatar_url(self) -> str:
+        chksum = hashlib.md5((self.email or self.author).encode()).hexdigest()
+        return f"https://www.gravatar.com/avatar/{chksum}?d=retro"

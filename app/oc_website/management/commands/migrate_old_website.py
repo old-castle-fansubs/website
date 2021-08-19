@@ -9,6 +9,7 @@ from django.core.management.base import BaseCommand
 from oc_website.management.commands._common import get_jinja_env
 from oc_website.models import (
     AnimeRequest,
+    Comment,
     FeaturedImage,
     Language,
     News,
@@ -19,7 +20,7 @@ from oc_website.models import (
     ProjectReleaseFile,
     ProjectReleaseLink,
 )
-from oc_website.taxonomies import ProjectStatus
+from oc_website.taxonomies import CommentContext, ProjectStatus
 
 
 class Command(BaseCommand):
@@ -41,9 +42,10 @@ class Command(BaseCommand):
             help="migrate projects and releases",
         )
         parser.add_argument(
-            "--requests",
-            action="store_true",
-            help="migrate anime requests",
+            "--requests", action="store_true", help="migrate anime requests"
+        )
+        parser.add_argument(
+            "--comments", action="store_true", help="migrate comments"
         )
 
     def handle(self, *_args, **options):
@@ -59,6 +61,8 @@ class Command(BaseCommand):
             )
         if options["requests"]:
             self.migrate_requests(root_dir)
+        if options["comments"]:
+            self.migrate_comments(root_dir)
 
     def migrate_news(self, root_dir: Path) -> None:
         self.stdout.write("Migrating news")
@@ -157,8 +161,8 @@ class Command(BaseCommand):
                 defaults=dict(
                     slug=project_file.stem,
                     status={
-                        "ongoing": ProjectStatus.ACTIVE.name,
-                        "finished": ProjectStatus.FINISHED.name,
+                        "ongoing": ProjectStatus.ACTIVE.value,
+                        "finished": ProjectStatus.FINISHED.value,
                     }[blocks["project_status"]],
                     synopsis=blocks["project_synopsis"],
                     notes=blocks["project_notes"],
@@ -383,4 +387,53 @@ class Command(BaseCommand):
         AnimeRequest.objects.bulk_create(to_create)
         AnimeRequest.objects.bulk_update(
             to_update, ["comment", "title", "request_date", "remote_addr"]
+        )
+
+    def migrate_comments(self, root_dir: Path) -> None:
+        # pylint: disable=too-many-locals,too-many-branches
+        self.stdout.write("Migrating comments")
+
+        comments_path = root_dir / "data" / "comments.jsonl"
+        old_comments = [
+            json.loads(line) for line in comments_path.read_text().splitlines()
+        ]
+
+        to_create = []
+        to_update = []
+
+        for old_comment in old_comments:
+            comment_id = old_comment["id"]
+            if new_comment := Comment.objects.filter(pk=comment_id).first():
+                to_update.append(new_comment)
+            else:
+                new_comment = Comment(pk=comment_id)
+                to_create.append(new_comment)
+            new_comment.parent_comment_id = old_comment["pid"]
+            new_comment.comment_date = dateutil.parser.parse(
+                old_comment["created"]
+            )
+            new_comment.context = (
+                CommentContext.GUESTBOOK.value
+                if old_comment["tid"] == 10
+                else CommentContext.NEWS.value
+            )
+            new_comment.text = old_comment["text"]
+            new_comment.remote_addr = old_comment["remote_addr"]
+            new_comment.author = old_comment["author"]
+            new_comment.email = old_comment["email"]
+            new_comment.website = old_comment["website"]
+
+        Comment.objects.bulk_create(to_create)
+        Comment.objects.bulk_update(
+            to_update,
+            [
+                "parent_comment_id",
+                "comment_date",
+                "context",
+                "text",
+                "remote_addr",
+                "author",
+                "email",
+                "website",
+            ],
         )

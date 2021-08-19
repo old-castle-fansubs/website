@@ -1,0 +1,24 @@
+<div id='comment-{{ comment.id }}' class='comment'>
+  <div class='avatar'>
+    <img src='{{ comment.author_avatar_url }}' alt='Avatar'>
+  </div>
+  <div class='text-wrapper'>
+    <div role='meta' class='comment-header'>
+      <span class='author'>{{ comment.author }}</span>
+      <span class='spacer'>&bull;</span>
+      <a href='#comment-{{ comment.id }}' class='permalink'
+        ><time title='{{ comment.comment_date }}' datetime='{{ comment.comment_date }}'>{{ comment.comment_date }}</time
+      ></a>
+      {% if not is_preview %}
+          <span class='spacer'>&bull;</span>
+          <a href='{% url 'comment_add' context=comment.context pid=comment.id %}' class='reply'>Reply</a>
+      {% endif %}
+    </div>
+    <div class='text'>
+      {{ comment.html|safe }}
+    </div>
+    <div class='follow-up'>
+      {% include 'comments.html' with comments=comment.child_comments %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Guest book{% endblock %}
+{% block id %}guest-book{% endblock %}
+{% block content %}
+<h1 class='fancy-title'><span>Guest book</span></h1>
+
+<section id='thread'>
+  <p>
+    <strong>{{ all_comment_count }} comments</strong>
+    <span class='spacer'>&bull;</span>
+    <a href='{% url 'comment_add' context='guest_book' %}'>Add new comment</a>
+    <span class='spacer'>&bull;</span>
+    <a href='{% url 'anime_requests' %}'>Request an anime</a>
+  </p>
+
+  {% include 'comments.html' with comments=comments %}
+</section>
+{% endblock %}

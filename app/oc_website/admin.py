@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.db.models.aggregates import Count, Max
 from oc_website.models import (
     AnimeRequest,
+    Comment,
     FeaturedImage,
     Language,
     News,
@@ -110,4 +111,19 @@ class NewsAdmin(admin.ModelAdmin):
 
 @admin.register(AnimeRequest)
 class AnimeRequestAdmin(admin.ModelAdmin):
-    pass
+    search_fields = ["title", "anidb_url"]
+
+    def __str__(self) -> str:
+        return f"request for {self.title}"
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    search_fields = ["author", "text", "website", "remote_addr"]
+    list_display = [
+        "context",
+        "comment_date",
+        "author",
+        "remote_addr",
+    ]
+    list_filter = ["context"]

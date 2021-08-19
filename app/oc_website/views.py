@@ -1,11 +1,24 @@
+import re
 from typing import Optional
 
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from oc_website.anidb import is_same_anidb_link, is_valid_anidb_link
-from oc_website.models import AnimeRequest, FeaturedImage, News, Project
-from oc_website.taxonomies import ProjectStatus
+from oc_website.models import (
+    AnimeRequest,
+    Comment,
+    FeaturedImage,
+    News,
+    Project,
+)
+from oc_website.taxonomies import CommentContext, ProjectStatus
+
+
+def get_client_ip(request: HttpRequest) -> Optional[str]:
+    if forwarded_for := request.META.get("X-Forwarded-For"):
+        return forwarded_for.split(",")[0]
+    return request.META.get("REMOTE_ADDR")
 
 
 def view_home(request: HttpRequest) -> HttpResponse:
@@ -27,9 +40,11 @@ def view_projects(request: HttpRequest) -> HttpResponse:
         request,
         "projects.html",
         context=dict(
-            ongoing_projects=projects.filter(status=ProjectStatus.ACTIVE.name),
+            ongoing_projects=projects.filter(
+                status=ProjectStatus.ACTIVE.value
+            ),
             finished_projects=projects.filter(
-                status=ProjectStatus.FINISHED.name
+                status=ProjectStatus.FINISHED.value
             ),
         ),
     )
@@ -91,23 +106,17 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
     )
 
 
-def view_anime_request(request: HttpRequest) -> HttpResponse:
+def view_anime_request_add(request: HttpRequest) -> HttpResponse:
     title = request.POST.get("title", "").strip()
     anidb_url = request.POST.get("anidb_url", "").strip()
     comment = request.POST.get("comment", "").strip()
-
-    remote_addr: Optional[str]
-    if forwarded_for := request.META.get("X-Forwarded-For"):
-        remote_addr = forwarded_for.split(",")[0]
-    else:
-        remote_addr = request.META.get("REMOTE_ADDR")
 
     anime_request = AnimeRequest(
         title=title,
         request_date=timezone.now(),
         anidb_url=anidb_url,
         comment=comment,
-        remote_addr=remote_addr,
+        remote_addr=get_client_ip(request),
     )
 
     errors: list[str] = []
@@ -138,9 +147,91 @@ def view_anime_request(request: HttpRequest) -> HttpResponse:
 
     return render(
         request,
-        "request.html",
+        "request_add.html",
         context=dict(
             anime_request=anime_request,
+            errors=errors,
+        ),
+    )
+
+
+def view_guest_book(request: HttpRequest) -> HttpResponse:
+    return render(
+        request,
+        "guest_book.html",
+        context=dict(
+            comments=Comment.objects.filter(
+                context=CommentContext.GUESTBOOK.value, parent_comment_id=None
+            ),
+            all_comment_count=Comment.objects.filter(
+                context=CommentContext.GUESTBOOK.value
+            ).count(),
+        ),
+    )
+
+
+def view_add_comment(
+    request: HttpRequest, context: str, pid: Optional[int] = None
+) -> HttpResponse:
+    is_preview = request.POST.get("submit") == "preview"
+    text = request.POST.get("text", "").strip()
+    author = request.POST.get("author", "").strip()
+    website = request.POST.get("website", "").strip()
+    email = request.POST.get("email", "").strip()
+
+    parent_comment: Optional[Comment] = Comment.objects.filter(
+        context=context, pk=pid
+    ).first()
+    if parent_comment:
+        context = parent_comment.context
+    if context == "guest_book":
+        context = CommentContext.GUESTBOOK.value
+
+    comment = Comment(
+        context=context,
+        parent_comment=parent_comment,
+        comment_date=timezone.now(),
+        remote_addr=get_client_ip(request),
+        text=text,
+        author=author,
+        email=email,
+        website=website,
+    )
+
+    errors: list[str] = []
+
+    if request.method == "POST":
+        if request.POST.get("phone") or request.POST.get("message"):
+            errors.append("Human verification failed.")
+        if not comment.text:
+            errors.append("Comment content cannot be empty.")
+        if not comment.author:
+            errors.append("Comment author cannot be empty.")
+        if context not in {ctx.value for ctx in CommentContext}:
+            errors.append("Bad comment context.")
+        if not re.search("[a-zA-Z']{3,}", comment.text):
+            errors.append(
+                "Add a few more letters to make your comment more interesting."
+            )
+        last_comment = Comment.objects.filter(context=context).first()
+        if (
+            last_comment
+            and last_comment.text == comment.text
+            and last_comment.author == comment.author
+        ):
+            errors.append("A comment with this exact content already exists.")
+
+        if not errors and not is_preview:
+            comment.save()
+            return redirect("guest_book")
+
+    return render(
+        request,
+        "comment_add.html",
+        context=dict(
+            parent_comment=parent_comment,
+            comment=comment,
+            preview=is_preview,
             errors=errors,
         ),
     )
