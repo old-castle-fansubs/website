@@ -1,18 +1,41 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% block title %}Guest book{% endblock %}
 {% block id %}guest-book{% endblock %}
 {% block content %}
 <h1 class='fancy-title'><span>Guest book</span></h1>
 
-<section id='thread'>
-  <p>
-    <strong>{{ all_comment_count }} comments</strong>
-    <span class='spacer'>&bull;</span>
-    <a href='{% url 'comment_add' context='guest_book' %}'>Add new comment</a>
-    <span class='spacer'>&bull;</span>
-    <a href='{% url 'anime_requests' %}'>Request an anime</a>
-  </p>
+<p>
+  <strong>{{ all_comment_count }} comments</strong>
+  <span class='spacer'>&bull;</span>
+  <a href='{% url 'comment_add' context='guest_book' %}'>Add new comment</a>
+  <span class='spacer'>&bull;</span>
+  <a href='{% url 'anime_requests' %}'>Request an anime</a>
+</p>
 
-  {% include 'comments.html' with comments=comments %}
-</section>
+{% include 'comments.html' with comments=page.object_list %}
+
+<div class='pagination'>
+  <span class='step-links'>
+    {% if page.has_previous %}
+      <a href='?page=1'>&laquo; first</a>
+      <a href='?page={{ page.previous_page_number }}'>previous</a>
+    {% else %}
+      <a>&laquo; first</a>
+      <a>previous</a>
+    {% endif %}
+
+    <span class='current'>
+      Page {{ page.number }} of {{ page.paginator.num_pages }}
+    </span>
+
+    {% if page.has_next %}
+      <a href='?page={{ page.next_page_number }}'>next</a>
+      <a href='?page={{ page.paginator.num_pages }}'>last &raquo;</a>
+    {% else %}
+      <a>next</a>
+      <a>last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+
 {% endblock %}

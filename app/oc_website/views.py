@@ -1,6 +1,7 @@
 import re
 from typing import Optional
 
+from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -13,6 +14,8 @@ from oc_website.models import (
     Project,
 )
 from oc_website.taxonomies import CommentContext, ProjectStatus
+
+MAX_GUESTBOOK_COMMENTS_PER_PAGE = 10
 
 
 def get_client_ip(request: HttpRequest) -> Optional[str]:
@@ -156,16 +159,26 @@ def view_anime_request_add(request: HttpRequest) -> HttpResponse:
 
 
 def view_guest_book(request: HttpRequest) -> HttpResponse:
+    all_comment_count = Comment.objects.filter(
+        context=CommentContext.GUESTBOOK.value
+    ).count()
+    paginator = Paginator(
+        Comment.objects.filter(
+            context=CommentContext.GUESTBOOK.value, parent_comment_id=None
+        ),
+        MAX_GUESTBOOK_COMMENTS_PER_PAGE,
+    )
+    try:
+        page = request.GET.get("page", 1)
+    except ValueError:
+        page = 1
+    page = paginator.page(page)
     return render(
         request,
         "guest_book.html",
         context=dict(
-            comments=Comment.objects.filter(
-                context=CommentContext.GUESTBOOK.value, parent_comment_id=None
-            ),
-            all_comment_count=Comment.objects.filter(
-                context=CommentContext.GUESTBOOK.value
-            ).count(),
+            page=page,
+            all_comment_count=all_comment_count,
         ),
     )
 

@@ -54,6 +54,9 @@ main {
 a {
   color: var(--link-text-color);
 }
+a:not([href]) {
+  color: var(--text-color);
+}
 a:visited {
   color: var(--visited-link-text-color);
 }
@@ -480,4 +483,13 @@ input:focus {
 
 img[loading=lazy] {
   background: url('/static/img/small_castle.png') no-repeat center;
+}
+
+.pagination {
+  margin-top: 2rem;
+  text-align: center;
+}
+.pagination .current,
+.pagination a {
+  padding: 0 1rem;
 }
