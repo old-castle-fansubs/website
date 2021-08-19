@@ -6,11 +6,9 @@ from oc_website.taxonomies import ProjectStatus
 
 
 def view_home(request: HttpRequest) -> HttpResponse:
-    featured_image = (
-        FeaturedImage.objects.filter(feature_date__lte=timezone.now())
-        .order_by("-feature_date")
-        .first()
-    )
+    featured_image = FeaturedImage.objects.filter(
+        feature_date__lte=timezone.now()
+    ).first()
     return render(
         request,
         "home.html",
@@ -52,6 +50,18 @@ def view_project(request: HttpRequest, slug: str) -> HttpResponse:
 
 def view_about(request: HttpRequest) -> HttpResponse:
     return render(request, "about.html")
+
+
+def view_featured_images(request: HttpRequest) -> HttpResponse:
+    return render(
+        request,
+        "featured.html",
+        context=dict(
+            featured_images=FeaturedImage.objects.filter(
+                feature_date__lte=timezone.now()
+            )
+        ),
+    )
 
 
 def view_404(request: HttpRequest, _exception: Exception) -> HttpResponse:

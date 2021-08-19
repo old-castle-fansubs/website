@@ -14,7 +14,9 @@ urlpatterns = [
     path("projects/<str:slug>", views.view_project, name="project"),
     path("guest_book", views.view_home, name="guest_book"),
     path("requests", views.view_home, name="requests"),
-    path("featured_images", views.view_home, name="featured_images"),
+    path(
+        "featured_images", views.view_featured_images, name="featured_images"
+    ),
 ]
 urlpatterns += staticfiles_urlpatterns()
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

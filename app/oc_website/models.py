@@ -11,6 +11,9 @@ class FeaturedImage(models.Model):
     feature_date = models.DateTimeField()
     image = models.FileField(upload_to="featured_images/")
 
+    class Meta:
+        ordering = ["-feature_date"]
+
     @property
     def is_image(self) -> bool:
         return self.image.path.endswith((".png", ".jpg", ".jpeg"))

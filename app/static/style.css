@@ -230,25 +230,26 @@ img.flag {
   width: 75%;
 }
 
-#featured-images table tr:first-of-type td {
-  padding-top: 0;
+#featured-images #body ul {
+  list-style-type: none;
+  display: flex;
+  margin: 0;
+  flex-wrap: wrap;
+  padding: 0;
+  align-items: center;
+  gap: 0.5rem;
 }
-#featured-images table tr:last-of-type td {
-  padding-top: 0;
-}
-#featured-images table td:first-child {
-  padding-left: 0;
-}
-#featured-images table td:last-child {
-  padding-right: 0;
-}
-#featured-images table td {
+#featured-images #body li {
+  margin: 0;
+  padding: 0;
+  width: 30%;
+  box-sizing: border-box;
+  flex-grow: 1;
   text-align: center;
-  width: 33%;
-  padding: 0.5rem;
 }
-#featured-images table td img {
+#featured-images #body img {
   max-width: 100%;
+  max-height: 12rem;
   margin: 0;
 }
 
