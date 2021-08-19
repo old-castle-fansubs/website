@@ -32,14 +32,16 @@ class Command(BaseCommand):
 
     def handle(self, *_args, **options):
         root_dir = options["root_dir"]
-        if options["clean"]:
-            Project.objects.all().delete()
-            FeaturedImage.objects.all().delete()
-        self.migrate_featured_images(root_dir)
-        project_id_to_release_filter = self.migrate_projects(root_dir)
+        clean = options["clean"]
+        self.migrate_featured_images(root_dir, clean=clean)
+        project_id_to_release_filter = self.migrate_projects(
+            root_dir, clean=clean
+        )
         self.migrate_project_releases(root_dir, project_id_to_release_filter)
 
-    def migrate_featured_images(self, root_dir: Path) -> None:
+    def migrate_featured_images(self, root_dir: Path, clean: bool) -> None:
+        if clean:
+            FeaturedImage.objects.all().delete()
         self.stdout.write("Migrating featured images")
         featured_images_path = root_dir / "data" / "featured.jsonl"
         featured_images_dir = (
@@ -64,8 +66,11 @@ class Command(BaseCommand):
                 )
             featured_image.save()
 
-    def migrate_projects(self, root_dir: Path) -> dict[int, str]:
+    def migrate_projects(self, root_dir: Path, clean: bool) -> dict[int, str]:
         # pylint: disable=too-many-locals
+        if clean:
+            Project.objects.all().delete()
+
         self.stdout.write("Migrating projects")
         projects_dir = root_dir / "oc_website" / "templates" / "projects"
 

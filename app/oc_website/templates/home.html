@@ -3,11 +3,7 @@
 {% block id %}home{% endblock %}
 {% block content %}
 <a href='{% url 'news' %}' id='featured-image'>
-{% if featured_image.is_image %}
   <img id='featured' src='{{ featured_image.image.url }}' alt='Featured image'/>
-{% elif featured_image.is_video %}
-  <video id='featured' src='{{ featured_image.image.url }}' autoplay loop/>
-{% endif %}
 </a>
 
 <br/><br/>

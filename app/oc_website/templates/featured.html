@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block title %}Previously featured images{% endblock %}
 {% block id %}featured-images{% endblock %}
 {% block content %}
@@ -8,9 +9,7 @@
   {% for featured_image in featured_images.all %}
     <li>
       <a href='{{ featured_image.image.url }}'>
-        <img src='{{ featured_image.image.url }}' alt='Featured image from {{ featured_image.feature_date }}'/><!--
-        --><br/><!--
-        -->{{ featured_image.feature_date }}
+        <img loading='lazy' src='{{ featured_image.image.url }}' alt='Featured image from {{ featured_image.feature_date }}'/>
       </a>
     </li>
   {% endfor %}
