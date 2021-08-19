@@ -137,3 +137,17 @@ class News(models.Model):
 class NewsAttachment(models.Model):
     news = models.ForeignKey(News, on_delete=models.CASCADE)
     file = models.FileField(upload_to="news/")
+
+
+class AnimeRequest(models.Model):
+    title = models.CharField(max_length=200)
+    request_date = models.DateTimeField(null=True, blank=True)
+    anidb_url = models.URLField()
+    comment = models.TextField(null=True, blank=True)
+    remote_addr = models.CharField(max_length=64, null=True, blank=True)
+
+    class Meta:
+        ordering = ["-request_date"]
+
+    def __str__(self) -> str:
+        return self.title

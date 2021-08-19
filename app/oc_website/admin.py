@@ -2,6 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.db.models.aggregates import Count, Max
 from oc_website.models import (
+    AnimeRequest,
     FeaturedImage,
     Language,
     News,
@@ -105,3 +106,8 @@ class NewsAdminForm(forms.ModelForm):
 class NewsAdmin(admin.ModelAdmin):
     inlines = [NewsAttachmentInline]
     form = NewsAdminForm
+
+
+@admin.register(AnimeRequest)
+class AnimeRequestAdmin(admin.ModelAdmin):
+    pass

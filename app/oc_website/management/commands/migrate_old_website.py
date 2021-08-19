@@ -8,6 +8,7 @@ from django.core.files import File
 from django.core.management.base import BaseCommand
 from oc_website.management.commands._common import get_jinja_env
 from oc_website.models import (
+    AnimeRequest,
     FeaturedImage,
     Language,
     News,
@@ -39,6 +40,11 @@ class Command(BaseCommand):
             action="store_true",
             help="migrate projects and releases",
         )
+        parser.add_argument(
+            "--requests",
+            action="store_true",
+            help="migrate anime requests",
+        )
 
     def handle(self, *_args, **options):
         root_dir = options["root_dir"]
@@ -51,6 +57,8 @@ class Command(BaseCommand):
             self.migrate_project_releases(
                 root_dir, project_id_to_release_filter
             )
+        if options["requests"]:
+            self.migrate_requests(root_dir)
 
     def migrate_news(self, root_dir: Path) -> None:
         self.stdout.write("Migrating news")
@@ -339,4 +347,40 @@ class Command(BaseCommand):
                 )
         ProjectReleaseFile.languages.through.objects.bulk_create(
             file_languages_to_create
+        )
+
+    def migrate_requests(self, root_dir: Path) -> None:
+        # pylint: disable=too-many-locals,too-many-branches
+        self.stdout.write("Migrating requests")
+
+        anime_requests_path = root_dir / "data" / "requests.jsonl"
+        old_anime_requests = [
+            json.loads(line)
+            for line in anime_requests_path.read_text().splitlines()
+        ]
+
+        to_create = []
+        to_update = []
+
+        for old_anime_request in old_anime_requests:
+            anidb_url = old_anime_request["anidb_link"]
+            if new_anime_request := AnimeRequest.objects.filter(
+                anidb_url=anidb_url
+            ).first():
+                to_update.append(new_anime_request)
+            else:
+                new_anime_request = AnimeRequest(anidb_url=anidb_url)
+                to_create.append(new_anime_request)
+            new_anime_request.title = old_anime_request["title"]
+            new_anime_request.request_date = (
+                dateutil.parser.parse(date)
+                if (date := old_anime_request.get("date"))
+                else None
+            )
+            new_anime_request.comment = old_anime_request["comment"]
+            new_anime_request.remote_addr = old_anime_request["remote_addr"]
+
+        AnimeRequest.objects.bulk_create(to_create)
+        AnimeRequest.objects.bulk_update(
+            to_update, ["comment", "title", "request_date", "remote_addr"]
         )

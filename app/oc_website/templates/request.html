@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Anime requests{% endblock %}
+{% block id %}requests{% endblock %}
+{% block content %}
+
+<h1 class='fancy-title'><span>Anime requests</span></h1>
+
+<p>Posting a new request:</p>
+
+<form action='{% url 'anime_request' %}' method='post'>
+  <div class='postbox'>
+    <div class='form-wrapper'>
+      {% csrf_token %}
+
+      {# honeypot #}
+      <label tabindex='-1' class='khatiff'>Leave this field empty:</label>
+      <input tabindex='-1' class='khatiff' type='text' name='phone' autocomplete='off'/>
+      <label tabindex='-1' class='khatiff'>Leave this field empty:</label>
+      <textarea tabindex='-1' class='khatiff' type='text' name='message' autocomplete='off'></textarea>
+
+      <p class='input-wrapper'>
+        <input type='text' name='title' placeholder='Title' value='{{ anime_request.title }}' required>
+      </p>
+
+      <p class='input-wrapper'>
+        <input type='url' name='anidb_url' placeholder='AniDB link' value='{{ anime_request.anidb_url }}' required>
+      </p>
+
+      <div class='textarea-wrapper'>
+        <textarea name='comment' placeholder="Type any comment here. You can leave this field blank.&#10;The contents of this field won't be displayed publicly.">{{ anime_request.comment }}</textarea>
+      </div>
+
+      <section class='auth-section'>
+        <p class='post-action'>
+          <button type='submit' name='submit' value='submit'>Submit</button>
+        </p>
+      </section>
+    </div>
+  </div>
+</form>
+
+{% if errors %}
+  <p>Errors:</p>
+  <ul>
+    {% for error in errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+  </ul>
+{% endif %}
+
+{% endblock %}

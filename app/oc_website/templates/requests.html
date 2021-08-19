@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Anime requests{% endblock %}
+{% block id %}requests{% endblock %}
+{% block content %}
+
+<h1 class='fancy-title'><span>Anime requests</span></h1>
+
+<p><strong>Disclaimer:</strong> Before doing requests, we suggest the viewers
+to <strong>double check with anidb</strong> whether the series have subtitles
+done by other groups. This list serves as a pool of suggestions for us to take
+when we have the room for new titles. This means that it is by no means
+binding, i.e. we may choose titles outside of this list for our future
+projects.</p>
+
+<p>We don't moderate this list, which means that you are probably going to see
+titles that were already started by other groups. Don't worry, we will
+prioritize the series according to their value and ease to sub once we get to
+review this list.</p>
+
+<p>This list is sorted alphabetically. If you don't see your title on this
+list, you can <a href='{% url 'anime_request' %}'>request one here</a>.</p>
+
+{% if requests.count %}
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Request date</th>
+        <th>AniDB link</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for request in requests.all %}
+        <tr>
+          <td>{{ request.title }}</td>
+
+          {% if request.request_date %}
+            <td>{{ request.request_date }}</td>
+          {% else %}
+            <td>Before Jun 2019</td>
+          {% endif %}
+
+          <td><a href='{{ request.anidb_url }}'>here</a></td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>(No requests yet.)</p>
+{% endif %}
+
+{% endblock %}
