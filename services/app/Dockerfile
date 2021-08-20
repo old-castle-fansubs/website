@@ -4,7 +4,9 @@ WORKDIR /app
 
 EXPOSE 8000 8001
 
-RUN apt-get update && apt-get install -y --no-install-recommends build-essential
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    mkvtoolnix
 
 COPY services/app/requirements.txt /conf/
 RUN pip install -r /conf/requirements.txt
