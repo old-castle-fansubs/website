@@ -8,25 +8,26 @@ from oc_website import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.view_home, name="home"),
-    path("news", views.view_news, name="news"),
-    path("about", views.view_about, name="about"),
-    path("projects", views.view_projects, name="projects"),
-    path("project/<str:slug>", views.view_project, name="project"),
-    path("guest_book", views.view_guest_book, name="guest_book"),
-    path("<str:context>/add", views.view_add_comment, name="comment_add"),
+    path("news/", views.view_news, name="news"),
+    path("news/<int:news_id>/", views.view_news, name="news"),
+    path("about/", views.view_about, name="about"),
+    path("projects/", views.view_projects, name="projects"),
+    path("project/<str:slug>/", views.view_project, name="project"),
+    path("guest_book/", views.view_guest_book, name="guest_book"),
+    path("<str:context>/add/", views.view_add_comment, name="comment_add"),
     path(
-        "<str:context>/add/<int:pid>",
+        "<str:context>/add/<int:pid>/",
         views.view_add_comment,
         name="comment_add",
     ),
-    path("anime_requests", views.view_anime_requests, name="anime_requests"),
+    path("anime_requests/", views.view_anime_requests, name="anime_requests"),
     path(
-        "anime_requests/add",
+        "anime_requests/add/",
         views.view_anime_request_add,
         name="anime_request_add",
     ),
     path(
-        "featured_images", views.view_featured_images, name="featured_images"
+        "featured_images/", views.view_featured_images, name="featured_images"
     ),
 ]
 urlpatterns += staticfiles_urlpatterns()

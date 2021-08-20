@@ -7,7 +7,9 @@
 {% for news_entry in news_entries %}
   <div class='news'>
     <h2 class='fancy-title'><span>{{ news_entry.title }}</span></h2>
-    <div class='date'>{{ news_entry.publication_date }} by {{ news_entry.author }}</div>
+    <div class='date'>
+      {{ news_entry.publication_date }} by {{ news_entry.author }}
+    </div>
 
     {{ news_entry.content|safe }}
 

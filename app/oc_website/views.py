@@ -73,15 +73,19 @@ def view_about(request: HttpRequest) -> HttpResponse:
     return render(request, "about.html")
 
 
-def view_news(request: HttpRequest) -> HttpResponse:
+def view_news(
+    request: HttpRequest, news_id: Optional[int] = None
+) -> HttpResponse:
+    if news_id:
+        news_entries = News.objects.filter(pk=news_id)
+    else:
+        news_entries = News.objects.filter(
+            publication_date__lte=timezone.now(), is_visible=True
+        )
     return render(
         request,
         "news.html",
-        context=dict(
-            news_entries=News.objects.filter(
-                publication_date__lte=timezone.now(), is_visible=True
-            )
-        ),
+        context=dict(news_entries=news_entries),
     )
 
 
