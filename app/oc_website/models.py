@@ -72,6 +72,7 @@ class ProjectRelease(models.Model):
     )
     release_date = models.DateTimeField()
     is_visible = models.BooleanField(default=True)
+    filename = models.CharField(max_length=256, null=True, blank=True)
 
     class Meta:
         ordering = ["-release_date"]

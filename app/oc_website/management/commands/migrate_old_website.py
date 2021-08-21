@@ -265,6 +265,7 @@ class Command(BaseCommand):
 
             releases_to_create.append(
                 ProjectRelease(
+                    filename=re.sub("/.*", "", items[0]["file"]),
                     project_id=project_id,
                     release_date=release_date,
                     is_visible=is_visible,

@@ -7,6 +7,7 @@ from typing import Any, Optional
 import ass_parser
 import ass_tag_parser
 import iso639
+from django.conf import settings
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from oc_website.models import (
@@ -175,6 +176,7 @@ def create_release(path: Path) -> ProjectRelease:
         project=project,
         release_date=timezone.now(),
         is_visible=False,
+        filename=str(path.relative_to(settings.DATA_DIR)),
     )
 
     if path.is_file():
@@ -199,7 +201,7 @@ def create_release(path: Path) -> ProjectRelease:
 
         release_file = ProjectReleaseFile.objects.create(
             release=release,
-            file_name=str(subpath.relative_to(path.parent)),
+            file_name=str(subpath.relative_to(settings.DATA_DIR)),
             file_version=get_version_from_file_name(path.name),
             episode_number=get_episode_number_from_file_name(path.name),
             episode_title=episode_title,
@@ -218,7 +220,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *_args, **options):
-        path = options["path"]
+        path = settings.DATA_DIR / options["path"]
         release = create_release(path)
         edit_url = url_to_edit_object(release)
         print(f"Created {release} as {release.pk}")
