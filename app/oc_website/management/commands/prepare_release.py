@@ -42,11 +42,14 @@ def get_subtitle_languages(source_path: Path) -> list[str]:
         ).stdout
     )
     return [
-        iso639.languages.get(
-            bibliographic=track["properties"]["language"]
-        ).alpha2
+        country_code
         for track in out["tracks"]
         if track["type"] == "subtitles"
+        and (
+            country_code := iso639.languages.get(
+                bibliographic=track["properties"]["language"]
+            ).alpha2
+        )
     ]
 
 
@@ -192,7 +195,9 @@ def create_release(path: Path) -> ProjectRelease:
             )
             languages.append(language)
 
-        subs_text = extract_subtitles(subpath, language=languages[0].name)
+        subs_text = extract_subtitles(
+            subpath, language=languages[0].name if languages else None
+        )
         if subs_text:
             ass_file = ass_parser.read_ass(subs_text)
             episode_title = get_episode_title_from_ass_file(ass_file)
