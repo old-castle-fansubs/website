@@ -3,8 +3,7 @@ import os
 import sys
 from contextlib import contextmanager
 from pathlib import Path
-from subprocess import run
-from typing import Any, Iterator, Optional, Union, cast
+from typing import Any, Iterator, Optional, cast
 
 import requests
 import torf
@@ -152,14 +151,6 @@ class NyaaPantsuPublisher(BasePublisher):
             raise ValueError(result["errors"])
         torrent_id = result["data"]["id"]
         return f"https://nyaa.net/view/{torrent_id}"
-
-
-def rsync(source: Union[Path, str], target: Union[Path, str]) -> None:
-    run(
-        ["rsync", "-ahsv", "--progress", source, target],
-        stdout=sys.stderr.fileno(),
-        check=True,
-    )
 
 
 def get_torrent_name(data_path: Path) -> str:
