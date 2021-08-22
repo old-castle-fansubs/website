@@ -78,6 +78,3 @@ services:
       - NYAA_PANTSU_USER=${NYAA_PANTSU_USER}
       - NYAA_PANTSU_PASS=${NYAA_PANTSU_PASS}
       - NYAA_PANTSU_API_KEY=${NYAA_PANTSU_API_KEY}
-
-volumes:
-  pgdata:
