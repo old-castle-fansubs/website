@@ -12,11 +12,21 @@ services:
     volumes:
       - ./app:/app
       - ./data:/data
+      - ./torrent:/torrent
       - ./services/app/entrypoint.sh:/usr/local/bin/entrypoint.sh
     environment:
       - DJANGO_SETTINGS_MODULE=oc_website.settings
       - SECRET_KEY=change_me  # change this in docker-compose.override.yml
-      - DEBUG=0
+      - DEBUG=${DEBUG}
+      - ANIDEX_API_KEY=${ANIDEX_API_KEY}
+      - ANIDEX_USER=${ANIDEX_USER}
+      - ANIDEX_PASS=${ANIDEX_PASS}
+      - ANIDEX_GROUP_ID=${ANIDEX_GROUP_ID}
+      - NYAA_SI_USER=${NYAA_SI_USER}
+      - NYAA_SI_PASS=${NYAA_SI_PASS}
+      - NYAA_PANTSU_USER=${NYAA_PANTSU_USER}
+      - NYAA_PANTSU_PASS=${NYAA_PANTSU_PASS}
+      - NYAA_PANTSU_API_KEY=${NYAA_PANTSU_API_KEY}
 
   redis:
     image: redis:6

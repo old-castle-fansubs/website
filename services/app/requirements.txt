@@ -10,6 +10,9 @@ markdown
 ass_parser
 ass_tag_parser
 iso-639
+tqdm
+requests
+torf
 
 # temporary requirements
 jinja2

@@ -1,11 +1,20 @@
 import os
 from pathlib import Path
 
+
+def get_setting(name: str) -> str:
+    ret = os.environ.get(name)
+    if not ret:
+        raise RuntimeError(f"Missing configuration variable {name}")
+    return ret
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR.parent
 DATA_DIR = REPO_DIR / "data"
+TORRENT_DIR = REPO_DIR / "torrent"
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = get_setting("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "False").lower() in {"1", "true"}
 ALLOWED_HOSTS = ["*"]
 
@@ -90,3 +99,31 @@ CELERY_TASK_TIME_LIMIT = 30 * 60
 CELERY_IMPORTS = ("oc_website.tasks",)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+ANIDEX_API_URL = "https://anidex.info/api/"
+ANIDEX_API_KEY = get_setting("ANIDEX_API_KEY")
+ANIDEX_GROUP_ID = get_setting("ANIDEX_GROUP_ID")
+ANIDEX_CATEGORY_ID = 1
+ANIDEX_LANGUAGE_ID = 1
+ANIDEX_MAX_RETRIES = 3
+
+NYAA_SI_API_URL = "https://nyaa.si/api/upload"
+NYAA_SI_USER = get_setting("NYAA_SI_USER")
+NYAA_SI_PASS = get_setting("NYAA_SI_PASS")
+NYAA_SI_INFO = "https://oldcastle.moe"
+NYAA_SI_CATEGORY_ID = "1_2"
+
+NYAA_PANTSU_API_URL = "https://nyaa.net/api/upload"
+NYAA_PANTSU_USER = get_setting("NYAA_PANTSU_USER")
+NYAA_PANTSU_PASS = get_setting("NYAA_PANTSU_PASS")
+NYAA_PANTSU_API_KEY = get_setting("NYAA_PANTSU_API_KEY")
+NYAA_PANTSU_WEBSITE = "https://oldcastle.moe"
+NYAA_PANTSU_CATEGORY_ID = "3_5"
+NYAA_PANTSU_LANGUAGES = "en"
+
+TORRENT_TRACKERS = [
+    "http://anidex.moe:6969/announce",
+    "http://nyaa.tracker.wf:7777/announce",
+    "udp://tracker.uw0.xyz:6969",
+]
+TORRENT_MAX_PIECE_SIZE = 4 * 1024 * 1024

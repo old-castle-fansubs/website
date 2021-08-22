@@ -1,5 +1,7 @@
 app/static/admin/
 /data
+/torrent
+/.env
 app/uploads/
 app/db.sqlite3
 docker-compose.override.yml
