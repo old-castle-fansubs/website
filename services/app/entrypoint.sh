@@ -8,11 +8,10 @@ Usage: docker run <imagename> COMMAND
 Commands
 
 dev         : Start a normal Django development server
-bash        : Start a bash shell
+shell       : Start a bash shell
 manage      : Start manage.py
 migrate     : Run migrations
 python      : Run a Python command
-shell       : Start a Django Python shell
 uwsgi       : Run uwsgi server
 test        : Run tests
 celery      : Run celery (task queue)
@@ -35,7 +34,7 @@ case "$1" in
         run_migrations
         python3 manage.py runserver 0.0.0.0:8000
     ;;
-    bash)
+    shell)
         /bin/bash "${@:2}"
     ;;
     manage)
@@ -46,9 +45,6 @@ case "$1" in
     ;;
     python)
         python3 "${@:2}"
-    ;;
-    shell)
-        python3 manage.py shell_plus
     ;;
     celery)
         celery -A oc_website worker -l INFO
