@@ -71,6 +71,7 @@ class ProjectRelease(models.Model):
         Project, on_delete=models.CASCADE, related_name="releases"
     )
     release_date = models.DateTimeField()
+    scheduled_publication_date = models.DateTimeField(null=True, blank=True)
     is_visible = models.BooleanField(default=True)
     filename = models.CharField(max_length=256, null=True, blank=True)
 

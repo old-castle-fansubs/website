@@ -7,15 +7,17 @@ Usage: docker run <imagename> COMMAND
 
 Commands
 
-dev      : Start a normal Django development server
-bash     : Start a bash shell
-manage   : Start manage.py
-migrate  : Run migrations
-python   : Run a Python command
-shell    : Start a Django Python shell
-uwsgi    : Run uwsgi server
-test     : Run tests
-help     : Show this message
+dev         : Start a normal Django development server
+bash        : Start a bash shell
+manage      : Start manage.py
+migrate     : Run migrations
+python      : Run a Python command
+shell       : Start a Django Python shell
+uwsgi       : Run uwsgi server
+test        : Run tests
+celery      : Run celery (task queue)
+celery-beat : Run celery beat (periodic tasks)
+help        : Show this message
 """
 }
 
@@ -50,6 +52,9 @@ case "$1" in
     ;;
     celery)
         celery -A oc_website worker -l INFO
+    ;;
+    celery-beat)
+        celery -A oc_website beat -l INFO
     ;;
     test)
         pytest --cov=oc_website --cov-report=term-missing
