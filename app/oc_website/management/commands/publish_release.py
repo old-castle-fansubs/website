@@ -227,6 +227,9 @@ def publish_release(release: ProjectRelease, dry_run: bool) -> None:
             for publisher_cls in BasePublisher.__subclasses__():
                 publisher = publisher_cls()
 
+                if release.links.filter(url__contains=publisher.name).exists():
+                    continue
+
                 try:
                     url = publisher.publish(torrent_path, dry_run=dry_run)
                 except Exception as ex:  # pylint: disable=broad-except
