@@ -5,6 +5,7 @@ celery==5.1.2                   # Task queue
 django-redis==4.12.1            # Backend for the task queue
 bleach
 markdown
+types-pytz
 
 # release scripts
 ass_parser
