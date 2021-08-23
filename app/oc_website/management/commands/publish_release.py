@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+import tempfile
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, Iterator, Optional, cast
@@ -206,18 +207,27 @@ def add_or_update_release_link(
 
 
 def publish_release(release: ProjectRelease, dry_run: bool) -> None:
-    with chdir(settings.DATA_DIR):
+    with chdir(settings.DATA_DIR), tempfile.TemporaryDirectory() as tmpdir:
         if not release.filename:
             raise CommandError("Release is missing a filename")
 
         data_path = settings.DATA_DIR / release.filename
 
+        move = False
+        torrent_path = settings.TORRENT_DIR / get_torrent_name(data_path)
+        if not torrent_path.exists():
+            torrent_path = settings.TORRENT_DIR / (
+                get_torrent_name(data_path) + ".added"
+            )
+        if not torrent_path.exists():
+            torrent_path = Path(tmpdir) / get_torrent_name(data_path)
+            move = True
+
         with log_step("Building torrent file"):
-            torrent_path = settings.TORRENT_DIR / get_torrent_name(data_path)
-            if not torrent_path.exists():
-                torrent = build_torrent_file(data_path, torrent_path)
-            else:
+            if torrent_path.exists():
                 torrent = torf.Torrent.read(torrent_path)
+            else:
+                torrent = build_torrent_file(data_path, torrent_path)
 
             add_or_update_release_link(
                 release=release, url=str(torrent.magnet()), search="magnet"
@@ -244,6 +254,11 @@ def publish_release(release: ProjectRelease, dry_run: bool) -> None:
         release.scheduled_publication_date = None
         release.is_visible = True
         release.save()
+
+        if move:
+            torrent_path.rename(
+                settings.TORRENT_DIR / get_torrent_name(data_path)
+            )
 
 
 class Command(BaseCommand):
