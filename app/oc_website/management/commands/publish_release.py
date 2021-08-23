@@ -111,7 +111,7 @@ class NyaaSiPublisher(BasePublisher):
 
 
 class NyaaPantsuPublisher(BasePublisher):
-    name = "nyaa.pantsu"
+    name = "nyaa.net"
 
     def publish(self, torrent_path: Path, dry_run: bool) -> Optional[str]:
         with torrent_path.open("rb") as handle:
