@@ -207,8 +207,8 @@ def create_release(path: Path) -> ProjectRelease:
         release_file = ProjectReleaseFile.objects.create(
             release=release,
             file_name=str(subpath.relative_to(settings.DATA_DIR)),
-            file_version=get_version_from_file_name(path.name),
-            episode_number=get_episode_number_from_file_name(path.name),
+            file_version=get_version_from_file_name(subpath.name),
+            episode_number=get_episode_number_from_file_name(subpath.name),
             episode_title=episode_title,
         )
         release_file.languages.set(languages)
