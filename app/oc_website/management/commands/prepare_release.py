@@ -138,7 +138,7 @@ def get_episode_title_from_ass_file(
 
     for event in ass_file.events:
         if event.actor == "[episode title]" or (
-            event.actor == "[title]" and "series" not in event.style
+            event.actor == "[title]" and "series" not in event.style_name
         ):
             clean_title = re.sub(
                 r"[–—]?\s*episode\s+#?\d+\s*[–—:]?\s*",
