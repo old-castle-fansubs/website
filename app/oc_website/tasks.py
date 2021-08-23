@@ -10,7 +10,7 @@ from oc_website.models import ProjectRelease
 
 @app.on_after_finalize.connect
 def setup_periodic_tasks(sender: Celery, **_kwargs: Any) -> None:
-    sender.add_periodic_task(crontab(minute=0), publish_due_releases.s())
+    sender.add_periodic_task(crontab(), publish_due_releases.s())
 
 
 @app.task
