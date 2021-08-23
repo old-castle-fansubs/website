@@ -241,6 +241,7 @@ def publish_release(release: ProjectRelease, dry_run: bool) -> None:
                     release=release, url=url, search=publisher.name
                 )
 
+        release.scheduled_publication_date = None
         release.is_visible = True
         release.save()
 
