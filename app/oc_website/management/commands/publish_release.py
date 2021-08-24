@@ -218,21 +218,26 @@ def publish_release(release: ProjectRelease, dry_run: bool) -> None:
 
         data_path = settings.DATA_DIR / release.filename
 
-        torrent_path = settings.TORRENT_DIR / get_torrent_name(data_path)
+        # a path that will be picked by transmission's watch-dir
+        final_torrent_path = settings.TORRENT_DIR / get_torrent_name(data_path)
+        # a path that got picked by transmission's watch-dir in the past
+        added_torrent_path = settings.TORRENT_DIR / (
+            get_torrent_name(data_path) + ".added"
+        )
+        # a new temporary path
+        tmp_torrent_path = Path(tmpdir) / get_torrent_name(data_path)
+
+        torrent_path = final_torrent_path
         if not torrent_path.exists():
-            torrent_path = settings.TORRENT_DIR / (
-                get_torrent_name(data_path) + ".added"
-            )
+            torrent_path = added_torrent_path
         if not torrent_path.exists():
-            torrent_path = Path(tmpdir) / get_torrent_name(data_path)
+            torrent_path = tmp_torrent_path
 
         with log_step("Building torrent file"):
             if torrent_path.exists():
                 torrent = torf.Torrent.read(torrent_path)
-                move = False
             else:
                 torrent = build_torrent_file(data_path, torrent_path)
-                move = True
 
             add_or_update_release_link(
                 release=release, url=str(torrent.magnet()), search="magnet"
@@ -260,10 +265,8 @@ def publish_release(release: ProjectRelease, dry_run: bool) -> None:
             release.is_visible = True
             release.save()
 
-        if move:
-            torrent_path.rename(
-                settings.TORRENT_DIR / get_torrent_name(data_path)
-            )
+        if not final_torrent_path.exists() and not added_torrent_path.exists():
+            final_torrent_path.write_bytes(torrent_path.read_bytes())
 
 
 class Command(BaseCommand):
