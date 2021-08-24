@@ -218,7 +218,6 @@ def publish_release(release: ProjectRelease, dry_run: bool) -> None:
 
         data_path = settings.DATA_DIR / release.filename
 
-        move = False
         torrent_path = settings.TORRENT_DIR / get_torrent_name(data_path)
         if not torrent_path.exists():
             torrent_path = settings.TORRENT_DIR / (
@@ -226,13 +225,14 @@ def publish_release(release: ProjectRelease, dry_run: bool) -> None:
             )
         if not torrent_path.exists():
             torrent_path = Path(tmpdir) / get_torrent_name(data_path)
-            move = True
 
         with log_step("Building torrent file"):
             if torrent_path.exists():
                 torrent = torf.Torrent.read(torrent_path)
+                move = False
             else:
                 torrent = build_torrent_file(data_path, torrent_path)
+                move = True
 
             add_or_update_release_link(
                 release=release, url=str(torrent.magnet()), search="magnet"
