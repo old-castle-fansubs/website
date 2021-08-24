@@ -207,6 +207,10 @@ def add_or_update_release_link(
 
 
 def publish_release(release: ProjectRelease, dry_run: bool) -> None:
+    # don't let scheduler pick it up again in its next run
+    release.scheduled_publication_date = None
+    release.save()
+
     with chdir(settings.DATA_DIR), tempfile.TemporaryDirectory() as tmpdir:
         if not release.filename:
             raise CommandError("Release is missing a filename")
@@ -251,7 +255,6 @@ def publish_release(release: ProjectRelease, dry_run: bool) -> None:
                     release=release, url=url, search=publisher.name
                 )
 
-        release.scheduled_publication_date = None
         release.is_visible = True
         release.save()
 
