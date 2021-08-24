@@ -252,7 +252,3 @@ def view_add_comment(
             errors=errors,
         ),
     )
-
-
-def view_404(request: HttpRequest, _exception: Exception) -> HttpResponse:
-    return render(request, "404.html")
