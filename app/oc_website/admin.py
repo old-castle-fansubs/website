@@ -16,6 +16,16 @@ from oc_website.models import (
 )
 
 
+@admin.action(description="Mark selected objects as visible")
+def make_visible(_modeladmin, _request, queryset):
+    queryset.update(is_visible=True)
+
+
+@admin.action(description="Mark selected objects as invisible")
+def make_invisible(_modeladmin, _request, queryset):
+    queryset.update(is_visible=False)
+
+
 @admin.register(Language)
 class LanguageAdmin(admin.ModelAdmin):
     pass
@@ -64,6 +74,7 @@ class ProjectReleaseAdmin(admin.ModelAdmin):
         "episode_number",
     ]
     list_filter = ["project"]
+    actions = [make_visible, make_invisible]
 
     def get_queryset(self, request):
         queryset = super().get_queryset(request)
