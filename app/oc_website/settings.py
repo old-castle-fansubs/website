@@ -117,7 +117,6 @@ ANIDEX_API_KEY = get_setting("ANIDEX_API_KEY")
 ANIDEX_GROUP_ID = get_setting("ANIDEX_GROUP_ID")
 ANIDEX_CATEGORY_ID = 1
 ANIDEX_LANGUAGE_ID = 1
-ANIDEX_MAX_RETRIES = 3
 
 NYAA_SI_API_URL = "https://nyaa.si/api/upload"
 NYAA_SI_USER = get_setting("NYAA_SI_USER")

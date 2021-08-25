@@ -44,16 +44,9 @@ class AnidexPublisher(BasePublisher):
                 )
                 return None
 
-            for _i in range(settings.ANIDEX_MAX_RETRIES):
-                try:
-                    response = requests.post(
-                        settings.ANIDEX_API_URL, data=data, files=files
-                    )
-                    response.raise_for_status()
-                except Exception:  # pylint: disable=broad-except
-                    continue
-                else:
-                    break
+            response = requests.post(
+                settings.ANIDEX_API_URL, data=data, files=files
+            )
 
         response.raise_for_status()
         if not response.text.startswith("https://"):
