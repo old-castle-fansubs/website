@@ -46,10 +46,12 @@ def test_publish_release(
         "oc_website.tasks.NyaaPantsuPublisher.publish",
         return_value="nyaa_pantsu_url",
     ) as fake_nyaa_pantsu_publish:
-        publish_release.s(project_release.pk, dry_run=True).apply()
+        publish_release.s(project_release.pk, dry_run=False).apply()
 
     project_release.refresh_from_db()
 
+    assert project_release.scheduled_publication_date is None
+    assert project_release.is_visible is True
     assert project_release.links.count() == 4
     assert sorted(project_release.links.values_list("url", flat=True)) == [
         "anidex_url",
@@ -71,8 +73,8 @@ def test_publish_release(
     assert torrent_path.exists()
     assert torrent_path_for_transmission.exists()
 
-    fake_anidex_publish.assert_called_once_with(torrent_path, dry_run=True)
-    fake_nyaa_si_publish.assert_called_once_with(torrent_path, dry_run=True)
+    fake_anidex_publish.assert_called_once_with(torrent_path, dry_run=False)
+    fake_nyaa_si_publish.assert_called_once_with(torrent_path, dry_run=False)
     fake_nyaa_pantsu_publish.assert_called_once_with(
-        torrent_path, dry_run=True
+        torrent_path, dry_run=False
     )
