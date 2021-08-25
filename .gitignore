@@ -3,7 +3,7 @@ app/uploads/
 app/db.sqlite3
 app/celerybeat-schedule
 /data
-/torrent
+/torrents
 /.env
 .coverage
 docker-compose.override.yml

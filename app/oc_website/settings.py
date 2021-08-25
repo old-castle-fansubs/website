@@ -11,8 +11,19 @@ def get_setting(name: str) -> str:
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR.parent
+
+# persistent directory with animu data
 DATA_DIR = REPO_DIR / "data"
-TORRENT_DIR = REPO_DIR / "torrent"
+
+# persistent directory with generated .torrent files
+TORRENTS_DIR = REPO_DIR / "torrents"
+
+# persistent directory where to put .torrent files for transmission to add
+# (transmission renames added .torrent files to .torrent.added at arbitrary
+# points in time, which causes races with the .torrent upload code, hence this
+# cannot be the same directory as TORRENTS_DIR and is used as a "fire and
+# forget" mechanism)
+TRANSMISSION_WATCHDIR = REPO_DIR / "transmission-watchdir"
 
 SECRET_KEY = get_setting("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "False").lower() in {"1", "true"}
