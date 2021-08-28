@@ -7,8 +7,6 @@ from typing import Any, Iterator, Optional, cast
 import requests
 import torf
 import tqdm
-from celery import Celery
-from celery.schedules import crontab
 from django.conf import settings
 from django.utils import timezone
 from oc_website.celery import app
@@ -191,11 +189,6 @@ def add_or_update_release_link(
     else:
         link = ProjectReleaseLink.objects.create(release=release, url=url)
     return link
-
-
-@app.on_after_finalize.connect
-def setup_periodic_tasks(sender: Celery, **_kwargs: Any) -> None:
-    sender.add_periodic_task(crontab(), publish_due_releases.s())
 
 
 @app.task
