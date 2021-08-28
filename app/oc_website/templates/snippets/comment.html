@@ -18,7 +18,7 @@
       {{ comment.html|safe }}
     </div>
     <div class='follow-up'>
-      {% include 'comments.html' with comments=comment.child_comments %}
+      {% include 'snippets/comments.html' with comments=comment.child_comments %}
     </div>
   </div>
 </div>

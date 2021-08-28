@@ -12,7 +12,7 @@
   <a href='{% url 'anime_requests' %}'>Request an anime</a>
 </p>
 
-{% include 'comments.html' with comments=page.object_list %}
+{% include 'snippets/comments.html' with comments=page.object_list %}
 {% include 'pager.html' with page=page %}
 
 {% endblock %}

@@ -59,7 +59,7 @@
 
 {% if comment.text %}
   <p>Preview of your comment:</p>
-  {% include 'comment.html' with comment=comment is_preview=True %}
+  {% include 'snippets/comment.html' with comment=comment is_preview=True %}
 {% endif %}
 
 <script type='text/javascript'>
