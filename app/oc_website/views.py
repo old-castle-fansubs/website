@@ -18,6 +18,13 @@ from oc_website.taxonomies import CommentContext, ProjectStatus
 MAX_GUESTBOOK_COMMENTS_PER_PAGE = 10
 
 
+def get_page_number(request: HttpRequest) -> int:
+    try:
+        return int(request.GET.get("page", 1))
+    except ValueError:
+        return 1
+
+
 def get_client_ip(request: HttpRequest) -> Optional[str]:
     if forwarded_for := request.META.get("X-Forwarded-For"):
         return forwarded_for.split(",")[0]
@@ -168,16 +175,11 @@ def view_guest_book(request: HttpRequest) -> HttpResponse:
         ),
         MAX_GUESTBOOK_COMMENTS_PER_PAGE,
     )
-    try:
-        page = request.GET.get("page", 1)
-    except ValueError:
-        page = 1
-    page = paginator.page(page)
     return render(
         request,
         "guest_book.html",
         context=dict(
-            page=page,
+            page=paginator.page(get_page_number(request)),
             all_comment_count=all_comment_count,
         ),
     )
