@@ -60,7 +60,7 @@ review this list.</p>
       <div class='image'>
         {% if request.anidb_image %}
           <a href='{{ request.anidb_image.url }}'>
-            <img loading='lazy' src='{{ request.anidb_image.url }}' alt='{{ request.title }}'/>
+            <img loading='lazy' src='{{ request.anidb_image.url }}' alt='{{ request.anidb_title }}'/>
           </a>
         {% else %}
           -
@@ -69,7 +69,7 @@ review this list.</p>
 
       <div class='details'>
         <p>
-          <strong>{{ request.title }}</strong>
+          <strong>{{ request.anidb_title }}</strong>
 
           ({% if request.anidb_type %}{{ request.anidb_type }},
             {{ request.anidb_episodes }} episodes,

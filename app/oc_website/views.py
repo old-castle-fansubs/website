@@ -13,6 +13,7 @@ from oc_website.models import (
     News,
     Project,
 )
+from oc_website.tasks import fill_anime_request
 from oc_website.taxonomies import CommentContext, ProjectStatus
 
 MAX_GUESTBOOK_COMMENTS_PER_PAGE = 10
@@ -138,16 +139,12 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
 
 
 def view_anime_request_add(request: HttpRequest) -> HttpResponse:
-    title = request.POST.get("title", "").strip()
     anidb_url = request.POST.get("anidb_url", "").strip()
     anidb_id = get_anidb_link_id(anidb_url)
-    comment = request.POST.get("comment", "").strip()
 
     anime_request = AnimeRequest(
-        title=title,
         request_date=timezone.now(),
         anidb_id=anidb_id,
-        comment=comment,
         remote_addr=get_client_ip(request),
     )
 
@@ -156,8 +153,6 @@ def view_anime_request_add(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         if request.POST.get("phone") or request.POST.get("message"):
             errors.append("Human verification failed.")
-        if not title:
-            errors.append("Request title cannot be empty.")
         if not anidb_url:
             errors.append("AniDB link cannot be empty.")
         elif not is_valid_anidb_link(anidb_url):
@@ -170,13 +165,14 @@ def view_anime_request_add(request: HttpRequest) -> HttpResponse:
 
         if not errors:
             anime_request.save()
+            fill_anime_request.delay(anime_request.pk)
             return redirect("anime_requests")
 
     return render(
         request,
         "request_add.html",
         context=dict(
-            anime_request=anime_request,
+            anidb_url=anidb_url,
             errors=errors,
         ),
     )

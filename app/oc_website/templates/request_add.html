@@ -5,7 +5,7 @@
 
 <h1 class='fancy-title'><span>Anime requests</span></h1>
 
-<p>Posting a new request:</p>
+<p>After submitting it might take a few minutes until your request appears on the site.</p>
 
 <form action='{% url 'anime_request_add' %}' method='post'>
   <div class='postbox'>
@@ -19,16 +19,8 @@
       <textarea tabindex='-1' class='khatiff' type='text' name='message' autocomplete='off'></textarea>
 
       <p class='input-wrapper'>
-        <input type='text' name='title' placeholder='Title' value='{{ anime_request.title }}' required>
+        <input type='url' name='anidb_url' placeholder='AniDB link' value='{% if anidb_url %}{{ anidb_url }}{% endif %}' required>
       </p>
-
-      <p class='input-wrapper'>
-        <input type='url' name='anidb_url' placeholder='AniDB link' value='{% if anime_request.anidb_url %}{{ anime_request.anidb_url }}{% endif %}' required>
-      </p>
-
-      <div class='textarea-wrapper'>
-        <textarea name='comment' placeholder="Type any comment here. You can leave this field blank.&#10;The contents of this field won't be displayed publicly.">{{ anime_request.comment }}</textarea>
-      </div>
 
       <section class='auth-section'>
         <p class='post-action'>

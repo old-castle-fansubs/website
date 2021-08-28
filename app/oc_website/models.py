@@ -144,7 +144,6 @@ class NewsAttachment(models.Model):
 
 
 class AnimeRequest(models.Model):
-    title = models.CharField(max_length=200)
     request_date = models.DateTimeField(null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
     remote_addr = models.CharField(max_length=64, null=True, blank=True)
@@ -170,7 +169,7 @@ class AnimeRequest(models.Model):
         ordering = ["-request_date"]
 
     def __str__(self) -> str:
-        return self.title
+        return self.anidb_title or ""
 
 
 class Comment(models.Model):
