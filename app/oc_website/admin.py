@@ -122,7 +122,17 @@ class NewsAdmin(admin.ModelAdmin):
 
 @admin.register(AnimeRequest)
 class AnimeRequestAdmin(admin.ModelAdmin):
-    search_fields = ["title", "anidb_id"]
+    search_fields = [
+        "title",
+        "anidb_id",
+    ]
+    list_display = [
+        "title",
+        "anidb_id",
+        "anidb_image",
+        "anidb_type",
+        "anidb_episodes",
+    ]
 
     def __str__(self) -> str:
         return f"request for {self.title}"

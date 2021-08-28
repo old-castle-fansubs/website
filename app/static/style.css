@@ -452,12 +452,26 @@ input:focus {
   margin-right: 0.5rem;
 }
 
-#requests table th:nth-child(2),
-#requests table td:nth-child(2),
-#requests table th:nth-child(3),
-#requests table td:nth-child(3) {
-  white-space: nowrap;
-  font-size: 0.8rem;
+#requests #body ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+#requests #body ul li {
+  display: flex;
+  margin-bottom: 2rem;
+}
+#requests #body ul .image {
+  width: 5rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+}
+#requests #body ul .details {
+  margin-left: 0.5rem;
+}
+#requests #body ul img {
+  max-width: 100%;
+  display: block;
 }
 
 #about #friends {

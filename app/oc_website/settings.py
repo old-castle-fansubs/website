@@ -132,6 +132,10 @@ NYAA_PANTSU_WEBSITE = "https://oldcastle.moe"
 NYAA_PANTSU_CATEGORY_ID = "3_5"
 NYAA_PANTSU_LANGUAGES = "en"
 
+ANIDB_CLIENT = get_setting("ANIDB_CLIENT")
+ANIDB_CLIENTVER = get_setting("ANIDB_CLIENTVER")
+ANIDB_CACHE_DIR = BASE_DIR / "cache" / "anidb"
+
 TORRENT_TRACKERS = [
     "http://anidex.moe:6969/announce",
     "http://nyaa.tracker.wf:7777/announce",

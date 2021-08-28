@@ -1,5 +1,6 @@
 app/static/admin/
 app/uploads/
+app/cache/
 app/db.sqlite3
 app/celerybeat-schedule
 /data

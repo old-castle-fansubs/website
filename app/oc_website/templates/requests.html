@@ -17,34 +17,52 @@ titles that were already started by other groups. Don't worry, we will
 prioritize the series according to their value and ease to sub once we get to
 review this list.</p>
 
-<p>This list is sorted alphabetically. If you don't see your title on this
-list, you can <a href='{% url 'anime_request_add' %}'>request one here</a>.</p>
+<p>Newest requests placed are at the top of the list. If you don't see your
+title on this list, you can <a href='{% url 'anime_request_add' %}'>request one
+here</a>.</p>
+
+<hr/>
 
 {% if requests.count %}
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Request date</th>
-        <th>AniDB link</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for request in requests.all %}
-        <tr>
-          <td>{{ request.title }}</td>
-
-          {% if request.request_date %}
-            <td>{{ request.request_date }}</td>
+  <ul>
+    {% for request in requests.all %}
+      <li>
+        <div class='image'>
+          {% if request.anidb_image %}
+            <a href='{{ request.anidb_image.url }}'>
+              <img loading='lazy' src='{{ request.anidb_image.url }}' alt='{{ request.title }}'/>
+            </a>
           {% else %}
-            <td>Before Jun 2019</td>
+            -
           {% endif %}
+        </div>
 
-          <td><a href='{{ request.anidb_url }}'>here</a></td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+        <div class='details'>
+          <p>
+            <strong>{{ request.title }}</strong>
+
+            ({% if request.anidb_type %}{{ request.anidb_type }},
+              {{ request.anidb_episodes }} episodes,
+            {% endif %}<a href='{{ request.anidb_url }}'>AniDB</a>)
+          </p>
+
+          <p>
+            <small>
+              {% if request.request_date %}
+                Requested on {{ request.request_date }}
+              {% else %}
+                Requested before Jun 2019
+              {% endif %}
+            </small>
+          </p>
+
+          {% if request.anidb_synopsis %}
+            <p>{{ request.anidb_synopsis }}</p>
+          {% endif %}
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
 {% else %}
   <p>(No requests yet.)</p>
 {% endif %}

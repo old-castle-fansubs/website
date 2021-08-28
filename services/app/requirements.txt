@@ -6,6 +6,7 @@ django-redis==4.12.1            # Backend for the task queue
 bleach
 markdown
 types-pytz
+python-dateutil
 
 # release scripts
 ass_parser
@@ -14,9 +15,6 @@ iso-639
 tqdm
 requests
 torf
-
-# temporary requirements
-python-dateutil
 
 # development requirements
 pytest                          # tests
