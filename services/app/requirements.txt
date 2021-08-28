@@ -16,7 +16,6 @@ requests
 torf
 
 # temporary requirements
-jinja2
 python-dateutil
 
 # development requirements
