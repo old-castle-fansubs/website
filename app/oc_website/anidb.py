@@ -2,13 +2,16 @@ import re
 from typing import Optional
 
 
-def is_valid_anidb_link(link: str) -> bool:
-    return link.startswith("https://anidb.net/")
-
-
 def get_anidb_link_id(link: str) -> Optional[int]:
     match = re.search(r"(\d+)", link)
     return int(match.group(1)) if match else None
+
+
+def is_valid_anidb_link(link: str) -> bool:
+    return (
+        link.startswith("https://anidb.net/")
+        and get_anidb_link_id(link) is not None
+    )
 
 
 def is_same_anidb_link(link1: str, link2: str) -> bool:

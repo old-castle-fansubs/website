@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
-from oc_website.anidb import is_same_anidb_link, is_valid_anidb_link
+from oc_website.anidb import get_anidb_link_id, is_valid_anidb_link
 from oc_website.models import (
     AnimeRequest,
     Comment,
@@ -116,12 +116,13 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
 def view_anime_request_add(request: HttpRequest) -> HttpResponse:
     title = request.POST.get("title", "").strip()
     anidb_url = request.POST.get("anidb_url", "").strip()
+    anidb_id = get_anidb_link_id(anidb_url)
     comment = request.POST.get("comment", "").strip()
 
     anime_request = AnimeRequest(
         title=title,
         request_date=timezone.now(),
-        anidb_url=anidb_url,
+        anidb_id=anidb_id,
         comment=comment,
         remote_addr=get_client_ip(request),
     )
@@ -131,19 +132,14 @@ def view_anime_request_add(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
         if request.POST.get("phone") or request.POST.get("message"):
             errors.append("Human verification failed.")
-        if not anime_request.title:
+        if not title:
             errors.append("Request title cannot be empty.")
-        if not anime_request.anidb_url:
+        if not anidb_url:
             errors.append("AniDB link cannot be empty.")
-        elif not is_valid_anidb_link(anime_request.anidb_url):
+        elif not is_valid_anidb_link(anidb_url):
             errors.append("The provided AniDB link appears to be invalid.")
 
-        if any(
-            is_same_anidb_link(anime_request.anidb_url, anidb_url)
-            for anidb_url in AnimeRequest.objects.values_list(
-                "anidb_url", flat=True
-            )
-        ):
+        if AnimeRequest.objects.filter(anidb_id=anidb_id).exists():
             errors.append(
                 "Anime with this AniDB link had been already requested."
             )

@@ -23,7 +23,7 @@
       </p>
 
       <p class='input-wrapper'>
-        <input type='url' name='anidb_url' placeholder='AniDB link' value='{{ anime_request.anidb_url }}' required>
+        <input type='url' name='anidb_url' placeholder='AniDB link' value='{% if anime_request.anidb_url %}{{ anime_request.anidb_url }}{% endif %}' required>
       </p>
 
       <div class='textarea-wrapper'>

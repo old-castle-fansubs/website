@@ -38,6 +38,6 @@ urlpatterns = [
     path(
         "featured_images/", views.view_featured_images, name="featured_images"
     ),
+    *staticfiles_urlpatterns(),
+    *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]
-urlpatterns += staticfiles_urlpatterns()
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

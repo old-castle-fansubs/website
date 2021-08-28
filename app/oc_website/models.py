@@ -146,9 +146,25 @@ class NewsAttachment(models.Model):
 class AnimeRequest(models.Model):
     title = models.CharField(max_length=200)
     request_date = models.DateTimeField(null=True, blank=True)
-    anidb_url = models.URLField()
     comment = models.TextField(null=True, blank=True)
     remote_addr = models.CharField(max_length=64, null=True, blank=True)
+
+    anidb_id = models.IntegerField()
+    anidb_image = models.FileField(
+        upload_to="requests/", null=True, blank=True
+    )
+    anidb_title = models.CharField(max_length=200, null=True, blank=True)
+    anidb_type = models.CharField(max_length=30, null=True, blank=True)
+    anidb_episodes = models.IntegerField(null=True, blank=True)
+    anidb_synopsis = models.TextField(null=True, blank=True)
+    anidb_start_date = models.DateTimeField(null=True, blank=True)
+    anidb_end_date = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def anidb_url(self) -> Optional[str]:
+        if not self.anidb_id:
+            return None
+        return f"https://anidb.net/anime/{self.anidb_id}"
 
     class Meta:
         ordering = ["-request_date"]
