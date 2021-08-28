@@ -24,7 +24,12 @@ urlpatterns = [
     path("project/<str:slug>/", views.view_project, name="project"),
     path("anime_requests/", views.view_anime_requests, name="anime_requests"),
     path(
-        "anime_requests/add/",
+        "anime_request/<int:request_id>/",
+        views.view_anime_request,
+        name="anime_request",
+    ),
+    path(
+        "anime_request/add/",
         views.view_anime_request_add,
         name="anime_request_add",
     ),

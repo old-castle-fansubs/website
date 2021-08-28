@@ -144,6 +144,20 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
     )
 
 
+def view_anime_request(request: HttpRequest, request_id: int) -> HttpResponse:
+    try:
+        anime_request = AnimeRequest.objects.get(pk=request_id)
+    except AnimeRequest.DoesNotExist as exc:
+        raise Http404("Anime request does not exist") from exc
+    return render(
+        request,
+        "request.html",
+        context=dict(
+            anime_request=anime_request,
+        ),
+    )
+
+
 def view_anime_request_add(request: HttpRequest) -> HttpResponse:
     anidb_url = request.POST.get("anidb_url", "").strip()
     anidb_id = get_anidb_link_id(anidb_url)

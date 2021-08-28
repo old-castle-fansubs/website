@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load url_extras %}
+{% block title %}Anime requests{% endblock %}
+{% block id %}requests{% endblock %}
+{% block content %}
+
+<h1 class='fancy-title'><span>Anime requests</span></h1>
+
+{% include 'snippets/request.html' with anime_request=anime_request %}
+
+{% endblock %}

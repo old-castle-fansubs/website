@@ -1,0 +1,37 @@
+<div class='request'>
+  <div class='image'>
+    {% if anime_request.anidb_image %}
+      <a href='{{ anime_request.anidb_image.url }}'>
+        <img loading='lazy' src='{{ anime_request.anidb_image.url }}' alt='{{ anime_request.anidb_title }}'/>
+      </a>
+    {% else %}
+      -
+    {% endif %}
+  </div>
+
+  <div class='details'>
+    <p>
+      <a href='{% url 'anime_request' anime_request.pk %}'>
+        <strong>{{ anime_request.anidb_title }}</strong>
+      </a>
+
+      ({% if anime_request.anidb_type %}{{ anime_request.anidb_type }},
+        {{ anime_request.anidb_episodes }} episodes,
+      {% endif %}<a href='{{ anime_request.anidb_url }}'>AniDB</a>)
+    </p>
+
+    <p>
+      <small>
+        {% if anime_request.request_date %}
+          Requested on {{ anime_request.request_date }}
+        {% else %}
+          Requested before Jun 2019
+        {% endif %}
+      </small>
+    </p>
+
+    {% if anime_request.anidb_synopsis %}
+      <p>{{ anime_request.anidb_synopsis }}</p>
+    {% endif %}
+  </div>
+</div>

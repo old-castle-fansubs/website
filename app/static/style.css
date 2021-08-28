@@ -455,29 +455,34 @@ input:focus {
 #requests #body hr+ul {
   margin-top: 2rem;
 }
+#requests #body nav {
+  line-height: 2rem;
+}
 #requests #body ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-#requests #body ul li {
-  display: flex;
+#requests #body li {
   margin-bottom: 2rem;
 }
-#requests #body ul .image {
+#requests #body .request {
+  display: flex;
+}
+#requests #body .request p:first-of-type {
+  margin-top: 0;
+}
+#requests #body .image {
   width: 5rem;
   flex-grow: 0;
   flex-shrink: 0;
 }
-#requests #body ul .details {
-  margin-left: 0.5rem;
-}
-#requests #body ul img {
+#requests #body .image img {
   max-width: 100%;
   display: block;
 }
-#requests #body nav {
-  line-height: 2rem;
+#requests #body .details {
+  margin-left: 0.5rem;
 }
 
 #about #friends {
