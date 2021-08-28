@@ -3,10 +3,14 @@ import re
 from collections import OrderedDict
 from typing import Optional
 
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from django.db.models import Count, IntegerField, OuterRef, Subquery, Value
+from django.db.models.functions import Coalesce
 from oc_website.fields import MagnetURLField
 from oc_website.markdown import render_markdown
-from oc_website.taxonomies import CommentContext, ProjectStatus
+from oc_website.taxonomies import ProjectStatus
 
 
 class FeaturedImage(models.Model):
@@ -143,7 +147,32 @@ class NewsAttachment(models.Model):
     file = models.FileField(upload_to="news/")
 
 
+class AnimeRequestManager(models.Manager):
+    def with_counts(self):
+        # pylint: disable=protected-access
+        content_type = ContentType.objects.get(
+            model=AnimeRequest._meta.model_name
+        )
+        return self.annotate(
+            comment_count=Coalesce(
+                Subquery(
+                    Comment.objects.filter(
+                        content_type=content_type,
+                        object_id=OuterRef("id"),
+                    )
+                    .values("object_id")
+                    .annotate(count=Count("object_id"))
+                    .values("count"),
+                    output_field=IntegerField(),
+                ),
+                Value(0),
+            )
+        )
+
+
 class AnimeRequest(models.Model):
+    objects = AnimeRequestManager()
+
     request_date = models.DateTimeField(null=True, blank=True)
     comment = models.TextField(null=True, blank=True)
     remote_addr = models.CharField(max_length=64, null=True, blank=True)
@@ -173,9 +202,12 @@ class AnimeRequest(models.Model):
 
 
 class Comment(models.Model):
-    context = models.CharField(
-        max_length=30, choices=CommentContext.get_choices()
+    content_type = models.ForeignKey(
+        ContentType, on_delete=models.CASCADE, null=True, blank=True
     )
+    object_id = models.PositiveIntegerField(null=True, blank=True)
+    content_object = GenericForeignKey("content_type", "object_id")
+
     parent_comment = models.ForeignKey(
         "Comment",
         on_delete=models.CASCADE,
@@ -183,6 +215,7 @@ class Comment(models.Model):
         blank=True,
         related_name="child_comments",
     )
+
     comment_date = models.DateTimeField(null=True, blank=True)
     remote_addr = models.CharField(max_length=64, null=True, blank=True)
     text = models.TextField()
@@ -191,10 +224,12 @@ class Comment(models.Model):
     website = models.URLField(null=True, blank=True)
 
     class Meta:
-        ordering = ["context", "-comment_date"]
+        ordering = ["-comment_date"]
 
     def __str__(self) -> str:
-        return f"comment on {self.context} by {self.author}"
+        return (
+            f"comment on {self.content_object or 'guestbook'} by {self.author}"
+        )
 
     @property
     def html(self) -> str:

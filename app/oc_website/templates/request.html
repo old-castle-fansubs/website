@@ -8,4 +8,10 @@
 
 {% include 'snippets/request.html' with anime_request=anime_request %}
 
+<p>
+  <a href='{% url 'anime_request_comment' object_id=anime_request.pk %}'>Add new comment</a>
+</p>
+
+{% include 'snippets/comments.html' with comments=comments comment_url='anime_request_comment' object_id=anime_request.pk %}
+
 {% endblock %}

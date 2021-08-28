@@ -1,6 +1,7 @@
 import re
 from typing import Optional
 
+from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
@@ -14,7 +15,7 @@ from oc_website.models import (
     Project,
 )
 from oc_website.tasks import fill_anime_request
-from oc_website.taxonomies import CommentContext, ProjectStatus
+from oc_website.taxonomies import ProjectStatus
 
 MAX_GUESTBOOK_COMMENTS_PER_PAGE = 10
 MAX_ANIME_REQUESTS_PER_PAGE = 10
@@ -111,7 +112,7 @@ def view_featured_images(request: HttpRequest) -> HttpResponse:
 
 
 def view_anime_requests(request: HttpRequest) -> HttpResponse:
-    anime_requests = AnimeRequest.objects.filter(
+    anime_requests = AnimeRequest.objects.with_counts().filter(
         request_date__lte=timezone.now(),
     )
     if search_text := request.GET.get("search_text"):
@@ -125,6 +126,7 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
             "type": "anidb_type",
             "request_date": "request_date",
             "start_date": "anidb_start_date",
+            "comment_count": "comment_count",
         }
         order_mapping.update(
             {f"-{key}": f"-{value}" for key, value in order_mapping.items()}
@@ -146,7 +148,7 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
 
 def view_anime_request(request: HttpRequest, request_id: int) -> HttpResponse:
     try:
-        anime_request = AnimeRequest.objects.get(pk=request_id)
+        anime_request = AnimeRequest.objects.with_counts().get(pk=request_id)
     except AnimeRequest.DoesNotExist as exc:
         raise Http404("Anime request does not exist") from exc
     return render(
@@ -154,6 +156,13 @@ def view_anime_request(request: HttpRequest, request_id: int) -> HttpResponse:
         "request.html",
         context=dict(
             anime_request=anime_request,
+            comments=Comment.objects.filter(
+                parent_comment_id=None,
+                content_type=ContentType.objects.get(
+                    model=anime_request._meta.model_name  # pylint: disable=protected-access
+                ),
+                object_id=anime_request.id,
+            ),
         ),
     )
 
@@ -199,13 +208,9 @@ def view_anime_request_add(request: HttpRequest) -> HttpResponse:
 
 
 def view_guest_book(request: HttpRequest) -> HttpResponse:
-    all_comment_count = Comment.objects.filter(
-        context=CommentContext.GUESTBOOK.value
-    ).count()
+    all_comment_count = Comment.objects.filter(content_type=None).count()
     paginator = Paginator(
-        Comment.objects.filter(
-            context=CommentContext.GUESTBOOK.value, parent_comment_id=None
-        ),
+        Comment.objects.filter(content_type=None, parent_comment_id=None),
         MAX_GUESTBOOK_COMMENTS_PER_PAGE,
     )
     return render(
@@ -219,7 +224,13 @@ def view_guest_book(request: HttpRequest) -> HttpResponse:
 
 
 def view_add_comment(
-    request: HttpRequest, context: str, pid: Optional[int] = None
+    # pylint: disable=too-many-arguments
+    request: HttpRequest,
+    page_title: str,
+    page_id: str,
+    content_type: Optional[str],
+    object_id: Optional[int],
+    pid: Optional[int] = None,
 ) -> HttpResponse:
     is_preview = request.POST.get("submit") == "preview"
     text = request.POST.get("text", "").strip()
@@ -227,16 +238,20 @@ def view_add_comment(
     website = request.POST.get("website", "").strip()
     email = request.POST.get("email", "").strip()
 
-    parent_comment: Optional[Comment] = Comment.objects.filter(
-        context=context, pk=pid
-    ).first()
+    parent_comment: Optional[Comment] = Comment.objects.filter(pk=pid).first()
     if parent_comment:
-        context = parent_comment.context
-    if context == "guest_book":
-        context = CommentContext.GUESTBOOK.value
+        content_type = parent_comment.content_type
+        object_id = parent_comment.object_id
+    else:
+        content_type = (
+            ContentType.objects.get(model=content_type)
+            if content_type
+            else None
+        )
 
     comment = Comment(
-        context=context,
+        content_type=content_type,
+        object_id=object_id,
         parent_comment=parent_comment,
         comment_date=timezone.now(),
         remote_addr=get_client_ip(request),
@@ -255,13 +270,13 @@ def view_add_comment(
             errors.append("Comment content cannot be empty.")
         if not comment.author:
             errors.append("Comment author cannot be empty.")
-        if context not in {ctx.value for ctx in CommentContext}:
-            errors.append("Bad comment context.")
         if not re.search("[a-zA-Z']{3,}", comment.text):
             errors.append(
                 "Add a few more letters to make your comment more interesting."
             )
-        last_comment = Comment.objects.filter(context=context).first()
+        last_comment = Comment.objects.filter(
+            content_type=comment.content_type
+        ).first()
         if (
             last_comment
             and last_comment.text == comment.text
@@ -271,6 +286,8 @@ def view_add_comment(
 
         if not errors and not is_preview:
             comment.save()
+            if object_id:
+                return redirect("anime_request", object_id)
             return redirect("guest_book")
 
     return render(
@@ -281,5 +298,7 @@ def view_add_comment(
             comment=comment,
             preview=is_preview,
             errors=errors,
+            page_title=page_title,
+            page_id=page_id,
         ),
     )

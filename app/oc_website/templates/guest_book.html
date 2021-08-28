@@ -7,12 +7,12 @@
 <p>
   <strong>{{ all_comment_count }} comments</strong>
   <span class='spacer'>&bull;</span>
-  <a href='{% url 'comment_add' context='guest_book' %}'>Add new comment</a>
+  <a href='{% url 'guest_book_comment' %}'>Add new comment</a>
   <span class='spacer'>&bull;</span>
   <a href='{% url 'anime_requests' %}'>Request an anime</a>
 </p>
 
-{% include 'snippets/comments.html' with comments=page.object_list %}
+{% include 'snippets/comments.html' with comments=page.object_list comment_url='guest_book_comment' %}
 {% include 'pager.html' with page=page %}
 
 {% endblock %}

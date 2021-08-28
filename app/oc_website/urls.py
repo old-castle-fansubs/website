@@ -16,12 +16,32 @@ def url_to_edit_object(obj):
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+]
+
+# home
+urlpatterns += [
     path("", views.view_home, name="home"),
+]
+
+# news
+urlpatterns += [
     path("news/", views.view_news, name="news"),
     path("news/<int:news_id>/", views.view_news, name="news"),
+]
+
+# about
+urlpatterns += [
     path("about/", views.view_about, name="about"),
+]
+
+# projects / releases
+urlpatterns += [
     path("projects/", views.view_projects, name="projects"),
     path("project/<str:slug>/", views.view_project, name="project"),
+]
+
+# anime requests
+urlpatterns += [
     path("anime_requests/", views.view_anime_requests, name="anime_requests"),
     path(
         "anime_request/<int:request_id>/",
@@ -29,20 +49,70 @@ urlpatterns = [
         name="anime_request",
     ),
     path(
+        "anime_request/<int:object_id>/comment/",
+        views.view_add_comment,
+        {
+            "content_type": "animerequest",
+            "page_title": "Anime requests",
+            "page_id": "requests",
+        },
+        name="anime_request_comment",
+    ),
+    path(
+        "anime_request/<int:object_id>/reply/<int:pid>",
+        views.view_add_comment,
+        {
+            "content_type": "animerequest",
+            "page_title": "Anime requests",
+            "page_id": "requests",
+        },
+        name="anime_request_comment",
+    ),
+    path(
         "anime_request/add/",
         views.view_anime_request_add,
         name="anime_request_add",
     ),
+]
+
+# guest book
+urlpatterns += [
     path("guest_book/", views.view_guest_book, name="guest_book"),
-    path("<str:context>/add/", views.view_add_comment, name="comment_add"),
     path(
-        "<str:context>/add/<int:pid>/",
+        "guest_book/comment/",
         views.view_add_comment,
-        name="comment_add",
+        {
+            "content_type": None,
+            "object_id": None,
+            "page_title": "Guest book",
+            "page_id": "guest-book",
+        },
+        name="guest_book_comment",
     ),
     path(
-        "featured_images/", views.view_featured_images, name="featured_images"
+        "guest_book/reply/<int:pid>",
+        views.view_add_comment,
+        {
+            "content_type": None,
+            "object_id": None,
+            "page_title": "Guest book",
+            "page_id": "guest-book",
+        },
+        name="guest_book_comment",
     ),
+]
+
+# featured images
+urlpatterns += [
+    path(
+        "featured_images/",
+        views.view_featured_images,
+        name="featured_images",
+    ),
+]
+
+# static files
+urlpatterns += [
     *staticfiles_urlpatterns(),
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
 ]

@@ -10,8 +10,3 @@ class StringChoiceEnum(Enum):
 class ProjectStatus(StringChoiceEnum):
     ACTIVE = "active"
     FINISHED = "finished"
-
-
-class CommentContext(StringChoiceEnum):
-    GUESTBOOK = "guestbook"
-    NEWS = "news"

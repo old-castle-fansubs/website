@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
-{% block title %}Guest book{% endblock %}
-{% block id %}guest-book{% endblock %}
+{% block title %}{{ page_title }}{% endblock %}
+{% block id %}{{ page_id }}{% endblock %}
 {% block content %}
 
-<h1 class='fancy-title'><span>Guest book</span></h1>
+<h1 class='fancy-title'><span>{{ page_title }}</span></h1>
 
 {% if parent_comment %}
   <p>Replying to a comment by <em>{{ parent_comment.author }}</em>:</p>
@@ -24,7 +24,7 @@
       <textarea tabindex='-1' class='khatiff' type='text' name='message' autocomplete='off'></textarea>
 
       <div class='textarea-wrapper'>
-        <textarea name='text' placeholder='Type comment here.&#10;For anime requests, please use the request list (reachable from guest book).' required>{{ comment.text }}</textarea>
+        <textarea name='text' placeholder='Type comment here.' required>{{ comment.text }}</textarea>
       </div>
 
       <section class='auth-section'>

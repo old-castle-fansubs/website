@@ -33,5 +33,13 @@
     {% if anime_request.anidb_synopsis %}
       <p>{{ anime_request.anidb_synopsis }}</p>
     {% endif %}
+
+    {% if include_comment_count %}
+      <p>
+        <a href='{% url 'anime_request' anime_request.pk %}'>
+          ({{ anime_request.comment_count }} {{ anime_request.comment_count|pluralize:"comment,comments" }})
+        </a>
+      </p>
+    {% endif %}
   </div>
 </div>

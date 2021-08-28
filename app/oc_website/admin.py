@@ -142,9 +142,9 @@ class AnimeRequestAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     search_fields = ["author", "text", "website", "remote_addr"]
     list_display = [
-        "context",
+        "content_object",
         "comment_date",
         "author",
         "remote_addr",
     ]
-    list_filter = ["context"]
+    list_filter = ["content_type"]
