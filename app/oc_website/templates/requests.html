@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load url_extras %}
 {% block title %}Anime requests{% endblock %}
 {% block id %}requests{% endblock %}
 {% block content %}
@@ -17,9 +18,39 @@ titles that were already started by other groups. Don't worry, we will
 prioritize the series according to their value and ease to sub once we get to
 review this list.</p>
 
-<p>Newest requests placed are at the top of the list. If you don't see your
-title on this list, you can <a href='{% url 'anime_request_add' %}'>request one
-here</a>.</p>
+<p>If you don't see your title on this list, you can
+<a href='{% url 'anime_request_add' %}'>request one here</a>.</p>
+
+<hr/>
+
+<nav>
+  Sort by:
+  <span>
+    Title
+    <a href='?{% query_transform request page=None sort='title' %}'>↓</a>
+    <a href='?{% query_transform request page=None sort='-title' %}'>↑</a>
+  </span>
+  <span>
+    Episodes
+    <a href='?{% query_transform request page=None sort='episodes' %}'>↓</a>
+    <a href='?{% query_transform request page=None sort='-episodes' %}'>↑</a>
+  </span>
+  <span>
+    Type
+    <a href='?{% query_transform request page=None sort='type' %}'>↓</a>
+    <a href='?{% query_transform request page=None sort='-type' %}'>↑</a>
+  </span>
+  <span>
+    Request date
+    <a href='?{% query_transform request page=None sort='request_date' %}'>↓</a>
+    <a href='?{% query_transform request page=None sort='-request_date' %}'>↑</a>
+  </span>
+  <span>
+    Airing date
+    <a href='?{% query_transform request page=None sort='start_date' %}'>↓</a>
+    <a href='?{% query_transform request page=None sort='-start_date' %}'>↑</a>
+  </span>
+</nav>
 
 <hr/>
 

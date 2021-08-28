@@ -110,12 +110,24 @@ def view_featured_images(request: HttpRequest) -> HttpResponse:
 
 
 def view_anime_requests(request: HttpRequest) -> HttpResponse:
-    paginator = Paginator(
-        AnimeRequest.objects.filter(
-            request_date__lte=timezone.now(),
-        ),
-        MAX_ANIME_REQUESTS_PER_PAGE,
+    anime_requests = AnimeRequest.objects.filter(
+        request_date__lte=timezone.now(),
     )
+    if sort_style := request.GET.get("sort"):
+        order_mapping = {
+            "title": "anidb_title",
+            "episodes": "anidb_episodes",
+            "type": "anidb_type",
+            "request_date": "request_date",
+            "start_date": "anidb_start_date",
+        }
+        order_mapping.update(
+            {f"-{key}": f"-{value}" for key, value in order_mapping.items()}
+        )
+        anime_requests = anime_requests.order_by(
+            order_mapping.get(sort_style, "-request_date")
+        )
+    paginator = Paginator(anime_requests, MAX_ANIME_REQUESTS_PER_PAGE)
     return render(
         request,
         "requests.html",
