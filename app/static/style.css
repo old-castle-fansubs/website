@@ -452,6 +452,9 @@ input:focus {
   margin-right: 0.5rem;
 }
 
+#requests #body hr+ul {
+  margin-top: 2rem;
+}
 #requests #body ul {
   list-style-type: none;
   margin: 0;
@@ -472,6 +475,9 @@ input:focus {
 #requests #body ul img {
   max-width: 100%;
   display: block;
+}
+#requests #body nav {
+  line-height: 2rem;
 }
 
 #about #friends {

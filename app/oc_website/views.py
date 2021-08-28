@@ -114,6 +114,10 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
     anime_requests = AnimeRequest.objects.filter(
         request_date__lte=timezone.now(),
     )
+    if search_text := request.GET.get("search_text"):
+        anime_requests = anime_requests.filter(
+            anidb_title__icontains=search_text
+        )
     if sort_style := request.GET.get("sort"):
         order_mapping = {
             "title": "anidb_title",
@@ -133,6 +137,8 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
         request,
         "requests.html",
         context=dict(
+            search_text=search_text,
+            sort_style=sort_style,
             page=paginator.page(get_page_number(request)),
         ),
     )
