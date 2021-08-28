@@ -22,6 +22,7 @@ urlpatterns = [
     path("about/", views.view_about, name="about"),
     path("projects/", views.view_projects, name="projects"),
     path("project/<str:slug>/", views.view_project, name="project"),
+    path("anime_requests/", views.view_anime_requests, name="anime_requests"),
     path(
         "anime_requests/add/",
         views.view_anime_request_add,
@@ -34,7 +35,6 @@ urlpatterns = [
         views.view_add_comment,
         name="comment_add",
     ),
-    path("anime_requests/", views.view_anime_requests, name="anime_requests"),
     path(
         "featured_images/", views.view_featured_images, name="featured_images"
     ),

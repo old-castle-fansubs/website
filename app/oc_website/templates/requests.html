@@ -23,48 +23,46 @@ here</a>.</p>
 
 <hr/>
 
-{% if requests.count %}
-  <ul>
-    {% for request in requests.all %}
-      <li>
-        <div class='image'>
-          {% if request.anidb_image %}
-            <a href='{{ request.anidb_image.url }}'>
-              <img loading='lazy' src='{{ request.anidb_image.url }}' alt='{{ request.title }}'/>
-            </a>
-          {% else %}
-            -
-          {% endif %}
-        </div>
+<ul>
+  {% for request in page.object_list.all %}
+    <li>
+      <div class='image'>
+        {% if request.anidb_image %}
+          <a href='{{ request.anidb_image.url }}'>
+            <img loading='lazy' src='{{ request.anidb_image.url }}' alt='{{ request.title }}'/>
+          </a>
+        {% else %}
+          -
+        {% endif %}
+      </div>
 
-        <div class='details'>
-          <p>
-            <strong>{{ request.title }}</strong>
+      <div class='details'>
+        <p>
+          <strong>{{ request.title }}</strong>
 
-            ({% if request.anidb_type %}{{ request.anidb_type }},
-              {{ request.anidb_episodes }} episodes,
-            {% endif %}<a href='{{ request.anidb_url }}'>AniDB</a>)
-          </p>
+          ({% if request.anidb_type %}{{ request.anidb_type }},
+            {{ request.anidb_episodes }} episodes,
+          {% endif %}<a href='{{ request.anidb_url }}'>AniDB</a>)
+        </p>
 
-          <p>
-            <small>
-              {% if request.request_date %}
-                Requested on {{ request.request_date }}
-              {% else %}
-                Requested before Jun 2019
-              {% endif %}
-            </small>
-          </p>
+        <p>
+          <small>
+            {% if request.request_date %}
+              Requested on {{ request.request_date }}
+            {% else %}
+              Requested before Jun 2019
+            {% endif %}
+          </small>
+        </p>
 
-          {% if request.anidb_synopsis %}
-            <p>{{ request.anidb_synopsis }}</p>
-          {% endif %}
-        </div>
-      </li>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p>(No requests yet.)</p>
-{% endif %}
+        {% if request.anidb_synopsis %}
+          <p>{{ request.anidb_synopsis }}</p>
+        {% endif %}
+      </div>
+    </li>
+  {% endfor %}
+</ul>
+
+{% include 'pager.html' with page=page %}
 
 {% endblock %}

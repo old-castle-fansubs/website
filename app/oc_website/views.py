@@ -16,6 +16,7 @@ from oc_website.models import (
 from oc_website.taxonomies import CommentContext, ProjectStatus
 
 MAX_GUESTBOOK_COMMENTS_PER_PAGE = 10
+MAX_ANIME_REQUESTS_PER_PAGE = 10
 
 
 def get_page_number(request: HttpRequest) -> int:
@@ -109,13 +110,17 @@ def view_featured_images(request: HttpRequest) -> HttpResponse:
 
 
 def view_anime_requests(request: HttpRequest) -> HttpResponse:
+    paginator = Paginator(
+        AnimeRequest.objects.filter(
+            request_date__lte=timezone.now(),
+        ),
+        MAX_ANIME_REQUESTS_PER_PAGE,
+    )
     return render(
         request,
         "requests.html",
         context=dict(
-            requests=AnimeRequest.objects.filter(
-                request_date__lte=timezone.now(),
-            )
+            page=paginator.page(get_page_number(request)),
         ),
     )
 
