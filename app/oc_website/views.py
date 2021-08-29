@@ -187,10 +187,10 @@ def view_anime_request_add(request: HttpRequest) -> HttpResponse:
         elif not is_valid_anidb_link(anidb_url):
             errors.append("The provided AniDB link appears to be invalid.")
 
-        if AnimeRequest.objects.filter(anidb_id=anidb_id).exists():
-            errors.append(
-                "Anime with this AniDB link had been already requested."
-            )
+        if existing_anime_request := AnimeRequest.objects.filter(
+            anidb_id=anidb_id
+        ).first():
+            return redirect("anime_request", existing_anime_request.pk)
 
         if not errors:
             anime_request.save()
