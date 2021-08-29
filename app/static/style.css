@@ -469,6 +469,12 @@ input:focus {
 #requests #body .request {
   display: flex;
 }
+#requests #body nav label {
+  margin-right: 1rem;
+}
+#requests #body nav button {
+  margin-right: 2rem;
+}
 #requests #body .request p:first-of-type {
   margin-top: 0;
 }

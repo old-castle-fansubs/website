@@ -6,20 +6,10 @@
 
 <h1 class='fancy-title'><span>Anime requests</span></h1>
 
-<p><strong>Disclaimer:</strong> Before doing requests, we suggest the viewers
-to <strong>double check with anidb</strong> whether the series have subtitles
-done by other groups. This list serves as a pool of suggestions for us to take
-when we have the room for new titles. This means that it is by no means
-binding, i.e. we may choose titles outside of this list for our future
-projects.</p>
-
-<p>We don't moderate this list, which means that you are probably going to see
-titles that were already started by other groups. Don't worry, we will
-prioritize the series according to their value and ease to sub once we get to
-review this list.</p>
-
-<p>If you don't see your title on this list, you can
-<a href='{% url 'anime_request_add' %}'>request one here</a>.</p>
+<p><strong>Disclaimer:</strong> We might choose something that's not even on
+the request list for the next project due to various circumstances.
+Additionally, we do not moderate this list, which means that there are going to
+be titles that were already started by other groups and that's okay.</p>
 
 <hr/>
 
@@ -28,6 +18,7 @@ review this list.</p>
     <label for='search_text'>Search:</label>
     <input name='search_text' type='text' id='search_text' value='{% if search_text %}{{ search_text }}{% endif %}'/>
     <button type='submit'value='submit'>Submit</button>
+    <a href='{% url 'anime_request_add' %}'>Make a new request</a>
   </form>
 
   Sort by:
