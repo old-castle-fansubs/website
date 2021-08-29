@@ -12,7 +12,11 @@
   <div class='details'>
     <p>
       <a href='{% url 'anime_request' anime_request.pk %}'>
-        <strong>{{ anime_request.anidb_title }}</strong>
+        {% if anime_request.anidb_title %}
+          <strong>{{ anime_request.anidb_title }}</strong>
+        {% else %}
+          <strong>Anime #{{ anime_request.anidb_id }}</strong>
+        {% endif %}
       </a>
 
       ({% if anime_request.anidb_type %}{{ anime_request.anidb_type }},
@@ -37,7 +41,7 @@
     {% if include_comment_count %}
       <p>
         <a href='{% url 'anime_request' anime_request.pk %}'>
-          ({{ anime_request.comment_count }} {{ anime_request.comment_count|pluralize:"comment,comments" }})
+          {{ anime_request.comment_count }} {{ anime_request.comment_count|pluralize:"comment,comments" }}
         </a>
       </p>
     {% endif %}
