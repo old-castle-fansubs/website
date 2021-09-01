@@ -3,6 +3,7 @@ from typing import Optional
 
 from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
@@ -113,7 +114,7 @@ def view_featured_images(request: HttpRequest) -> HttpResponse:
 
 def view_anime_requests(request: HttpRequest) -> HttpResponse:
     anime_requests = AnimeRequest.objects.with_counts().filter(
-        request_date__lte=timezone.now(),
+        Q(request_date__lte=timezone.now()) | Q(request_date__isnull=True),
     )
     if search_text := request.GET.get("search_text"):
         anime_requests = anime_requests.filter(
