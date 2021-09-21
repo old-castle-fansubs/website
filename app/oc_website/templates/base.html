@@ -7,11 +7,15 @@
   <meta name='description' content='Old Castle – fan-made subtitles for old and abandoned anime series.'/>
   <meta name='viewport' content='width=device-width, initial-scale=1'>
   <title>Old Castle Fansubs - {% block title %}{% endblock %}</title>
-  <link rel='icon' href='{% static 'favicon.ico' %}' type='image/x-icon' />
-  <link rel='preload' href='{% static 'style.css' %}?{% deployment_id %}' as='style'>
-  <link rel='preload' href='{% static 'img/blue.jpg' %}' as='image' type='image/jpeg'>
-  <link rel='preload' href='{% static 'img/stone.jpg' %}' as='image' type='image/jpeg'>
-  <link rel='stylesheet' href='{% static 'style.css' %}?{% deployment_id %}'>
+  <link rel='icon' href='{% static 'favicon.ico' %}' type='image/x-icon'/>
+  <link rel='preload' href='{% static 'style.css' %}?{% deployment_id %}' as='style'/>
+  <link rel='preload' href='{% static 'comments.css' %}?{% deployment_id %}' as='style'/>
+  <link rel='preload' href='{% static 'img/blue.jpg' %}' as='image' type='image/jpeg'/>
+  <link rel='preload' href='{% static 'img/stone.jpg' %}' as='image' type='image/jpeg'/>
+  <link rel='preload' href='https://fonts.googleapis.com/css?family=New+Rocker|Pirata+One|Roboto|UnifrakturCook:700'/>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=New+Rocker|Pirata+One|Roboto|UnifrakturCook:700'/>
+  <link rel='stylesheet' href='{% static 'style.css' %}?{% deployment_id %}'/>
+  <link rel='stylesheet' href='{% static 'comments.css' %}?{% deployment_id %}'/>
   {% endblock %}
 </head>
 <body id='{% block id %}{% endblock %}'>
