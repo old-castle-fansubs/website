@@ -1,3 +1,4 @@
+/.git
 /app/static/admin/
 /app/uploads/
 /app/cache/
@@ -6,8 +7,6 @@
 /data
 /torrents
 /transmission-watchdir
-/.env
 .pytest_cache
 .mypy_cache
 .coverage
-docker-compose.override.yml
