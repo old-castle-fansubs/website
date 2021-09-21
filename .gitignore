@@ -1,4 +1,4 @@
-/app/static/admin/
+/app/static/
 /app/uploads/
 /app/cache/
 /app/db.sqlite3
