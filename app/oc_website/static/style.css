@@ -121,16 +121,16 @@ a:hover {
   border-style: inset;
 }
 
-#body h1 {
+#content h1 {
   font-size: 1.5rem;
 }
-#body h2 {
+#content h2 {
   font-size: 1.1rem;
 }
-#body>*:first-child {
+#content>*:first-child {
   margin-top: 0;
 }
-#body>*:last-child {
+#content>*:last-child {
   margin-bottom: 0;
 }
 
@@ -233,7 +233,7 @@ img.flag {
   width: 75%;
 }
 
-#featured-images #body ul {
+#featured-images #content ul {
   list-style-type: none;
   display: flex;
   margin: 0;
@@ -242,7 +242,7 @@ img.flag {
   align-items: center;
   gap: 0.5rem;
 }
-#featured-images #body li {
+#featured-images #content li {
   margin: 0;
   padding: 0;
   width: 30%;
@@ -251,12 +251,12 @@ img.flag {
   text-align: center;
   vertical-align: middle;
 }
-#featured-images #body li a {
+#featured-images #content li a {
   display: block;
   width: 100%;
   height: 100%;
 }
-#featured-images #body img {
+#featured-images #content img {
   outline: 1px solid var(--text-color);
   width: 100%;
   height: 100%;
@@ -279,18 +279,18 @@ img.flag {
   max-height: 40rem;
 }
 
-#projects #body {
+#projects #content {
   text-align: center;
 }
-#projects #body a {
+#projects #content a {
   display: inline-block;
 }
-#projects #body ul.projects {
+#projects #content ul.projects {
   list-style-type: none;
   margin: 1rem 0 2rem 0;
   padding: 0;
 }
-#projects #body li.project {
+#projects #content li.project {
   margin: 0 1rem 1rem 0;
   padding: 0;
   display: inline-block;
@@ -298,7 +298,7 @@ img.flag {
   width: 13rem;
   vertical-align: top;
 }
-#projects #body .cover {
+#projects #content .cover {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -449,42 +449,42 @@ input:focus {
   margin-right: 0.5rem;
 }
 
-#requests #body hr+ul {
+#requests #content hr+ul {
   margin-top: 2rem;
 }
-#requests #body nav {
+#requests #content nav {
   line-height: 2rem;
 }
-#requests #body ul {
+#requests #content ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
 }
-#requests #body li {
+#requests #content li {
   margin-bottom: 2rem;
 }
-#requests #body .request {
+#requests #content .request {
   display: flex;
 }
-#requests #body nav label {
+#requests #content nav label {
   margin-right: 1rem;
 }
-#requests #body nav button {
+#requests #content nav button {
   margin-right: 2rem;
 }
-#requests #body .request p:first-of-type {
+#requests #content .request p:first-of-type {
   margin-top: 0;
 }
-#requests #body .image {
+#requests #content .image {
   width: 5rem;
   flex-grow: 0;
   flex-shrink: 0;
 }
-#requests #body .image img {
+#requests #content .image img {
   max-width: 100%;
   display: block;
 }
-#requests #body .details {
+#requests #content .details {
   margin-left: 0.5rem;
 }
 
