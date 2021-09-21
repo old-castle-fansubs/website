@@ -21,10 +21,12 @@
 <body id='{% block id %}{% endblock %}'>
   <main>
     <header id='top-header'>
-      <div id='top-header-logo'>
-        <h1><a href='{% url 'home' %}'>Old Castle<br/>
-        <small>fansub group</small></a></h1>
-      </div>
+      <h1>
+        <a href='{% url 'home' %}'>
+          Old Castle<br/>
+          <small>fansub group</small>
+        </a>
+      </h1>
       <nav id='top-nav'>
         <ul>
           <li><a href='{% url 'home' %}'>Home</a></li>
