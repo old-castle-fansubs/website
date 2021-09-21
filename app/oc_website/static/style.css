@@ -1,5 +1,5 @@
 :root {
-  --background-color: #BED9F7;
+  --background-color: #bed9f7;
   --text-color: black;
   --link-text-color: blue;
   --visited-link-text-color: purple;
@@ -20,12 +20,12 @@ html {
 body {
   overflow-y: scroll;
   background-color: var(--background-color);
-  background-image:  url('img/blue.jpg');
+  background-image: url("img/blue.jpg");
   background-attachment: fixed;
   background-position: top center;
   background-size: cover;
   color: var(--text-color);
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   margin: 1.5rem;
 }
 main {
@@ -68,7 +68,7 @@ a:hover {
   margin-bottom: 1.5rem;
 }
 #top-header h1 {
-  font-family: 'UnifrakturCook', cursive;
+  font-family: "UnifrakturCook", cursive;
   margin: 0;
   padding: 0;
   font-size: 3.5rem;
@@ -104,8 +104,8 @@ a:hover {
   border-left: 3px solid rgba(190, 190, 190, 0.8);
   border-bottom: 3px solid rgba(0, 0, 0, 0.5);
   border-right: 3px solid rgba(0, 0, 0, 0.5);
-  background: dimgrey url('img/stone.jpg');
-  font-family: 'Pirata One', cursive;
+  background: dimgrey url("img/stone.jpg");
+  font-family: "Pirata One", cursive;
   font-size: 1.7rem;
   line-height: 1.5rem;
   color: rgba(255, 255, 255, 0.7);
@@ -124,10 +124,10 @@ a:hover {
 #content h2 {
   font-size: 1.1rem;
 }
-#content>*:first-child {
+#content > *:first-child {
   margin-top: 0;
 }
-#content>*:last-child {
+#content > *:last-child {
   margin-bottom: 0;
 }
 
@@ -367,11 +367,13 @@ img.flag {
 }
 
 #thread.loading:before {
-  content: 'Loading comments…';
+  content: "Loading comments…";
 }
 
-textarea, input, button {
-  font-family: 'Roboto', sans-serif;
+textarea,
+input,
+button {
+  font-family: "Roboto", sans-serif;
   font-size: 1rem;
   box-sizing: border-box;
   padding: 0.3rem 0.5rem;
@@ -446,7 +448,7 @@ input:focus {
   margin-right: 0.5rem;
 }
 
-#requests #content hr+ul {
+#requests #content hr + ul {
   margin-top: 2rem;
 }
 #requests #content nav {
@@ -506,8 +508,8 @@ input:focus {
   max-width: 100%;
 }
 
-img[loading=lazy] {
-  background: url('/static/img/small_castle.png') no-repeat center;
+img[loading="lazy"] {
+  background: url("/static/img/small_castle.png") no-repeat center;
 }
 
 .pagination {

@@ -1,6 +1,6 @@
 :root {
   --background-color: black;
-  --text-color: #FFC080;
+  --text-color: #ffc080;
   --link-text-color: orange;
   --visited-link-text-color: violet;
   --hovered-link-text-color: red;
@@ -11,7 +11,8 @@
   --blockquote-border-color: rgb(72, 57, 45);
 }
 
-body, main {
+body,
+main {
   margin-top: 0;
   padding-top: 0;
 }
@@ -19,21 +20,21 @@ body {
   background-image: none;
 }
 #top-header h1 a {
-  color: #FFFFD8;
+  color: #ffffd8;
 }
 
 #body h1:before,
 #body h1:after {
   display: inline-block;
-  background: url('img/pumpkin.png');
+  background: url("img/pumpkin.png");
   background-size: 20px 20px;
-  content: '';
+  content: "";
   width: 20px;
   height: 20px;
   margin: 0 10px;
 }
 #top-header {
-  background-image: url('img/halloween-bk.png');
+  background-image: url("img/halloween-bk.png");
   background-size: auto 300px;
   background-position: -100px 30px;
   background-repeat: no-repeat;

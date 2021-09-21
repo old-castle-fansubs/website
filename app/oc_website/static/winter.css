@@ -1,12 +1,12 @@
 :root {
   --background-color: aliceblue;
   --text-color: black;
-  --link-text-color: #1565C0;
+  --link-text-color: #1565c0;
   --visited-link-text-color: #633974;
   --hovered-link-text-color: green;
   --input-background-color: white;
   --input-border-color: dodgerblue;
-  --button-background-color: #29B6F6;
+  --button-background-color: #29b6f6;
   --blockquote-background-color: rgb(150, 180, 220, 0.2);
   --blockquote-border-color: dodgerblue;
 }
@@ -17,7 +17,7 @@ a:hover {
 
 body {
   background-image: linear-gradient(dodgerblue, aliceblue);
-  background-image: url('img/blue-bokeh.jpg');
+  background-image: url("img/blue-bokeh.jpg");
   background-position: center;
 }
 
