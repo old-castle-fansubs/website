@@ -272,9 +272,6 @@ img.flag {
 #home #featured-image img {
   display: block;
 }
-#home #top-nav {
-  display: none;
-}
 #home #featured {
   margin: 0 auto;
   display: inline-block;

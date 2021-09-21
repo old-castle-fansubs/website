@@ -2,11 +2,9 @@
 {% block title %}Home{% endblock %}
 {% block id %}home{% endblock %}
 {% block content %}
+<h1 class='fancy-title'><span>Featured image</span></h1>
+
 <a href='{% url 'news' %}' id='featured-image'>
   <img id='featured' src='{{ featured_image.image.url }}' alt='Featured image'/>
 </a>
-
-<br/><br/>
-
-<a href='{% url 'news' %}'>Click on the image to enter</a>
 {% endblock %}
