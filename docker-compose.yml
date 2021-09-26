@@ -32,6 +32,7 @@ services:
       - NYAA_PANTSU_API_KEY=${NYAA_PANTSU_API_KEY}
       - ANIDB_CLIENT=${ANIDB_CLIENT}
       - ANIDB_CLIENTVER=${ANIDB_CLIENTVER}
+      - HOST_SITE=${HOST_SITE}
 
   redis:
     image: redis:6
@@ -65,6 +66,7 @@ services:
       - NYAA_PANTSU_API_KEY=${NYAA_PANTSU_API_KEY}
       - ANIDB_CLIENT=${ANIDB_CLIENT}
       - ANIDB_CLIENTVER=${ANIDB_CLIENTVER}
+      - HOST_SITE=${HOST_SITE}
 
   celery-beat:
     build:
@@ -93,3 +95,4 @@ services:
       - NYAA_PANTSU_API_KEY=${NYAA_PANTSU_API_KEY}
       - ANIDB_CLIENT=${ANIDB_CLIENT}
       - ANIDB_CLIENTVER=${ANIDB_CLIENTVER}
+      - HOST_SITE=${HOST_SITE}
