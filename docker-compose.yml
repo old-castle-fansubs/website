@@ -1,5 +1,29 @@
 version: '3'
 
+x-environment: &environment
+  - DJANGO_SETTINGS_MODULE=oc_website.settings
+  - SECRET_KEY=change_me  # change this in docker-compose.override.yml
+  - DEBUG=${DEBUG}
+  - ANIDEX_API_KEY=${ANIDEX_API_KEY}
+  - ANIDEX_USER=${ANIDEX_USER}
+  - ANIDEX_PASS=${ANIDEX_PASS}
+  - ANIDEX_GROUP_ID=${ANIDEX_GROUP_ID}
+  - NYAA_SI_USER=${NYAA_SI_USER}
+  - NYAA_SI_PASS=${NYAA_SI_PASS}
+  - NYAA_PANTSU_USER=${NYAA_PANTSU_USER}
+  - NYAA_PANTSU_PASS=${NYAA_PANTSU_PASS}
+  - NYAA_PANTSU_API_KEY=${NYAA_PANTSU_API_KEY}
+  - ANIDB_CLIENT=${ANIDB_CLIENT}
+  - ANIDB_CLIENTVER=${ANIDB_CLIENTVER}
+  - HOST_SITE=${HOST_SITE}
+
+x-volumes: &volumes
+  - ./app:/app
+  - ./data:/data
+  - ./torrents:/torrents
+  - ./transmission-watchdir:/transmission-watchdir
+  - ./services/app/entrypoint.sh:/usr/local/bin/entrypoint.sh
+
 services:
   app:
     build:
@@ -11,28 +35,8 @@ services:
     ports:
       - 8000:8000
       - 8001:8001
-    volumes:
-      - ./app:/app
-      - ./data:/data
-      - ./torrents:/torrents
-      - ./transmission-watchdir:/transmission-watchdir
-      - ./services/app/entrypoint.sh:/usr/local/bin/entrypoint.sh
-    environment:
-      - DJANGO_SETTINGS_MODULE=oc_website.settings
-      - SECRET_KEY=change_me  # change this in docker-compose.override.yml
-      - DEBUG=${DEBUG}
-      - ANIDEX_API_KEY=${ANIDEX_API_KEY}
-      - ANIDEX_USER=${ANIDEX_USER}
-      - ANIDEX_PASS=${ANIDEX_PASS}
-      - ANIDEX_GROUP_ID=${ANIDEX_GROUP_ID}
-      - NYAA_SI_USER=${NYAA_SI_USER}
-      - NYAA_SI_PASS=${NYAA_SI_PASS}
-      - NYAA_PANTSU_USER=${NYAA_PANTSU_USER}
-      - NYAA_PANTSU_PASS=${NYAA_PANTSU_PASS}
-      - NYAA_PANTSU_API_KEY=${NYAA_PANTSU_API_KEY}
-      - ANIDB_CLIENT=${ANIDB_CLIENT}
-      - ANIDB_CLIENTVER=${ANIDB_CLIENTVER}
-      - HOST_SITE=${HOST_SITE}
+    volumes: *volumes
+    environment: *environment
 
   redis:
     image: redis:6
@@ -46,27 +50,8 @@ services:
     command: celery
     depends_on:
       - redis
-    volumes:
-      - ./app:/app
-      - ./data:/data
-      - ./torrents:/torrents
-      - ./transmission-watchdir:/transmission-watchdir
-      - ./services/app/entrypoint.sh:/usr/local/bin/entrypoint.sh
-    environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=${DEBUG}
-      - ANIDEX_API_KEY=${ANIDEX_API_KEY}
-      - ANIDEX_USER=${ANIDEX_USER}
-      - ANIDEX_PASS=${ANIDEX_PASS}
-      - ANIDEX_GROUP_ID=${ANIDEX_GROUP_ID}
-      - NYAA_SI_USER=${NYAA_SI_USER}
-      - NYAA_SI_PASS=${NYAA_SI_PASS}
-      - NYAA_PANTSU_USER=${NYAA_PANTSU_USER}
-      - NYAA_PANTSU_PASS=${NYAA_PANTSU_PASS}
-      - NYAA_PANTSU_API_KEY=${NYAA_PANTSU_API_KEY}
-      - ANIDB_CLIENT=${ANIDB_CLIENT}
-      - ANIDB_CLIENTVER=${ANIDB_CLIENTVER}
-      - HOST_SITE=${HOST_SITE}
+    volumes: *volumes
+    environment: *environment
 
   celery-beat:
     build:
@@ -75,24 +60,5 @@ services:
     command: celery-beat
     depends_on:
       - redis
-    volumes:
-      - ./app:/app
-      - ./data:/data
-      - ./torrents:/torrents
-      - ./transmission-watchdir:/transmission-watchdir
-      - ./services/app/entrypoint.sh:/usr/local/bin/entrypoint.sh
-    environment:
-      - SECRET_KEY=${SECRET_KEY}
-      - DEBUG=${DEBUG}
-      - ANIDEX_API_KEY=${ANIDEX_API_KEY}
-      - ANIDEX_USER=${ANIDEX_USER}
-      - ANIDEX_PASS=${ANIDEX_PASS}
-      - ANIDEX_GROUP_ID=${ANIDEX_GROUP_ID}
-      - NYAA_SI_USER=${NYAA_SI_USER}
-      - NYAA_SI_PASS=${NYAA_SI_PASS}
-      - NYAA_PANTSU_USER=${NYAA_PANTSU_USER}
-      - NYAA_PANTSU_PASS=${NYAA_PANTSU_PASS}
-      - NYAA_PANTSU_API_KEY=${NYAA_PANTSU_API_KEY}
-      - ANIDB_CLIENT=${ANIDB_CLIENT}
-      - ANIDB_CLIENTVER=${ANIDB_CLIENTVER}
-      - HOST_SITE=${HOST_SITE}
+    volumes: *volumes
+    environment: *environment
