@@ -95,50 +95,6 @@ class NyaaSiPublisher(BasePublisher):
         return cast(str, result["url"])
 
 
-class NyaaPantsuPublisher(BasePublisher):
-    name = "nyaa.net"
-
-    def publish(self, torrent_path: Path, dry_run: bool) -> Optional[str]:
-        with torrent_path.open("rb") as handle:
-            data = {
-                "username": settings.NYAA_PANTSU_USER,
-                "name": torrent_path.stem,
-                "magnet": None,
-                "c": settings.NYAA_PANTSU_CATEGORY_ID,
-                "remake": False,
-                "desc": "",
-                "status": None,
-                "hidden": False,
-                "website_link": settings.NYAA_PANTSU_WEBSITE,
-                "languages": settings.NYAA_PANTSU_LANGUAGES,
-            }
-            files = {"torrent": handle}
-            headers = {"Authorization": settings.NYAA_PANTSU_API_KEY}
-
-            if dry_run:
-                print(
-                    "publishing to nyaa.pantsu "
-                    f"(payload={json.dumps(data)}, "
-                    f"headers={headers}, "
-                    f"files={files})"
-                )
-                return None
-
-            response = requests.post(
-                settings.NYAA_PANTSU_API_URL,
-                headers=headers,
-                data=data,
-                files=files,
-            )
-
-        response.raise_for_status()
-        result = response.json()
-        if result.get("errors"):
-            raise ValueError(result["errors"])
-        torrent_id = result["data"]["id"]
-        return f"https://nyaa.net/view/{torrent_id}"
-
-
 def get_torrent_name(data_path: Path) -> str:
     if data_path.is_file():
         return data_path.stem + ".torrent"
