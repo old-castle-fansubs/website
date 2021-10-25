@@ -199,7 +199,7 @@ def publish_due_releases() -> None:
         publish_release.delay(release.pk, dry_run=False)
 
 
-@app.task
+@app.task(autoretry_for=(Exception,), retry_kwargs={"max_retries": 10})
 def publish_release_to_third_party(
     publisher_cls_name: str, release_id: int, dry_run: bool
 ) -> None:
