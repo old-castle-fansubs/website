@@ -117,9 +117,16 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
         Q(request_date__lte=timezone.now()) | Q(request_date__isnull=True),
     )
     if search_text := request.GET.get("search_text"):
-        anime_requests = anime_requests.filter(
-            anidb_title__icontains=search_text
+        filter_arg = (
+            Q(anidb_title__icontains=search_text)
+            | Q(anidb_type__icontains=search_text)
+            | Q(anidb_synopsis__icontains=search_text)
         )
+        try:
+            filter_arg |= Q(anidb_id=int(search_text))
+        except ValueError:
+            pass
+        anime_requests = anime_requests.filter(filter_arg)
     if sort_style := request.GET.get("sort"):
         order_mapping = {
             "title": "anidb_title",
