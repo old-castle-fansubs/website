@@ -17,9 +17,12 @@ class XmlParser:
     def __init__(self, path: Path) -> None:
         self.doc = ElementTree.parse(str(path)).getroot()
 
-    def get_text(self, xpath: str) -> str:
+    def get_text(self, xpath: str, required: bool = True) -> str:
         node = self.doc.find(xpath)
-        assert node is not None
+        if node is None:
+            if required:
+                raise ValueError(f"{xpath} not found")
+            return ""
         return node.text or ""
 
 
@@ -67,8 +70,8 @@ def fill_anime_request(anime_request_id: int) -> None:
     anime_request.anidb_title = doc.get_text(".//title")
     anime_request.anidb_type = doc.get_text(".//type")
     anime_request.anidb_episodes = int(doc.get_text(".//episodecount"))
-    anime_request.anidb_synopsis = process_synopsis(
-        doc.get_text(".//description")
+    anime_request.anidb_synopsis = (
+        process_synopsis(doc.get_text("./description", required=False)) or None
     )
     anime_request.anidb_start_date = process_date(doc.get_text(".//startdate"))
     anime_request.anidb_end_date = process_date(doc.get_text(".//enddate"))

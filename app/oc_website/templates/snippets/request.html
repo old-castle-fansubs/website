@@ -36,6 +36,8 @@
 
     {% if anime_request.anidb_synopsis %}
       <p>{{ anime_request.anidb_synopsis }}</p>
+    {% else %}
+      <p>This title has no synopsis.</p>
     {% endif %}
 
     {% if include_comment_count %}
