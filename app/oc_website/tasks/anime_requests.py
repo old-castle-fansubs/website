@@ -1,6 +1,6 @@
 import logging
 import time
-from datetime import date
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 from xml.etree import ElementTree
@@ -27,9 +27,9 @@ def process_synopsis(synopsis: str) -> str:
     return synopsis.replace("http", " http")
 
 
-def process_date(text: str) -> Optional[date]:
+def process_date(text: str) -> Optional[datetime]:
     try:
-        return dateutil.parser.parse(text).date()
+        return dateutil.parser.parse(text).astimezone()
     except ValueError:
         return None
 
