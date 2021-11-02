@@ -56,14 +56,18 @@ be titles that were already started by other groups and that's okay.</p>
 
 <hr/>
 
-<ul>
-  {% for anime_request in page.object_list.all %}
-    <li>
-      {% include 'snippets/request.html' with anime_request=anime_request include_comment_count=True %}
-    </li>
-  {% endfor %}
-</ul>
+{% if not page.object_list.all %}
+  <p>No results found.</p>
+{% else %}
+  <ul>
+    {% for anime_request in page.object_list.all %}
+      <li>
+        {% include 'snippets/request.html' with anime_request=anime_request include_comment_count=True %}
+      </li>
+    {% endfor %}
+  </ul>
 
-{% include 'pager.html' with page=page %}
+  {% include 'pager.html' with page=page %}
+{% endif %}
 
 {% endblock %}
