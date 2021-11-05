@@ -223,6 +223,8 @@ class Comment(models.Model):
     email = models.EmailField(null=True, blank=True)
     website = models.URLField(null=True, blank=True)
 
+    is_visible = models.BooleanField(default=True)
+
     class Meta:
         ordering = ["-comment_date"]
 

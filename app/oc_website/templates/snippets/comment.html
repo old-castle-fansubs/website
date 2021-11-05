@@ -9,7 +9,7 @@
       <a href='#comment-{{ comment.id }}' class='permalink'
         ><time title='{{ comment.comment_date }}' datetime='{{ comment.comment_date }}'>{{ comment.comment_date }}</time
       ></a>
-      {% if not is_preview %}
+      {% if not is_preview and comment.is_visible %}
           <span class='spacer'>&bull;</span>
           {% if object_id %}
             <a href='{% url comment_url object_id=object_id pid=comment.id %}' class='reply'>Reply</a>
@@ -19,7 +19,11 @@
       {% endif %}
     </div>
     <div class='text'>
-      {{ comment.html|safe }}
+      {% if comment.is_visible %}
+        {{ comment.html|safe }}
+      {% else %}
+        <p><em>(This comment has been hidden by a moderator.)</em></p>
+      {% endif %}
     </div>
     <div class='follow-up'>
       {% include 'snippets/comments.html' with comments=comment.child_comments %}
