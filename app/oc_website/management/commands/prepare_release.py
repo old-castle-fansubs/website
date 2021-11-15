@@ -16,6 +16,7 @@ from oc_website.models import (
     ProjectRelease,
     ProjectReleaseFile,
 )
+from oc_website.tasks.utils import get_next_release_datetime
 from oc_website.urls import url_to_edit_object
 
 
@@ -180,6 +181,7 @@ def create_release(path: Path) -> ProjectRelease:
         release_date=timezone.now(),
         is_visible=False,
         filename=str(path.relative_to(settings.DATA_DIR)),
+        scheduled_publication_date=get_next_release_datetime(),
     )
 
     if path.is_file():
