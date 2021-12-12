@@ -5,7 +5,7 @@ from unittest.mock import patch
 import pytest
 from django.conf import settings
 from django.test import override_settings
-from oc_website.tasks import BasePublisher, publish_release
+from oc_website.tasks.releases import BasePublisher, publish_release
 from oc_website.tests.factories import ProjectReleaseFactory
 
 
@@ -39,20 +39,19 @@ def test_publish_release(
     project_release = project_release_factory(filename="test file.txt")
 
     with patch(
-        "oc_website.tasks.AnidexPublisher.publish", return_value="anidex_url"
+        "oc_website.tasks.releases.AnidexPublisher.publish",
+        return_value="anidex_url",
     ) as fake_anidex_publish, patch(
-        "oc_website.tasks.NyaaSiPublisher.publish", return_value="nyaa_si_url"
-    ) as fake_nyaa_si_publish, patch(
-        "oc_website.tasks.NyaaPantsuPublisher.publish",
-        return_value="nyaa_pantsu_url",
-    ) as fake_nyaa_pantsu_publish:
+        "oc_website.tasks.releases.NyaaSiPublisher.publish",
+        return_value="nyaa_si_url",
+    ) as fake_nyaa_si_publish:
         publish_release.s(project_release.pk, dry_run=False).apply()
 
     project_release.refresh_from_db()
 
     assert project_release.scheduled_publication_date is None
     assert project_release.is_visible is True
-    assert project_release.links.count() == 4
+    assert project_release.links.count() == 3
     assert sorted(project_release.links.values_list("url", flat=True)) == [
         "anidex_url",
         (
@@ -62,7 +61,6 @@ def test_publish_release(
             "&tr=http%3A%2F%2Fnyaa.tracker.wf%3A7777%2Fannounce"
             "&tr=udp%3A%2F%2Ftracker.uw0.xyz%3A6969"
         ),
-        "nyaa_pantsu_url",
         "nyaa_si_url",
     ]
 
@@ -75,6 +73,3 @@ def test_publish_release(
 
     fake_anidex_publish.assert_called_once_with(torrent_path, dry_run=False)
     fake_nyaa_si_publish.assert_called_once_with(torrent_path, dry_run=False)
-    fake_nyaa_pantsu_publish.assert_called_once_with(
-        torrent_path, dry_run=False
-    )

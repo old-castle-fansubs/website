@@ -142,14 +142,6 @@ NYAA_SI_PASS = get_setting("NYAA_SI_PASS")
 NYAA_SI_INFO = "https://oldcastle.moe"
 NYAA_SI_CATEGORY_ID = "1_2"
 
-NYAA_PANTSU_API_URL = "https://nyaa.net/api/upload"
-NYAA_PANTSU_USER = get_setting("NYAA_PANTSU_USER")
-NYAA_PANTSU_PASS = get_setting("NYAA_PANTSU_PASS")
-NYAA_PANTSU_API_KEY = get_setting("NYAA_PANTSU_API_KEY")
-NYAA_PANTSU_WEBSITE = "https://oldcastle.moe"
-NYAA_PANTSU_CATEGORY_ID = "3_5"
-NYAA_PANTSU_LANGUAGES = "en"
-
 ANIDB_CLIENT = get_setting("ANIDB_CLIENT")
 ANIDB_CLIENTVER = get_setting("ANIDB_CLIENTVER")
 ANIDB_CACHE_DIR = BASE_DIR / "cache" / "anidb"
