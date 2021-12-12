@@ -16,14 +16,18 @@ from oc_website.models import ProjectRelease, ProjectReleaseLink
 class BasePublisher:
     name: str = NotImplemented
 
-    def publish(self, torrent_path: Path, dry_run: bool) -> Optional[str]:
+    def publish(
+        self, torrent_path: Path, data_path: Path, dry_run: bool
+    ) -> Optional[str]:
         raise NotImplementedError("not implemented")
 
 
 class AnidexPublisher(BasePublisher):
     name = "anidex.info"
 
-    def publish(self, torrent_path: Path, dry_run: bool) -> Optional[str]:
+    def publish(
+        self, torrent_path: Path, data_path: Path, dry_run: bool
+    ) -> Optional[str]:
         with torrent_path.open("rb") as handle:
             data = {
                 "api_key": settings.ANIDEX_API_KEY,
@@ -55,7 +59,9 @@ class AnidexPublisher(BasePublisher):
 class NyaaSiPublisher(BasePublisher):
     name = "nyaa.si"
 
-    def publish(self, torrent_path: Path, dry_run: bool) -> Optional[str]:
+    def publish(
+        self, torrent_path: Path, data_path: Path, dry_run: bool
+    ) -> Optional[str]:
         with torrent_path.open("rb") as handle:
             data = {
                 "torrent_data": json.dumps(
@@ -93,6 +99,26 @@ class NyaaSiPublisher(BasePublisher):
         if result.get("errors"):
             raise ValueError(result["errors"])
         return cast(str, result["url"])
+
+
+class IrcbotPublisher(BasePublisher):
+    name = "ircbot"
+
+    def publish(
+        self, torrent_path: Path, data_path: Path, dry_run: bool
+    ) -> Optional[str]:
+        ircbot_link_path = settings.IRCBOT_WATCHDIR / data_path.name
+        if dry_run:
+            print(
+                "publishing to ircbot (source={ircbot_link_path}, target={data_path})"
+            )
+        else:
+            if ircbot_link_path.exists() and ircbot_link_path.is_symlink():
+                ircbot_link_path.unlink()
+            if not ircbot_link_path.exists():
+                ircbot_link_path.parent.mkdir(parents=True, exist_ok=True)
+                ircbot_link_path.symlink_to(data_path)
+        return None
 
 
 def get_torrent_name(data_path: Path) -> str:
@@ -175,7 +201,7 @@ def publish_release_to_third_party(
     data_path = settings.DATA_DIR / release.filename
     torrent_path = settings.TORRENTS_DIR / get_torrent_name(data_path)
 
-    url = publisher.publish(torrent_path, dry_run=dry_run)
+    url = publisher.publish(torrent_path, data_path, dry_run=dry_run)
     if not url:
         return
     add_or_update_release_link(release=release, url=url, search=publisher.name)

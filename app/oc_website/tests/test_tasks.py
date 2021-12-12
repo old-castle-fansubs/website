@@ -15,6 +15,7 @@ def fixture_override_dirs(tmp_path: Path) -> Iterable[None]:
         DATA_DIR=tmp_path / "data",
         TORRENTS_DIR=tmp_path / "torrents",
         TRANSMISSION_WATCHDIR=tmp_path / "transmission-watchdir",
+        IRCBOT_WATCHDIR=tmp_path / "ircbot-watchdir",
     ):
         settings.DATA_DIR.mkdir()
         settings.TORRENTS_DIR.mkdir()
@@ -35,7 +36,8 @@ def test_publish_release(
     override_dirs: None,  # pylint: disable=unused-argument
     project_release_factory: ProjectReleaseFactory,
 ) -> None:
-    (settings.DATA_DIR / "test file.txt").write_text("123")
+    data_path = settings.DATA_DIR / "test file.txt"
+    data_path.write_text("123")
     project_release = project_release_factory(filename="test file.txt")
 
     with patch(
@@ -71,5 +73,12 @@ def test_publish_release(
     assert torrent_path.exists()
     assert torrent_path_for_transmission.exists()
 
-    fake_anidex_publish.assert_called_once_with(torrent_path, dry_run=False)
-    fake_nyaa_si_publish.assert_called_once_with(torrent_path, dry_run=False)
+    assert (settings.IRCBOT_WATCHDIR / "test file.txt").is_symlink()
+    assert (settings.IRCBOT_WATCHDIR / "test file.txt").read_text() == "123"
+
+    fake_anidex_publish.assert_called_once_with(
+        torrent_path, data_path, dry_run=False
+    )
+    fake_nyaa_si_publish.assert_called_once_with(
+        torrent_path, data_path, dry_run=False
+    )

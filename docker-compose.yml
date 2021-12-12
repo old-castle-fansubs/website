@@ -18,6 +18,7 @@ x-volumes: &volumes
   - ./app:/app
   - ./data:/data
   - ./torrents:/torrents
+  - ./ircbot-watchdir:/ircbot-watchdir
   - ./transmission-watchdir:/transmission-watchdir
   - ./services/app/entrypoint.sh:/usr/local/bin/entrypoint.sh
 

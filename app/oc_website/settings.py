@@ -25,6 +25,9 @@ TORRENTS_DIR = REPO_DIR / "torrents"
 # forget" mechanism)
 TRANSMISSION_WATCHDIR = REPO_DIR / "transmission-watchdir"
 
+# directory where to put symlinks of anime releases for the irc bot
+IRCBOT_WATCHDIR = REPO_DIR / "ircbot-watchdir"
+
 SECRET_KEY = get_setting("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "False").lower() in {"1", "true"}
 ALLOWED_HOSTS = ["*"]
