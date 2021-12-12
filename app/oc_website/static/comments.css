@@ -81,30 +81,13 @@
 .postbox {
   margin: 0 auto 2em;
 }
+.postbox label {
+  display: block;
+}
 .postbox > .form-wrapper {
   display: block;
   padding: 0;
-}
-.postbox > .form-wrapper > .auth-section {
-  display: flex;
   margin: 0.25em 0 0 0;
-}
-.postbox > .form-wrapper > .auth-section > * {
-  margin: 0 0.5em 0 0;
-}
-.postbox > .form-wrapper > .auth-section > *:last-child {
-  margin: 0;
-}
-.postbox > .form-wrapper > .auth-section .input-wrapper {
-  flex-grow: 1;
-}
-.postbox > .form-wrapper > .auth-section .input-wrapper input {
-  width: 100%;
-}
-.postbox > .form-wrapper > .auth-section .post-action {
-  display: block;
-  max-width: 5em;
-  display: inline-block;
 }
 
 .khatiff {

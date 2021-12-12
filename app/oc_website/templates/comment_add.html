@@ -6,10 +6,10 @@
 <h1 class='fancy-title'><span>{{ page_title }}</span></h1>
 
 {% if parent_comment %}
-  <p>Replying to a comment by <em>{{ parent_comment.author }}</em>:</p>
+  <h2>Reply to a comment by <em>{{ parent_comment.author }}</em></h2>
   {{ parent_comment.html|safe }}
 {% else %}
-  <p>Posting a new comment:</p>
+  <h2>New comment</h2>
 {% endif %}
 
 <form action='{{ form_url }}' method='post'>
@@ -23,26 +23,28 @@
       <label tabindex='-1' class='khatiff'>Leave this field empty:</label>
       <textarea tabindex='-1' class='khatiff' type='text' name='message' autocomplete='off'></textarea>
 
-      <div class='textarea-wrapper'>
-        <textarea name='text' placeholder='Type comment here.' required>{{ comment.text }}</textarea>
-      </div>
-
       <section class='auth-section'>
         <p class='input-wrapper'>
-          <input type='text' name='author' placeholder='Name' value='{{ comment.author }}' required>
+          <label for='author'>Nickname:</label>
+          <input type='text' id='author' name='author' value='{{ comment.author }}' required>
         </p>
+
         <p class='input-wrapper'>
-          <input type='email' name='email' placeholder='E-mail (optional)' value='{{ comment.email }}'>
+          <label for='email'>
+            E-mail address: <small>(optional, not shown on the website, used to display Gravatars)</small>
+          </label>
+          <input type='email' name='email' value='{{ comment.email }}'>
         </p>
-        <p class='input-wrapper'>
-          <input type='url' name='website' placeholder='Website (optional)' value='{{ comment.website }}'>
-        </p>
-        <p class='post-action'>
-          <button type='submit' name='submit' value='submit'>Submit</button>
-        </p>
-        <p class='post-action'>
-          <button type='submit' name='submit' value='preview'>Preview</button>
-        </p>
+      </section>
+
+      <div class='textarea-wrapper'>
+        Comment:
+        <textarea name='text' required>{{ comment.text }}</textarea>
+      </div>
+
+      <section class='buttons'>
+        <button type='submit' name='submit' value='submit'>Submit</button>
+        <button type='submit' name='submit' value='preview'>Preview</button>
       </section>
     </div>
   </div>

@@ -19,7 +19,8 @@
       <textarea tabindex='-1' class='khatiff' type='text' name='message' autocomplete='off'></textarea>
 
       <p class='input-wrapper'>
-        <input type='url' name='anidb_url' placeholder='AniDB link' value='{% if anidb_url %}{{ anidb_url }}{% endif %}' required>
+        <label for='anidb_url'>AniDB link:</label>
+        <input type='url' id='anidb_url' name='anidb_url' value='{% if anidb_url %}{{ anidb_url }}{% endif %}' required>
       </p>
 
       <section class='auth-section'>
