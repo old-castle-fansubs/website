@@ -5,6 +5,7 @@ from unittest.mock import patch
 import pytest
 from django.conf import settings
 from django.test import override_settings
+
 from oc_website.tasks.releases import BasePublisher, publish_release
 from oc_website.tests.factories import ProjectReleaseFactory
 

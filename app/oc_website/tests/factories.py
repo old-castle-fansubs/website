@@ -2,6 +2,7 @@ from datetime import datetime, timezone
 
 import factory
 from factory.fuzzy import FuzzyDateTime
+
 from oc_website.models import Project, ProjectRelease
 
 

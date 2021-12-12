@@ -1,4 +1,5 @@
 from django.db import migrations
+
 from oc_website.anidb import get_anidb_link_id
 
 

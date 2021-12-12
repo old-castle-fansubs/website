@@ -4,6 +4,7 @@ line-length = 79
 [tool.isort]
 multi_line_output = 3
 include_trailing_comma = true
+known_first_party = ["oc_website"]
 
 [tool.mypy]
 disallow_untyped_decorators = false

@@ -7,15 +7,17 @@ from django.db.models import Q
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
+
 from oc_website.anidb import get_anidb_link_id, is_valid_anidb_link
 from oc_website.models import (
+    AniDBEntry,
     AnimeRequest,
     Comment,
     FeaturedImage,
     News,
     Project,
 )
-from oc_website.tasks import fill_anime_request
+from oc_website.tasks import fill_missing_anidb_info
 from oc_website.taxonomies import ProjectStatus
 
 MAX_GUESTBOOK_COMMENTS_PER_PAGE = 10
@@ -179,12 +181,6 @@ def view_anime_request_add(request: HttpRequest) -> HttpResponse:
     anidb_url = request.POST.get("anidb_url", "").strip()
     anidb_id = get_anidb_link_id(anidb_url)
 
-    anime_request = AnimeRequest(
-        request_date=timezone.now(),
-        anidb_id=anidb_id,
-        remote_addr=get_client_ip(request),
-    )
-
     errors: list[str] = []
 
     if request.method == "POST":
@@ -196,13 +192,20 @@ def view_anime_request_add(request: HttpRequest) -> HttpResponse:
             errors.append("The provided AniDB link appears to be invalid.")
 
         if existing_anime_request := AnimeRequest.objects.filter(
-            anidb_id=anidb_id
+            anidb_entry__anidb_id=anidb_id
         ).first():
             return redirect("anime_request", existing_anime_request.pk)
 
         if not errors:
-            anime_request.save()
-            fill_anime_request.delay(anime_request.pk)
+            anidb_entry = AniDBEntry.objects.create(
+                anidb_id=anidb_id,
+            )
+            anime_request = AnimeRequest.objects.create(
+                request_date=timezone.now(),
+                anidb_entry=anidb_entry,
+                remote_addr=get_client_ip(request),
+            )
+            fill_missing_anidb_info.delay(anime_request.pk)
             return redirect("anime_requests")
 
     return render(

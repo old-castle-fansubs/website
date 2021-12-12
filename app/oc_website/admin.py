@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib import admin
 from django.db.models.aggregates import Count, Max
+
 from oc_website.models import (
+    AniDBEntry,
     AnimeRequest,
     Comment,
     FeaturedImage,
@@ -120,22 +122,37 @@ class NewsAdmin(admin.ModelAdmin):
     form = NewsAdminForm
 
 
+@admin.register(AniDBEntry)
+class AniDBEntryAdmin(admin.ModelAdmin):
+    search_fields = [
+        "anidb_id",
+        "title",
+    ]
+    list_display = [
+        "anidb_id",
+        "episodes",
+        "image",
+        "title",
+        "type",
+    ]
+
+
 @admin.register(AnimeRequest)
 class AnimeRequestAdmin(admin.ModelAdmin):
     search_fields = [
-        "anidb_title",
-        "anidb_id",
+        "anidb_entry__anidb_id",
+        "anidb_entry__title",
     ]
     list_display = [
-        "anidb_title",
-        "anidb_id",
-        "anidb_image",
-        "anidb_type",
-        "anidb_episodes",
+        "anidb_entry_anidb_id",
+        "anidb_entry_title",
     ]
 
-    def __str__(self) -> str:
-        return f"request for {self.anidb_title}"
+    def anidb_entry_anidb_id(self, instance) -> int:
+        return instance.anidb_entry.anidb_id
+
+    def anidb_entry_title(self, instance) -> str:
+        return instance.anidb_entry.title
 
 
 @admin.register(Comment)

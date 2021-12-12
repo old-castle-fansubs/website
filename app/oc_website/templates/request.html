@@ -6,7 +6,7 @@
 
 <h1 class='fancy-title'><span>Anime requests</span></h1>
 
-{% include 'snippets/request.html' with anime_request=anime_request %}
+{% include 'snippets/request.html' with anime_request=anime_request anidb_entry=anidb_entry %}
 
 <p>
   <a href='{% url 'anime_request_comment' object_id=anime_request.pk %}'>Add new comment</a>

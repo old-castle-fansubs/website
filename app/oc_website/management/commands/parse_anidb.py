@@ -1,24 +1,25 @@
 from django.core.management.base import BaseCommand
-from oc_website.models import AnimeRequest
-from oc_website.tasks.anime_requests import fill_anime_request
+
+from oc_website.models import AniDBEntry
+from oc_website.tasks.anidb import fill_missing_anidb_info
 
 
 class Command(BaseCommand):
-    help = "Reanalyzes AniDB response for a given request."
+    help = "Reanalyzes AniDB response for a given ID."
 
     def add_arguments(self, parser):
         parser.add_argument(
             "id",
             type=int,
             nargs="*",
-            help="request ID to refresh AniDB description of",
+            help="AniDB ID to refresh metadata of",
         )
 
     def handle(self, *_args, **options):
-        requests = AnimeRequest.objects.all().order_by("pk")
-        if request_ids := options["id"]:
-            requests = requests.filter(pk__in=request_ids)
+        entries = AniDBEntry.objects.all().order_by("anidb_id")
+        if anidb_ids := options["id"]:
+            entries = entries.filter(pk__in=anidb_ids)
 
-        for request in requests:
-            self.stdout.write(f"Analyzing {request.pk}")
-            fill_anime_request(request.pk)
+        for entry in entries:
+            self.stdout.write(f"Analyzing {entry.anidb_id}")
+            fill_missing_anidb_info(anidb_id=entry.anidb_id)

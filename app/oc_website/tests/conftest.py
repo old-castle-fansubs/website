@@ -1,6 +1,7 @@
 import pytest
-from oc_website.tests.factories import ProjectFactory, ProjectReleaseFactory
 from pytest_factoryboy import register
+
+from oc_website.tests.factories import ProjectFactory, ProjectReleaseFactory
 
 register(ProjectReleaseFactory)
 register(ProjectFactory)

@@ -9,6 +9,7 @@ import torf
 import tqdm
 from django.conf import settings
 from django.utils import timezone
+
 from oc_website.celery import app
 from oc_website.models import ProjectRelease, ProjectReleaseLink
 

@@ -1,8 +1,10 @@
+{% with anidb_entry=anime_request.anidb_entry %}
+
 <div class='request'>
   <div class='image'>
-    {% if anime_request.anidb_image %}
-      <a href='{{ anime_request.anidb_image.url }}'>
-        <img loading='lazy' src='{{ anime_request.anidb_image.url }}' alt='{{ anime_request.anidb_title }}'/>
+    {% if anidb_entry.image %}
+      <a href='{{ anidb_entry.image.url }}'>
+        <img loading='lazy' src='{{ anidb_entry.image.url }}' alt='{{ anidb_entry.title }}'/>
       </a>
     {% else %}
       -
@@ -12,16 +14,16 @@
   <div class='details'>
     <p>
       <a href='{% url 'anime_request' anime_request.pk %}'>
-        {% if anime_request.anidb_title %}
-          <strong>{{ anime_request.anidb_title }}</strong>
+        {% if anidb_entry.title %}
+          <strong>{{ anidb_entry.title }}</strong>
         {% else %}
           <strong>Anime #{{ anime_request.anidb_id }}</strong>
         {% endif %}
       </a>
 
-      ({% if anime_request.anidb_type %}{{ anime_request.anidb_type }},
-        {{ anime_request.anidb_episodes }} episodes,
-      {% endif %}<a href='{{ anime_request.anidb_url }}'>AniDB</a>)
+      ({% if anidb_entry.type %}{{ anidb_entry.type }},
+        {{ anidb_entry.episodes }} episodes,
+      {% endif %}<a href='{{ anidb_entry.url }}'>AniDB</a>)
     </p>
 
     <p>
@@ -34,8 +36,8 @@
       </small>
     </p>
 
-    {% if anime_request.anidb_synopsis %}
-      <p>{{ anime_request.anidb_synopsis }}</p>
+    {% if anidb_entry.synopsis %}
+      <p>{{ anidb_entry.synopsis }}</p>
     {% else %}
       <p>This title has no synopsis.</p>
     {% endif %}
@@ -49,3 +51,5 @@
     {% endif %}
   </div>
 </div>
+
+{% endwith %}

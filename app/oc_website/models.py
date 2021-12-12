@@ -8,9 +8,28 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import Count, IntegerField, OuterRef, Subquery, Value
 from django.db.models.functions import Coalesce
+
 from oc_website.fields import MagnetURLField
 from oc_website.markdown import render_markdown
 from oc_website.taxonomies import ProjectStatus
+
+
+class AniDBEntry(models.Model):
+    anidb_id = models.IntegerField()
+    image = models.FileField(upload_to="anidb/", null=True, blank=True)
+    title = models.CharField(max_length=200, null=True, blank=True)
+    type = models.CharField(max_length=30, null=True, blank=True)
+    episodes = models.IntegerField(null=True, blank=True)
+    synopsis = models.TextField(null=True, blank=True)
+    start_date = models.DateTimeField(null=True, blank=True)
+    end_date = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "AniDB entry"
+        verbose_name_plural = "AniDB entries"
+
+    def __str__(self) -> str:
+        return f"{self.title}"
 
 
 class FeaturedImage(models.Model):
@@ -177,28 +196,17 @@ class AnimeRequest(models.Model):
     comment = models.TextField(null=True, blank=True)
     remote_addr = models.CharField(max_length=64, null=True, blank=True)
 
-    anidb_id = models.IntegerField()
-    anidb_image = models.FileField(
-        upload_to="requests/", null=True, blank=True
-    )
-    anidb_title = models.CharField(max_length=200, null=True, blank=True)
-    anidb_type = models.CharField(max_length=30, null=True, blank=True)
-    anidb_episodes = models.IntegerField(null=True, blank=True)
-    anidb_synopsis = models.TextField(null=True, blank=True)
-    anidb_start_date = models.DateTimeField(null=True, blank=True)
-    anidb_end_date = models.DateTimeField(null=True, blank=True)
+    anidb_entry = models.ForeignKey(AniDBEntry, on_delete=models.CASCADE)
 
     @property
     def anidb_url(self) -> Optional[str]:
-        if not self.anidb_id:
-            return None
-        return f"https://anidb.net/anime/{self.anidb_id}"
+        return f"https://anidb.net/anime/{self.anidb_entry.anidb_id}"
 
     class Meta:
         ordering = ["-request_date"]
 
     def __str__(self) -> str:
-        return self.anidb_title or ""
+        return f"Request for {self.anidb_entry or self.anidb_entry.anidb_id}"
 
 
 class Comment(models.Model):
