@@ -11,22 +11,23 @@ def get_setting(name: str) -> str:
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR.parent
+MNT_DIR = Path("/mnt")
 
 # persistent directory with animu data
-DATA_DIR = REPO_DIR / "data"
+DATA_DIR = MNT_DIR / "data"
 
 # persistent directory with generated .torrent files
-TORRENTS_DIR = REPO_DIR / "torrents"
+TORRENTS_DIR = MNT_DIR / "torrents"
 
 # persistent directory where to put .torrent files for transmission to add
 # (transmission renames added .torrent files to .torrent.added at arbitrary
 # points in time, which causes races with the .torrent upload code, hence this
 # cannot be the same directory as TORRENTS_DIR and is used as a "fire and
 # forget" mechanism)
-TRANSMISSION_WATCHDIR = REPO_DIR / "transmission-watchdir"
+TRANSMISSION_WATCHDIR = MNT_DIR / "transmission-watchdir"
 
 # directory where to put symlinks of anime releases for the irc bot
-IRCBOT_WATCHDIR = REPO_DIR / "ircbot-watchdir"
+IRCBOT_WATCHDIR = MNT_DIR / "ircbot-watchdir"
 
 SECRET_KEY = get_setting("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "False").lower() in {"1", "true"}

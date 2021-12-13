@@ -16,10 +16,7 @@ x-environment: &environment
 
 x-volumes: &volumes
   - ./app:/app
-  - ./data:/data
-  - ./torrents:/torrents
-  - ./ircbot-watchdir:/ircbot-watchdir
-  - ./transmission-watchdir:/transmission-watchdir
+  - ./mnt:/mnt
   - ./services/app/entrypoint.sh:/usr/local/bin/entrypoint.sh
 
 services:
