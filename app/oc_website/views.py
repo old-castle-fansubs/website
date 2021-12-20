@@ -120,9 +120,9 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
     )
     if search_text := request.GET.get("search_text"):
         filter_arg = (
-            Q(anidb_title__icontains=search_text)
-            | Q(anidb_type__icontains=search_text)
-            | Q(anidb_synopsis__icontains=search_text)
+            Q(anidb_entry__title__icontains=search_text)
+            | Q(anidb_entry__type__icontains=search_text)
+            | Q(anidb_entry__synopsis__icontains=search_text)
         )
         try:
             filter_arg |= Q(anidb_id=int(search_text))
