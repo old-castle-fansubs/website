@@ -131,11 +131,11 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
         anime_requests = anime_requests.filter(filter_arg)
     if sort_style := request.GET.get("sort"):
         order_mapping = {
-            "title": "anidb_title",
-            "episodes": "anidb_episodes",
-            "type": "anidb_type",
+            "title": "anidb_entry__title",
+            "episodes": "anidb_entry__episodes",
+            "type": "anidb_entry__type",
             "request_date": "request_date",
-            "start_date": "anidb_start_date",
+            "start_date": "anidb_entry__start_date",
             "comment_count": "comment_count",
         }
         order_mapping.update(
