@@ -24,6 +24,10 @@ class AniDBEntry(models.Model):
     start_date = models.DateTimeField(null=True, blank=True)
     end_date = models.DateTimeField(null=True, blank=True)
 
+    @property
+    def url(self) -> str:
+        return f"https://anidb.net/anime/{self.anidb_id}"
+
     class Meta:
         verbose_name = "AniDB entry"
         verbose_name_plural = "AniDB entries"
