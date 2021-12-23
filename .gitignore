@@ -4,6 +4,7 @@
 /app/db.sqlite3
 /app/celerybeat-schedule
 /data
+/mnt
 /torrents
 /transmission-watchdir
 /.env
