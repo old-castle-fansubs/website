@@ -93,7 +93,7 @@ def view_news(
         news_entries = News.objects.filter(pk=news_id)
     else:
         news_entries = News.objects.filter(
-            publication_date__lte=timezone.now(), is_visible=True
+            publication_date__lte=timezone.now()
         )
     return render(
         request,

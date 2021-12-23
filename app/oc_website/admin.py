@@ -118,6 +118,7 @@ class NewsAdminForm(forms.ModelForm):
 
 @admin.register(News)
 class NewsAdmin(admin.ModelAdmin):
+    list_display = ["id", "title", "publication_date"]
     inlines = [NewsAttachmentInline]
     form = NewsAdminForm
 

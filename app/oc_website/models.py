@@ -153,9 +153,7 @@ class News(models.Model):
     publication_date = models.DateTimeField()
     title = models.CharField(max_length=100)
     author = models.CharField(max_length=100)
-    slug = models.CharField(max_length=30)
     content = models.TextField()
-    is_visible = models.BooleanField(default=True)
 
     class Meta:
         ordering = ["-publication_date"]
