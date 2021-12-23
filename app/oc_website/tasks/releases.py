@@ -246,3 +246,7 @@ def publish_release(release_id: int, dry_run: bool) -> None:
         release.is_visible = True
         release.release_date = timezone.now()
         release.save()
+
+    project = release.project
+    project.is_visible = True
+    project.save()
