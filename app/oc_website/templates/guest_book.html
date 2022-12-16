@@ -7,7 +7,11 @@
 <p>
   <strong>{{ all_comment_count }} comments</strong>
   <span class='spacer'>&bull;</span>
-  New comments are disabled due to abuse.
+  {% if comments_enabled %}
+    <a href='{% url 'guest_book_comment' %}'>Add new comment</a>
+  {% else %}
+    New comments are disabled.
+  {% endif %}
 </p>
 
 {% include 'snippets/comments.html' with comments=page.object_list comment_url='guest_book_comment' %}

@@ -9,7 +9,7 @@
       <a href='#comment-{{ comment.id }}' class='permalink'
         ><time title='{{ comment.comment_date }}' datetime='{{ comment.comment_date }}'>{{ comment.comment_date }}</time
       ></a>
-      {% if not is_preview and comment.is_visible %}
+      {% if comments_enabled and not is_preview and comment.is_visible %}
           <span class='spacer'>&bull;</span>
           {% if object_id %}
             <a href='{% url comment_url object_id=object_id pid=comment.id %}' class='reply'>Reply</a>

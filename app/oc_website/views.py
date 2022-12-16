@@ -1,6 +1,7 @@
 import re
 from typing import Optional
 
+from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -178,6 +179,7 @@ def view_anime_request(request: HttpRequest, request_id: int) -> HttpResponse:
 
 
 def view_anime_request_add(request: HttpRequest) -> HttpResponse:
+    is_preview = request.POST.get("submit") == "preview"
     anidb_url = request.POST.get("anidb_url", "").strip()
     anidb_id = get_anidb_link_id(anidb_url)
 
@@ -190,6 +192,8 @@ def view_anime_request_add(request: HttpRequest) -> HttpResponse:
             errors.append("AniDB link cannot be empty.")
         elif not is_valid_anidb_link(anidb_url):
             errors.append("The provided AniDB link appears to be invalid.")
+        if not settings.REQUESTS_ENABLED and not is_preview:
+            errors.append("Get a life…")
 
         if existing_anime_request := AnimeRequest.objects.filter(
             anidb_entry__anidb_id=anidb_id
@@ -294,6 +298,8 @@ def view_add_comment(
             and last_comment.author == comment.author
         ):
             errors.append("A comment with this exact content already exists.")
+        if not settings.COMMENTS_ENABLED and not is_preview:
+            errors.append("Get a life…")
 
         if not errors and not is_preview:
             comment.save()
