@@ -18,7 +18,6 @@ disable = [
     "import-error",  # for pre-commit, which cannot install external modules
     "missing-docstring",
     "too-few-public-methods",
-    "no-self-use",
     "no-member",  # leave that to mypy
     "useless-return",  # false positives for `return None` that conflict with mypy
     "fixme",
