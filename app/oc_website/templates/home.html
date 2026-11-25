@@ -4,7 +4,9 @@
 {% block content %}
 <h1 class='fancy-title'><span>Featured image</span></h1>
 
+{% if featured_image %}
 <a href='{% url 'news' %}' id='featured-image'>
   <img id='featured' src='{{ featured_image.image.url }}' alt='Featured image'/>
 </a>
+{% endif %}
 {% endblock %}
