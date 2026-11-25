@@ -2,18 +2,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from django.urls import path, reverse
+from django.urls import path
 
 from oc_website import views
-
-
-def url_to_edit_object(obj):
-    # pylint: disable=protected-access
-    return settings.HOST_SITE + reverse(
-        f"admin:{obj._meta.app_label}_{obj._meta.model_name}_change",
-        args=[obj.pk],
-    )
-
 
 urlpatterns = [
     path("admin/", admin.site.urls),

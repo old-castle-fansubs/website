@@ -2,13 +2,6 @@
 /app/uploads/
 /app/cache/
 /app/db.sqlite3
-/app/celerybeat-schedule
-/data
-/mnt
-/torrents
-/transmission-watchdir
-/.env
 .pytest_cache
 .mypy_cache
 .coverage
-docker-compose.override.yml

@@ -11,20 +11,6 @@ def get_setting(name: str) -> str:
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR.parent
-MNT_DIR = Path("/mnt")
-
-# persistent directory with animu data
-DATA_DIR = MNT_DIR / "data"
-
-# persistent directory with generated .torrent files
-TORRENTS_DIR = MNT_DIR / "torrents"
-
-# persistent directory where to put .torrent files for transmission to add
-# (transmission renames added .torrent files to .torrent.added at arbitrary
-# points in time, which causes races with the .torrent upload code, hence this
-# cannot be the same directory as TORRENTS_DIR and is used as a "fire and
-# forget" mechanism)
-TRANSMISSION_WATCHDIR = MNT_DIR / "transmission-watchdir"
 
 SECRET_KEY = get_setting("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "False").lower() in {"1", "true"}
@@ -122,37 +108,7 @@ STATIC_ROOT = BASE_DIR / "static"
 MEDIA_URL = "/uploads/"
 MEDIA_ROOT = BASE_DIR / "uploads"
 
-CELERY_BROKER_URL = "redis://redis:6379"
-CELERY_RESULT_BACKEND = "redis://redis:6379"
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_IMPORTS = ("oc_website.tasks",)
-
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-ANIDEX_API_URL = "https://anidex.info/api/"
-ANIDEX_API_KEY = get_setting("ANIDEX_API_KEY")
-ANIDEX_GROUP_ID = get_setting("ANIDEX_GROUP_ID")
-ANIDEX_CATEGORY_ID = 1
-ANIDEX_LANGUAGE_ID = 1
-
-NYAA_SI_API_URL = "https://nyaa.si/api/upload"
-NYAA_SI_USER = get_setting("NYAA_SI_USER")
-NYAA_SI_PASS = get_setting("NYAA_SI_PASS")
-NYAA_SI_INFO = "https://oldcastle.moe"
-NYAA_SI_CATEGORY_ID = "1_2"
-
-ANIDB_CLIENT = get_setting("ANIDB_CLIENT")
-ANIDB_CLIENTVER = get_setting("ANIDB_CLIENTVER")
-ANIDB_CACHE_DIR = BASE_DIR / "cache" / "anidb"
-
-TORRENT_TRACKERS = [
-    "http://anidex.moe:6969/announce",
-    "http://nyaa.tracker.wf:7777/announce",
-    "udp://tracker.uw0.xyz:6969",
-]
-TORRENT_MAX_PIECE_SIZE = 4 * 1024 * 1024
-
-HOST_SITE = get_setting("HOST_SITE")
 FILE_UPLOAD_PERMISSIONS = 0o644
 

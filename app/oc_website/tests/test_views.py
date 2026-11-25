@@ -36,7 +36,7 @@ def fixture_content() -> dict[str, int]:
         project=project, url="https://anidb.net/anime/1"
     )
     release = ProjectRelease.objects.create(
-        project=project, release_date=PAST, filename="glass-mask-01.mkv"
+        project=project, release_date=PAST
     )
     ProjectReleaseLink.objects.create(
         release=release, url="magnet:?xt=urn:btih:" + "ab" * 20

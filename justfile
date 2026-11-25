@@ -1,13 +1,6 @@
 export DJANGO_SETTINGS_MODULE := "oc_website.settings"
 export DEBUG := "1"
 export SECRET_KEY := "dev"
-export HOST_SITE := "http://localhost:8000"
-export ANIDEX_API_KEY := "dev"
-export ANIDEX_GROUP_ID := "0"
-export NYAA_SI_USER := "dev"
-export NYAA_SI_PASS := "dev"
-export ANIDB_CLIENT := "dev"
-export ANIDB_CLIENTVER := "1"
 
 # Run manage.py
 manage *args:
