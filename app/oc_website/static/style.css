@@ -286,50 +286,52 @@ img.flag {
 #projects #content {
   text-align: center;
 }
-#projects table.projects {
+#projects #content a {
+  display: inline-block;
+}
+#projects #content ul.projects {
+  list-style-type: none;
   margin: 1rem 0 2rem 0;
-  text-align: left;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 1rem;
 }
-#projects table.projects th {
-  font-weight: normal;
-  font-size: 0.85rem;
-  opacity: 0.7;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+#projects #content li.project {
+  margin: 0;
+  padding: 0;
+  text-align: center;
 }
-#projects table.projects td {
-  vertical-align: middle;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+#projects #content li.project a {
+  display: block;
 }
-#projects table.projects td.cover {
-  width: 5rem;
-  padding-left: 0;
+#projects #content .cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-origin: border-box;
   line-height: 0;
-}
-#projects table.projects td.cover img {
-  width: 5rem;
+  margin-bottom: 0.25rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  width: 100%;
   aspect-ratio: 13 / 9;
-  object-fit: cover;
   box-sizing: border-box;
-  border-top: 3px solid rgba(255, 255, 255, 0.5);
-  border-left: 3px solid rgba(255, 255, 255, 0.5);
-  border-bottom: 3px solid rgba(0, 0, 0, 0.5);
-  border-right: 3px solid rgba(0, 0, 0, 0.5);
+  border-top: 5px solid rgba(255, 255, 255, 0.5);
+  border-left: 5px solid rgba(255, 255, 255, 0.5);
+  border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+  border-right: 5px solid rgba(0, 0, 0, 0.5);
 }
-#projects table.projects .episodes,
-#projects table.projects .years {
-  text-align: right;
-  white-space: nowrap;
+#projects ul.languages {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }
-#projects table.projects .languages {
-  white-space: nowrap;
-}
-#projects table.projects td.languages .flag {
-  margin-right: 0.2rem;
-}
-@media (max-width: 600px) {
-  #projects table.projects .years {
-    display: none;
-  }
+#projects li.language {
+  margin: 0 0 0.25rem 0.25rem;
+  padding: 0;
+  display: inline-block;
 }
 
 #project #project-wrapper {

@@ -4,7 +4,7 @@ from typing import Any, Optional
 
 from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator
-from django.db.models import Count, Max, Min, Q
+from django.db.models import Q
 from django.http import Http404, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
@@ -57,18 +57,7 @@ def view_home(request: HttpRequest) -> HttpResponse:
 
 
 def view_projects(request: HttpRequest) -> HttpResponse:
-    visible = Q(releases__is_visible=True)
-    projects = (
-        Project.objects.filter(is_visible=True)
-        .annotate(
-            episode_count=Count(
-                "releases__files__episode_number", filter=visible, distinct=True
-            ),
-            first_release=Min("releases__release_date"),
-            last_release=Max("releases__release_date"),
-        )
-        .order_by("title")
-    )
+    projects = Project.objects.filter(is_visible=True).order_by("title")
     return render(
         request,
         "projects.html",
