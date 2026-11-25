@@ -1,24 +1,21 @@
-import re
-from typing import Optional
+import functools
+from collections.abc import Callable
+from typing import Any, Optional
 
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.http import Http404, HttpRequest, HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.utils import timezone
 
-from oc_website.anidb import get_anidb_link_id, is_valid_anidb_link
 from oc_website.models import (
-    AniDBEntry,
     AnimeRequest,
     Comment,
     FeaturedImage,
     News,
     Project,
 )
-from oc_website.tasks import fill_missing_anidb_info
 from oc_website.taxonomies import ProjectStatus
 
 MAX_GUESTBOOK_COMMENTS_PER_PAGE = 10
@@ -32,10 +29,18 @@ def get_page_number(request: HttpRequest) -> int:
         return 1
 
 
-def get_client_ip(request: HttpRequest) -> Optional[str]:
-    if forwarded_for := request.META.get("X-Forwarded-For"):
-        return forwarded_for.split(",")[0]
-    return request.META.get("REMOTE_ADDR")
+def staff_only(
+    view: Callable[..., HttpResponse]
+) -> Callable[..., HttpResponse]:
+    @functools.wraps(view)
+    def wrapper(
+        request: HttpRequest, *args: Any, **kwargs: Any
+    ) -> HttpResponse:
+        if not request.user.is_staff:
+            raise Http404
+        return view(request, *args, **kwargs)
+
+    return wrapper
 
 
 def view_home(request: HttpRequest) -> HttpResponse:
@@ -115,6 +120,7 @@ def view_featured_images(request: HttpRequest) -> HttpResponse:
     )
 
 
+@staff_only
 def view_anime_requests(request: HttpRequest) -> HttpResponse:
     anime_requests = AnimeRequest.objects.with_counts().filter(
         Q(request_date__lte=timezone.now()) | Q(request_date__isnull=True),
@@ -157,6 +163,7 @@ def view_anime_requests(request: HttpRequest) -> HttpResponse:
     )
 
 
+@staff_only
 def view_anime_request(request: HttpRequest, request_id: int) -> HttpResponse:
     try:
         anime_request = AnimeRequest.objects.with_counts().get(pk=request_id)
@@ -178,50 +185,7 @@ def view_anime_request(request: HttpRequest, request_id: int) -> HttpResponse:
     )
 
 
-def view_anime_request_add(request: HttpRequest) -> HttpResponse:
-    is_preview = request.POST.get("submit") == "preview"
-    anidb_url = request.POST.get("anidb_url", "").strip()
-    anidb_id = get_anidb_link_id(anidb_url)
-
-    errors: list[str] = []
-
-    if request.method == "POST":
-        if request.POST.get("phone") or request.POST.get("message"):
-            errors.append("Human verification failed.")
-        if not anidb_url:
-            errors.append("AniDB link cannot be empty.")
-        elif not is_valid_anidb_link(anidb_url):
-            errors.append("The provided AniDB link appears to be invalid.")
-        if not settings.REQUESTS_ENABLED and not is_preview:
-            errors.append("Get a life…")
-
-        if existing_anime_request := AnimeRequest.objects.filter(
-            anidb_entry__anidb_id=anidb_id
-        ).first():
-            return redirect("anime_request", existing_anime_request.pk)
-
-        if not errors:
-            anidb_entry = AniDBEntry.objects.create(
-                anidb_id=anidb_id,
-            )
-            anime_request = AnimeRequest.objects.create(
-                request_date=timezone.now(),
-                anidb_entry=anidb_entry,
-                remote_addr=get_client_ip(request),
-            )
-            fill_missing_anidb_info.delay(anime_request.pk)
-            return redirect("anime_requests")
-
-    return render(
-        request,
-        "request_add.html",
-        context=dict(
-            anidb_url=anidb_url,
-            errors=errors,
-        ),
-    )
-
-
+@staff_only
 def view_guest_book(request: HttpRequest) -> HttpResponse:
     all_comment_count = Comment.objects.filter(content_type=None).count()
     paginator = Paginator(
@@ -234,88 +198,5 @@ def view_guest_book(request: HttpRequest) -> HttpResponse:
         context=dict(
             page=paginator.page(get_page_number(request)),
             all_comment_count=all_comment_count,
-        ),
-    )
-
-
-def view_add_comment(
-    # pylint: disable=too-many-arguments
-    request: HttpRequest,
-    page_title: str,
-    page_id: str,
-    content_type: Optional[str],
-    object_id: Optional[int],
-    pid: Optional[int] = None,
-) -> HttpResponse:
-    is_preview = request.POST.get("submit") == "preview"
-    text = request.POST.get("text", "").strip()
-    author = request.POST.get("author", "").strip()
-    website = request.POST.get("website", "").strip()
-    email = request.POST.get("email", "").strip()
-
-    parent_comment: Optional[Comment] = Comment.objects.filter(pk=pid).first()
-    if parent_comment:
-        content_type = parent_comment.content_type
-        object_id = parent_comment.object_id
-    else:
-        content_type = (
-            ContentType.objects.get(model=content_type)
-            if content_type
-            else None
-        )
-
-    comment = Comment(
-        content_type=content_type,
-        object_id=object_id,
-        parent_comment=parent_comment,
-        comment_date=timezone.now(),
-        remote_addr=get_client_ip(request),
-        text=text,
-        author=author,
-        email=email,
-        website=website,
-    )
-
-    errors: list[str] = []
-
-    if request.method == "POST":
-        if request.POST.get("phone") or request.POST.get("message"):
-            errors.append("Human verification failed.")
-        if not comment.text:
-            errors.append("Comment content cannot be empty.")
-        if not comment.author:
-            errors.append("Comment author cannot be empty.")
-        if not re.search("[a-zA-Z']{3,}", comment.text):
-            errors.append(
-                "Add a few more letters to make your comment more interesting."
-            )
-        last_comment = Comment.objects.filter(
-            content_type=comment.content_type
-        ).first()
-        if (
-            last_comment
-            and last_comment.text == comment.text
-            and last_comment.author == comment.author
-        ):
-            errors.append("A comment with this exact content already exists.")
-        if not settings.COMMENTS_ENABLED and not is_preview:
-            errors.append("Get a life…")
-
-        if not errors and not is_preview:
-            comment.save()
-            if object_id:
-                return redirect("anime_request", object_id)
-            return redirect("guest_book")
-
-    return render(
-        request,
-        "comment_add.html",
-        context=dict(
-            parent_comment=parent_comment,
-            comment=comment,
-            preview=is_preview,
-            errors=errors,
-            page_title=page_title,
-            page_id=page_id,
         ),
     )

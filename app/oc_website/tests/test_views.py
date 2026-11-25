@@ -87,13 +87,6 @@ def fixture_content() -> dict[str, int]:
         "/about/",
         "/projects/",
         "/project/glass-mask/",
-        "/anime_requests/",
-        "/anime_requests/?search_text=glass&sort=title",
-        "/anime_request/{anime_request}/",
-        "/anime_request/{anime_request}/comment/",
-        "/anime_request/add/",
-        "/guest_book/",
-        "/guest_book/comment/",
         "/featured_images/",
         "/admin/login/",
     ],
@@ -101,6 +94,46 @@ def fixture_content() -> dict[str, int]:
 def test_page_renders(content: dict[str, int], client: Client, url: str) -> None:
     response = client.get(url.format(**content))
     assert response.status_code == 200
+
+
+STAFF_URLS = [
+    "/anime_requests/",
+    "/anime_requests/?search_text=glass&sort=title",
+    "/anime_request/{anime_request}/",
+    "/guest_book/",
+]
+
+
+@pytest.fixture(name="staff_client")
+def fixture_staff_client(client: Client) -> Client:
+    client.force_login(
+        User.objects.create_superuser("admin", "admin@example.com", "admin")
+    )
+    return client
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("url", STAFF_URLS)
+def test_staff_page_renders_for_staff(
+    content: dict[str, int], staff_client: Client, url: str
+) -> None:
+    response = staff_client.get(url.format(**content))
+    assert response.status_code == 200
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("url", STAFF_URLS)
+def test_staff_page_is_hidden_from_others(
+    content: dict[str, int], client: Client, url: str
+) -> None:
+    response = client.get(url.format(**content))
+    assert response.status_code == 404
+
+
+@pytest.mark.django_db
+def test_staff_tabs(staff_client: Client) -> None:
+    assert b"Guest book" not in Client().get("/").content
+    assert b"Guest book" in staff_client.get("/").content
 
 
 @pytest.mark.django_db
@@ -119,13 +152,10 @@ def test_page_renders(content: dict[str, int], client: Client, url: str) -> None
 )
 def test_admin_list_renders(
     content: dict[str, int],  # pylint: disable=unused-argument
-    client: Client,
+    staff_client: Client,
     model: str,
 ) -> None:
-    client.force_login(
-        User.objects.create_superuser("admin", "admin@example.com", "admin")
-    )
-    response = client.get(f"/admin/oc_website/{model}/")
+    response = staff_client.get(f"/admin/oc_website/{model}/")
     assert response.status_code == 200
 
 

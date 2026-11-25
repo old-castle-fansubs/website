@@ -60,7 +60,6 @@ TEMPLATES = [
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
-                "oc_website.context_processors.add_settings",
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
@@ -157,5 +156,3 @@ TORRENT_MAX_PIECE_SIZE = 4 * 1024 * 1024
 HOST_SITE = get_setting("HOST_SITE")
 FILE_UPLOAD_PERMISSIONS = 0o644
 
-COMMENTS_ENABLED = False
-REQUESTS_ENABLED = False

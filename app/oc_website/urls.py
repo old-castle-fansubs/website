@@ -41,7 +41,7 @@ urlpatterns += [
     path("project/<str:slug>/", views.view_project, name="project"),
 ]
 
-# anime requests
+# anime requests and the guest book, read-only and for staff only
 urlpatterns += [
     path("anime_requests/", views.view_anime_requests, name="anime_requests"),
     path(
@@ -49,58 +49,7 @@ urlpatterns += [
         views.view_anime_request,
         name="anime_request",
     ),
-    path(
-        "anime_request/<int:object_id>/comment/",
-        views.view_add_comment,
-        {
-            "content_type": "animerequest",
-            "page_title": "Anime requests",
-            "page_id": "requests",
-        },
-        name="anime_request_comment",
-    ),
-    path(
-        "anime_request/<int:object_id>/reply/<int:pid>",
-        views.view_add_comment,
-        {
-            "content_type": "animerequest",
-            "page_title": "Anime requests",
-            "page_id": "requests",
-        },
-        name="anime_request_comment",
-    ),
-    path(
-        "anime_request/add/",
-        views.view_anime_request_add,
-        name="anime_request_add",
-    ),
-]
-
-# guest book
-urlpatterns += [
     path("guest_book/", views.view_guest_book, name="guest_book"),
-    path(
-        "guest_book/comment/",
-        views.view_add_comment,
-        {
-            "content_type": None,
-            "object_id": None,
-            "page_title": "Guest book",
-            "page_id": "guest-book",
-        },
-        name="guest_book_comment",
-    ),
-    path(
-        "guest_book/reply/<int:pid>",
-        views.view_add_comment,
-        {
-            "content_type": None,
-            "object_id": None,
-            "page_title": "Guest book",
-            "page_id": "guest-book",
-        },
-        name="guest_book_comment",
-    ),
 ]
 
 # featured images
