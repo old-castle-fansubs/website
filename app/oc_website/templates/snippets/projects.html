@@ -1,22 +1,25 @@
 <h1 class='fancy-title'><span>{{ title }}</span></h1>
 {% if not projects|length %}
-  Nothing… yet!
-{% endif %}
-<ul class='projects'>
+  Nothing… yet!
+{% else %}
+<table class='projects'>
+  <tr>
+    <th></th>
+    <th class='title'>Title</th>
+    <th class='episodes'>Episodes</th>
+    <th class='years'>Years</th>
+    <th class='languages'>Languages</th>
+  </tr>
   {% for project in projects %}
-    {% if project.is_visible %}
-      <li class='project'>
-        <a href='{% url 'project' project.slug %}'>
-          <div class='cover' style='background-image: url("{{ project.small_image.url }}")'><!--
-            --><ul class='languages'
-              >{% for language in project.languages %}<!--
-                --><li class='language'>{% include 'snippets/flag.html' with country_code=language %}</li><!--
-              -->{% endfor %}
-            </ul><!--
-          --></div><!--
-          -->{{ project.title }}
-        </a>
-      </li>
-    {% endif %}
+    <tr>
+      <td class='cover'>
+        <a href='{% url 'project' project.slug %}'><img loading='lazy' src='{{ project.small_image.url }}' alt=''/></a>
+      </td>
+      <td class='title'><a href='{% url 'project' project.slug %}'>{{ project.title }}</a></td>
+      <td class='episodes'>{{ project.episode_count|default:'' }}</td>
+      <td class='years'>{% if project.first_release %}{{ project.first_release|date:'Y' }}{% if project.last_release|date:'Y' != project.first_release|date:'Y' %}&ndash;{{ project.last_release|date:'Y' }}{% endif %}{% endif %}</td>
+      <td class='languages'>{% for language in project.languages %}{% include 'snippets/flag.html' with country_code=language %}{% endfor %}</td>
+    </tr>
   {% endfor %}
-</ul>
+</table>
+{% endif %}
