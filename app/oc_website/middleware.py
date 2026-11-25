@@ -1,4 +1,5 @@
-import pytz
+from zoneinfo import ZoneInfo
+
 from django.urls import reverse
 from django.utils import timezone
 
@@ -9,5 +10,5 @@ class TimezoneMiddleware:
 
     def __call__(self, request):
         if request.path.startswith(reverse("admin:index")):
-            timezone.activate(pytz.timezone("Europe/Warsaw"))
+            timezone.activate(ZoneInfo("Europe/Warsaw"))
         return self.get_response(request)
