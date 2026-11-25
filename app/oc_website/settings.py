@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 
 def get_setting(name: str) -> str:
     ret = os.environ.get(name)
@@ -11,10 +13,18 @@ def get_setting(name: str) -> str:
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 REPO_DIR = BASE_DIR.parent
+load_dotenv(REPO_DIR / ".env")
+
+# the database, the uploads and the collected static files
+DATA_DIR = Path(os.environ.get("DATA_DIR", BASE_DIR))
 
 SECRET_KEY = get_setting("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "False").lower() in {"1", "true"}
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "*").split(",")
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 
 INSTALLED_APPS = [
     "oc_website",
@@ -75,7 +85,7 @@ WSGI_APPLICATION = "oc_website.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": DATA_DIR / "db.sqlite3",
     }
 }
 
@@ -103,10 +113,10 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "oc_website" / "static",
 ]
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = DATA_DIR / "static"
 
 MEDIA_URL = "/uploads/"
-MEDIA_ROOT = BASE_DIR / "uploads"
+MEDIA_ROOT = DATA_DIR / "uploads"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
