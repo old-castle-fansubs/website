@@ -26,9 +26,6 @@ TORRENTS_DIR = MNT_DIR / "torrents"
 # forget" mechanism)
 TRANSMISSION_WATCHDIR = MNT_DIR / "transmission-watchdir"
 
-# directory where to put symlinks of anime releases for the irc bot
-IRCBOT_WATCHDIR = MNT_DIR / "ircbot-watchdir"
-
 SECRET_KEY = get_setting("SECRET_KEY")
 DEBUG = os.environ.get("DEBUG", "False").lower() in {"1", "true"}
 ALLOWED_HOSTS = ["*"]

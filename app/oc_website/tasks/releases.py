@@ -102,26 +102,6 @@ class NyaaSiPublisher(BasePublisher):
         return cast(str, result["url"])
 
 
-class IrcbotPublisher(BasePublisher):
-    name = "ircbot"
-
-    def publish(
-        self, torrent_path: Path, data_path: Path, dry_run: bool
-    ) -> Optional[str]:
-        ircbot_link_path = settings.IRCBOT_WATCHDIR / data_path.name
-        if dry_run:
-            print(
-                "publishing to ircbot (source={ircbot_link_path}, target={data_path})"
-            )
-        else:
-            if ircbot_link_path.exists() and ircbot_link_path.is_symlink():
-                ircbot_link_path.unlink()
-            if not ircbot_link_path.exists():
-                ircbot_link_path.parent.mkdir(parents=True, exist_ok=True)
-                ircbot_link_path.symlink_to(data_path)
-        return None
-
-
 def get_torrent_name(data_path: Path) -> str:
     if data_path.is_file():
         return data_path.stem + ".torrent"

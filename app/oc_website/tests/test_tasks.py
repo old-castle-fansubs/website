@@ -16,7 +16,6 @@ def fixture_override_dirs(tmp_path: Path) -> Iterable[None]:
         DATA_DIR=tmp_path / "data",
         TORRENTS_DIR=tmp_path / "torrents",
         TRANSMISSION_WATCHDIR=tmp_path / "transmission-watchdir",
-        IRCBOT_WATCHDIR=tmp_path / "ircbot-watchdir",
     ):
         settings.DATA_DIR.mkdir()
         settings.TORRENTS_DIR.mkdir()
@@ -74,8 +73,6 @@ def test_publish_release(
     assert torrent_path.exists()
     assert torrent_path_for_transmission.exists()
 
-    assert (settings.IRCBOT_WATCHDIR / "test file.txt").is_symlink()
-    assert (settings.IRCBOT_WATCHDIR / "test file.txt").read_text() == "123"
 
     fake_anidex_publish.assert_called_once_with(
         torrent_path, data_path, dry_run=False
