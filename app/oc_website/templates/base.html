@@ -12,8 +12,9 @@
   <link rel='preload' href='{% static 'comments.css' %}?{% deployment_id %}' as='style'/>
   <link rel='preload' href='{% static 'img/blue.jpg' %}' as='image' type='image/jpeg'/>
   <link rel='preload' href='{% static 'img/stone.jpg' %}' as='image' type='image/jpeg'/>
-  <link rel='preload' href='https://fonts.googleapis.com/css?family=New+Rocker|Pirata+One|Roboto|UnifrakturCook:700'/>
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=New+Rocker|Pirata+One|Roboto|UnifrakturCook:700'/>
+  <link rel='preload' href='{% static 'fonts/unifrakturcook-700-latin.woff2' %}' as='font' type='font/woff2' crossorigin/>
+  <link rel='preload' href='{% static 'fonts/roboto-latin.woff2' %}' as='font' type='font/woff2' crossorigin/>
+  <link rel='stylesheet' href='{% static 'fonts/fonts.css' %}?{% deployment_id %}'/>
   <link rel='stylesheet' href='{% static 'style.css' %}?{% deployment_id %}'/>
   <link rel='stylesheet' href='{% static 'comments.css' %}?{% deployment_id %}'/>
   {% endblock %}
