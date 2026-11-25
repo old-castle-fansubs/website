@@ -52,7 +52,7 @@ def fixture_content() -> dict[str, int]:
     news = News.objects.create(
         publication_date=PAST,
         title="Hello",
-        author="rr-",
+        author="dash",
         content="First **news**.",
     )
     FeaturedImage.objects.create(
