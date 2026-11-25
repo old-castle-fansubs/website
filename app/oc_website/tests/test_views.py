@@ -107,7 +107,9 @@ STAFF_URLS = [
 @pytest.fixture(name="staff_client")
 def fixture_staff_client(client: Client) -> Client:
     client.force_login(
-        User.objects.create_superuser("admin", "admin@example.com", "admin")
+        User.objects.create(
+            username="admin", is_staff=True, is_superuser=True
+        )
     )
     return client
 
